@@ -1,0 +1,213 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Blog Process Logs{% endblock %}
+
+{% block extrastyle %}
+<style>
+    .log-container {
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+    }
+    
+    .log-file-selector {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .log-file-selector a {
+        padding: 8px 15px;
+        background: #f5f5f5;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+    }
+    
+    .log-file-selector a.active {
+        background: #417690;
+        color: white;
+    }
+    
+    .log-entry {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+        border-left: 4px solid #ccc;
+    }
+    
+    .log-entry.info {
+        border-left-color: #4CAF50;
+        background-color: #e8f5e9;
+    }
+    
+    .log-entry.error {
+        border-left-color: #F44336;
+        background-color: #ffebee;
+    }
+    
+    .log-entry.warning {
+        border-left-color: #FF9800;
+        background-color: #fff3e0;
+    }
+    
+    .log-entry pre {
+        white-space: pre-wrap;
+        margin: 5px 0;
+        font-family: monospace;
+        font-size: 13px;
+    }
+    
+    .process-container {
+        margin-bottom: 30px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    
+    .process-header {
+        padding: 10px 15px;
+        background: #f0f0f0;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .process-logs {
+        padding: 0 15px 15px;
+    }
+    
+    .step-container {
+        margin: 10px 0;
+        padding-left: 15px;
+        border-left: 2px solid #ddd;
+    }
+    
+    .step-header {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .step-completed {
+        border-left-color: #4CAF50;
+    }
+    
+    .step-failed {
+        border-left-color: #F44336;
+    }
+    
+    .toggle-icon {
+        transition: transform 0.3s;
+    }
+    
+    .collapsed .toggle-icon {
+        transform: rotate(-90deg);
+    }
+    
+    .collapsed + .process-logs {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>Blog Process Logs</h1>
+    
+    <div class="log-file-selector">
+        <strong>Select Log File:</strong>
+        {% for file in log_files %}
+            <a href="{% url 'view_specific_log' file %}" class="{% if file == selected_log %}active{% endif %}">
+                {{ file }}
+            </a>
+        {% empty %}
+            <p>No log files found</p>
+        {% endfor %}
+    </div>
+    
+    {% if processes %}
+        <h2>Process Logs</h2>
+        
+        {% for process_id, entries in processes.items %}
+            <div class="process-container">
+                <div class="process-header" onclick="toggleProcess(this)">
+                    <span>Process ID: {{ process_id }}</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="process-logs">
+                    {% for entry in entries %}
+                        <div class="log-entry {% if 'level' in entry %}{{ entry.level|lower }}{% else %}info{% endif %}">
+                            {% if entry.timestamp %}
+                                <div><small>{{ entry.timestamp }}</small></div>
+                            {% endif %}
+                            <pre>{{ entry.message }}</pre>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% elif log_content %}
+        <h2>Log Entries</h2>
+        
+        {% for entry in log_content %}
+            <div class="log-entry {% if 'level' in entry %}{{ entry.level|lower }}{% else %}info{% endif %}">
+                {% if entry.timestamp %}
+                    <div><small>{{ entry.timestamp }}</small></div>
+                {% endif %}
+                <pre>{{ entry.message }}</pre>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No log entries found</p>
+    {% endif %}
+</div>
+
+<script>
+    function toggleProcess(header) {
+        header.classList.toggle('collapsed');
+    }
+    
+    // Group steps by their ID
+    document.addEventListener('DOMContentLoaded', function() {
+        // Process the log entries to identify and group steps
+        const stepContainers = {};
+        const logEntries = document.querySelectorAll('.log-entry');
+        
+        logEntries.forEach(entry => {
+            const messageText = entry.querySelector('pre').textContent;
+            
+            // Check if this is a step entry
+            const stepMatch = messageText.match(/STEP (\d+): ([^-]+) - (STARTED|COMPLETED|FAILED)/);
+            if (stepMatch) {
+                const stepId = stepMatch[1];
+                const stepName = stepMatch[2].trim();
+                const stepStatus = stepMatch[3];
+                
+                // Create a container for this step if it doesn't exist
+                if (!stepContainers[stepId]) {
+                    stepContainers[stepId] = {
+                        name: stepName,
+                        status: stepStatus,
+                        entries: []
+                    };
+                }
+                
+                // Update status if this is a completion or failure
+                if (stepStatus === 'COMPLETED' || stepStatus === 'FAILED') {
+                    stepContainers[stepId].status = stepStatus;
+                }
+                
+                // Add this entry to the step
+                stepContainers[stepId].entries.push(entry);
+            } else {
+                // Check if this belongs to an existing step (context logs)
+                // TODO: Implement if needed
+            }
+        });
+    });
+</script>
+{% endblock %} 

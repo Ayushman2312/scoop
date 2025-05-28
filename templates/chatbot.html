@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogify - AI Blog Assistant</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add CSRF token -->
+    {% csrf_token %}
+    <style>
+    .chat-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .chat-header {
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+    
+    .chat-messages {
+        height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-bottom: 15px;
+    }
+    
+    .message {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border-radius: 18px;
+        max-width: 80%;
+        position: relative;
+    }
+    
+    .user-message {
+        background-color: #dcf8c6;
+        margin-left: auto;
+        border-bottom-right-radius: 4px;
+    }
+    
+    .bot-message {
+        background-color: #f0f0f0;
+        margin-right: auto;
+        border-bottom-left-radius: 4px;
+    }
+    
+    .message-time {
+        font-size: 0.7rem;
+        color: #777;
+        margin-top: 5px;
+        text-align: right;
+    }
+    
+    .chat-input {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .chat-input textarea {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        resize: none;
+    }
+    
+    .chat-options {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    
+    .loading {
+        text-align: center;
+        padding: 20px;
+        display: none;
+    }
+    
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 30px;
+    }
+    
+    .feature-card {
+        flex: 1 1 calc(50% - 15px);
+        min-width: 300px;
+        padding: 15px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-card h3 {
+        margin-top: 0;
+        color: #2c3e50;
+    }
+    
+    .outline-section, .improve-section {
+        display: none;
+    }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>AI Blog Assistant</h2>
+            <p>Powered by Google Gemini API</p>
+        </div>
+        
+        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat" type="button" role="tab" aria-controls="chat" aria-selected="true">Chat</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="outline-tab" data-bs-toggle="tab" data-bs-target="#outline" type="button" role="tab" aria-controls="outline" aria-selected="false">Generate Outline</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="improve-tab" data-bs-toggle="tab" data-bs-target="#improve" type="button" role="tab" aria-controls="improve" aria-selected="false">Improve Content</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <!-- Chat Tab -->
+            <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
+                <div class="chat-messages" id="chatMessages"></div>
+                
+                <div class="loading" id="chatLoading">
+                    <div class="loading-spinner"></div>
+                    <p>AI is thinking...</p>
+                </div>
+                
+                <div class="chat-input">
+                    <textarea id="userInput" placeholder="Type your message here..." rows="3"></textarea>
+                    <button class="btn btn-primary" id="sendMessage">Send</button>
+                </div>
+                
+                <div class="chat-options">
+                    <button class="btn btn-sm btn-outline-secondary" id="clearChat">Clear Chat</button>
+                    <span id="processingTime"></span>
+                </div>
+            </div>
+            
+            <!-- Outline Tab -->
+            <div class="tab-pane fade" id="outline" role="tabpanel" aria-labelledby="outline-tab">
+                <div class="mb-3">
+                    <label for="blogTitle" class="form-label">Blog Post Title</label>
+                    <input type="text" class="form-control" id="blogTitle" placeholder="Enter your blog post title">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="blogKeywords" class="form-label">Keywords (comma separated)</label>
+                    <input type="text" class="form-control" id="blogKeywords" placeholder="e.g., marketing, SEO, content">
+                </div>
+                
+                <button class="btn btn-primary" id="generateOutline">Generate Outline</button>
+                
+                <div class="loading" id="outlineLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Generating outline...</p>
+                </div>
+                
+                <div class="outline-result mt-4">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Generated Outline</h5>
+                            <button class="btn btn-sm btn-outline-secondary" id="copyOutline">Copy</button>
+                        </div>
+                        <div class="card-body">
+                            <div id="outlineResult" class="markdown-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Improve Content Tab -->
+            <div class="tab-pane fade" id="improve" role="tabpanel" aria-labelledby="improve-tab">
+                <div class="mb-3">
+                    <label for="contentToImprove" class="form-label">Content to Improve</label>
+                    <textarea class="form-control" id="contentToImprove" rows="6" placeholder="Paste your blog content here..."></textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Improvement Type</label>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="improvementType" id="improve-general" value="general" checked>
+                        <label class="btn btn-outline-primary" for="improve-general">General</label>
+                        
+                        <input type="radio" class="btn-check" name="improvementType" id="improve-grammar" value="grammar">
+                        <label class="btn btn-outline-primary" for="improve-grammar">Grammar</label>
+                        
+                        <input type="radio" class="btn-check" name="improvementType" id="improve-seo" value="seo">
+                        <label class="btn btn-outline-primary" for="improve-seo">SEO</label>
+                        
+                        <input type="radio" class="btn-check" name="improvementType" id="improve-engagement" value="engagement">
+                        <label class="btn btn-outline-primary" for="improve-engagement">Engagement</label>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" id="improveContent">Improve Content</button>
+                
+                <div class="loading" id="improveLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Improving content...</p>
+                </div>
+                
+                <div class="improve-result mt-4">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Improved Content</h5>
+                            <button class="btn btn-sm btn-outline-secondary" id="copyImproved">Copy</button>
+                        </div>
+                        <div class="card-body">
+                            <div id="improvedResult"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="features">
+        <div class="feature-card">
+            <h3>Features</h3>
+            <ul>
+                <li>AI-powered conversation with context memory</li>
+                <li>Blog post outline generation</li>
+                <li>Content improvement suggestions</li>
+                <li>Grammar and spelling correction</li>
+                <li>SEO optimization assistance</li>
+            </ul>
+        </div>
+        
+        <div class="feature-card">
+            <h3>Examples</h3>
+            <p><strong>Try asking:</strong></p>
+            <ul>
+                <li>"How do I create engaging blog introductions?"</li>
+                <li>"What are some SEO best practices for blog posts?"</li>
+                <li>"Help me brainstorm topics for a marketing blog"</li>
+                <li>"What's the ideal blog post length?"</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Get CSRF token from cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    const csrftoken = getCookie('csrftoken');
+    
+    // Chat functionality
+    let currentConversationId = null;
+    
+    document.getElementById('sendMessage').addEventListener('click', async () => {
+        const userInput = document.getElementById('userInput');
+        const message = userInput.value.trim();
+        
+        if (!message) return;
+        
+        // Add user message to chat
+        addMessageToChat('user', message);
+        userInput.value = '';
+        
+        // Show loading
+        document.getElementById('chatLoading').style.display = 'block';
+        
+        try {
+            const response = await fetch('/chat/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    message: message,
+                    conversation_id: currentConversationId
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                currentConversationId = data.conversation_id;
+                addMessageToChat('bot', data.response);
+                document.getElementById('processingTime').textContent = 
+                    `Processing time: ${data.processing_time.toFixed(2)}s`;
+            } else {
+                throw new Error(data.error || 'Failed to get response');
+            }
+        } catch (error) {
+            addMessageToChat('bot', `Error: ${error.message}`);
+        } finally {
+            document.getElementById('chatLoading').style.display = 'none';
+        }
+    });
+    
+    // Clear chat
+    document.getElementById('clearChat').addEventListener('click', async () => {
+        if (!currentConversationId) return;
+        
+        try {
+            const response = await fetch('/chat/clear/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    conversation_id: currentConversationId
+                })
+            });
+            
+            if (response.ok) {
+                document.getElementById('chatMessages').innerHTML = '';
+                currentConversationId = null;
+                document.getElementById('processingTime').textContent = '';
+            }
+        } catch (error) {
+            console.error('Failed to clear chat:', error);
+        }
+    });
+    
+    // Generate outline
+    document.getElementById('generateOutline').addEventListener('click', async () => {
+        const title = document.getElementById('blogTitle').value.trim();
+        const keywords = document.getElementById('blogKeywords').value.trim();
+        
+        if (!title) {
+            alert('Please enter a blog title');
+            return;
+        }
+        
+        document.getElementById('outlineLoading').style.display = 'block';
+        
+        try {
+            const response = await fetch('/chat/outline/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    title: title,
+                    keywords: keywords ? keywords.split(',').map(k => k.trim()) : []
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                document.getElementById('outlineResult').innerHTML = data.outline;
+            } else {
+                throw new Error(data.error || 'Failed to generate outline');
+            }
+        } catch (error) {
+            document.getElementById('outlineResult').innerHTML = `Error: ${error.message}`;
+        } finally {
+            document.getElementById('outlineLoading').style.display = 'none';
+        }
+    });
+    
+    // Improve content
+    document.getElementById('improveContent').addEventListener('click', async () => {
+        const content = document.getElementById('contentToImprove').value.trim();
+        const improvementType = document.querySelector('input[name="improvementType"]:checked').value;
+        
+        if (!content) {
+            alert('Please enter content to improve');
+            return;
+        }
+        
+        document.getElementById('improveLoading').style.display = 'block';
+        
+        try {
+            const response = await fetch('/chat/improve/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    content: content,
+                    improvement_type: improvementType
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                document.getElementById('improvedResult').innerHTML = data.improved_content;
+            } else {
+                throw new Error(data.error || 'Failed to improve content');
+            }
+        } catch (error) {
+            document.getElementById('improvedResult').innerHTML = `Error: ${error.message}`;
+        } finally {
+            document.getElementById('improveLoading').style.display = 'none';
+        }
+    });
+    
+    // Helper function to add messages to chat
+    function addMessageToChat(role, content) {
+        const chatMessages = document.getElementById('chatMessages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${role}-message`;
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.textContent = content;
+        
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'message-time';
+        timeDiv.textContent = new Date().toLocaleTimeString();
+        
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(timeDiv);
+        chatMessages.appendChild(messageDiv);
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Copy buttons
+    document.getElementById('copyOutline').addEventListener('click', () => {
+        copyToClipboard('outlineResult');
+    });
+    
+    document.getElementById('copyImproved').addEventListener('click', () => {
+        copyToClipboard('improvedResult');
+    });
+    
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        const text = element.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+        });
+    }
+</script>
+
+</body>
+</html>

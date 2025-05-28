@@ -1,0 +1,255 @@
+<!-- Standardized Header for Blog Templates -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+
+    <title>{{ title }} | Blogify</title>
+
+    <meta name="description" content="{{ meta_description }}">
+
+    
+    <!-- Open Graph / Facebook -->
+
+    <meta property="og:type" content="article">
+
+    <meta property="og:url" content="{{ page_url }}">
+
+    <meta property="og:title" content="{{ title }}">
+
+    <meta property="og:description" content="{{ meta_description }}">
+
+    <meta property="og:image" content="{{ featured_image }}">
+
+    
+    <!-- Twitter -->
+
+    <meta property="twitter:card" content="summary_large_image">
+
+    <meta property="twitter:url" content="{{ page_url }}">
+
+    <meta property="twitter:title" content="{{ title }}">
+
+    <meta property="twitter:description" content="{{ meta_description }}">
+
+    <meta property="twitter:image" content="{{ featured_image }}">
+
+    
+    <!-- Structured Data - Article Schema -->
+
+    <script type="application/ld+json">
+
+    {
+
+      "@context": "https://schema.org",
+
+      "@type": "{{ schema_type|default:'Article' }}",
+
+      "headline": "{{ title }}",
+
+      "image": "{{ featured_image }}",
+
+      "author": {
+
+        "@type": "Person",
+
+        "name": "Blogify AI"
+
+      },
+
+      "publisher": {
+
+        "@type": "Organization",
+
+        "name": "Blogify",
+
+        "logo": {
+
+          "@type": "ImageObject",
+
+          "url": "/static/images/logo.png"
+
+        }
+
+      },
+
+      "datePublished": "{{ published_date }}",
+
+      "dateModified": "{{ modified_date }}"
+
+    }
+
+    </script>
+
+    
+    <!-- Tailwind CSS -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            theme: {
+
+                extend: {
+
+                    colors: {
+
+                        primary: {
+
+                            50: '#f0f9ff',
+
+                            100: '#e0f2fe',
+
+                            200: '#bae6fd',
+
+                            300: '#7dd3fc',
+
+                            400: '#38bdf8',
+
+                            500: '#0ea5e9',
+
+                            600: '#0284c7',
+
+                            700: '#0369a1',
+
+                            800: '#075985',
+
+                            900: '#0c4a6e',
+
+                        },
+
+                    },
+
+                },
+
+            },
+
+        }
+
+    </script>
+
+    
+    <!-- Google AdSense -->
+
+    {% if not debug %}
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOURPUBID" crossorigin="anonymous"></script>
+
+    {% endif %}
+
+    
+    <!-- Google Analytics -->
+
+    {% if not debug %}
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOURGAID"></script>
+
+    <script>
+
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag(){dataLayer.push(arguments);}
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-YOURGAID');
+
+    </script>
+
+    {% endif %}
+
+    
+    {% block extra_head %}{% endblock %}
+
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+    <!-- Header -->
+
+    <header class="bg-white shadow-sm">
+
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+
+            <a href="{% url 'index' %}" class="text-2xl font-bold text-primary-600">Blogify</a>
+
+            
+
+            <nav class="hidden md:flex space-x-6">
+
+                <a href="{% url 'index' %}" class="text-gray-600 hover:text-primary-600 transition">Home</a>
+
+                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Categories</a>
+
+                <a href="#" class="text-gray-600 hover:text-primary-600 transition">About</a>
+
+                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Contact</a>
+
+            </nav>
+
+            
+
+            <div class="flex items-center">
+
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-primary-600 transition">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        
+        <!-- Mobile Menu -->
+
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
+
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+
+                <a href="{% url 'index' %}" class="text-gray-600 hover:text-primary-600 transition">Home</a>
+
+                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Categories</a>
+
+                <a href="#" class="text-gray-600 hover:text-primary-600 transition">About</a>
+
+                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Contact</a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    
+    <!-- Header Ad Placement -->
+
+    {% if header_ads %}
+
+    <div class="w-full bg-gray-100 py-3 text-center">
+
+        {% for ad in header_ads %}
+
+        <div class="ad-container">{{ ad.ad_code|safe }}</div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %} 

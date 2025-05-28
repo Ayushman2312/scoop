@@ -1,0 +1,10 @@
+[
+  {
+    "query": "What is a blog?",
+    "expected": "A blog is"
+  },
+  {
+    "query": "How do I increase my blog traffic?",
+    "expected": "traffic"
+  }
+]

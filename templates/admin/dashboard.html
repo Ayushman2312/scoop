@@ -1,0 +1,145 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>Blog Administration Dashboard</h1>
+    
+    <div class="module">
+        <h2>Quick Actions</h2>
+        <div class="dashboard-actions">
+            <a href="{% url 'create_blog_api' %}" class="button">Create New Blog Post</a>
+            <a href="{% url 'view_process_logs' %}" class="button">View Process Logs</a>
+        </div>
+    </div>
+    
+    <div class="module">
+        <h2>Blog Statistics</h2>
+        <table>
+            <tr>
+                <td>Total Posts:</td>
+                <td>{{ stats.total_posts }}</td>
+            </tr>
+            <tr>
+                <td>Published Posts:</td>
+                <td>{{ stats.published_posts }}</td>
+            </tr>
+            <tr>
+                <td>Draft Posts:</td>
+                <td>{{ stats.draft_posts }}</td>
+            </tr>
+            <tr>
+                <td>Scheduled Posts:</td>
+                <td>{{ stats.scheduled_posts }}</td>
+            </tr>
+            <tr>
+                <td>Total Views:</td>
+                <td>{{ stats.total_views }}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="module">
+        <h2>Recent Posts</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Views</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in recent_posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.status }}</td>
+                    <td>{{ post.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ post.view_count }}</td>
+                    <td>
+                        <a href="/blog/{{ post.slug }}/" target="_blank">View</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No posts found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="module">
+        <h2>Trending Posts</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Views</th>
+                    <th>Avg. Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in trending_posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.view_count }}</td>
+                    <td>{{ post.avg_time_on_page|default:"N/A" }}</td>
+                    <td>
+                        <a href="/blog/{{ post.slug }}/" target="_blank">View</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No trending posts found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .dashboard-actions {
+        margin: 15px 0;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .button {
+        display: inline-block;
+        padding: 8px 15px;
+        background: #417690;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    
+    .module {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    table th, table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    table th {
+        background-color: #f5f5f5;
+    }
+</style>
+{% endblock %} 

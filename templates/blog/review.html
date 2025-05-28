@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | Blogify{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Article header -->
+    <div class="mb-8 text-center">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ post.title }}</h1>
+        <div class="flex justify-center items-center text-gray-600 text-sm">
+            <span>{{ post.published_at|date:"F d, Y" }}</span>
+            <span class="mx-2">•</span>
+            <span>{{ post.reading_time }} min read</span>
+        </div>
+    </div>
+    
+    <!-- Review summary box -->
+    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Review Summary</h2>
+        <!-- Simple pros and cons -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-3">Pros</h3>
+                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                    <li>Comprehensive analysis</li>
+                    <li>In-depth research</li>
+                    <li>Practical insights</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-3">Cons</h3>
+                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                    <li>Subject to market changes</li>
+                    <li>Individual results may vary</li>
+                    <li>Requires further research</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Article content -->
+    <article class="prose prose-lg max-w-none">
+        {{ post.content|safe }}
+    </article>
+    
+    <!-- Related articles -->
+    {% if related_posts %}
+    <div class="mt-12 pt-8 border-t border-gray-200">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Related Reviews</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for related in related_posts %}
+            <div class="bg-white rounded-lg shadow-sm p-5 hover:shadow-md transition duration-300">
+                <h4 class="text-lg font-semibold text-gray-800 mb-2">
+                    <a href="{% url 'blog_detail' related.slug %}" class="hover:text-primary-600 transition">{{ related.title }}</a>
+                </h4>
+                <p class="text-gray-600 text-sm mb-3">{{ related.meta_description|truncatechars:100 }}</p>
+                <div class="flex justify-between items-center">
+                    <a href="{% url 'blog_detail' related.slug %}" class="text-primary-600 hover:text-primary-700 text-sm font-medium transition">Read review</a>
+                    <span class="text-xs text-gray-500">{{ related.reading_time }} min read</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

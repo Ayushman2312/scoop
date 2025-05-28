@@ -1,0 +1,969 @@
+{"time": "2025-05-27 01:43:45,366", "level": "INFO", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748290425",
+  "timestamp": "2025-05-27T01:43:45.366165"
+}"}
+{"time": "2025-05-27 01:43:45,367", "level": "INFO", "message": "Starting blog automation pipeline"}
+{"time": "2025-05-27 01:43:45,368", "level": "INFO", "message": "STEP 1: FETCH_TRENDING_TOPICS - Checking for recent trending topics"}
+{"time": "2025-05-27 01:43:45,376", "level": "INFO", "message": "No recent trending topics found, fetching new ones"}
+{"time": "2025-05-27 01:43:45,439", "level": "INFO", "message": "Fetching task started
+Data: {
+  "task_id": "d4e07888-6f0b-420b-9453-bd09fd67fb0f"
+}"}
+{"time": "2025-05-27 01:43:50,443", "level": "INFO", "message": "Topics refresh complete
+Data: {
+  "topics_count": 0
+}"}
+{"time": "2025-05-27 01:43:50,445", "level": "ERROR", "message": "STEP 1: FETCH_TRENDING_TOPICS - FAILED
+Data: {
+  "error": "Still no trending topics available after fetching"
+}"}
+{"time": "2025-05-27 01:43:50,446", "level": "INFO", "message": "PROCESS FAILED
+Data: {
+  "reason": "Still no trending topics available after fetching"
+}"}
+{"time": "2025-05-28 01:12:34,257", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748374954",
+  "timestamp": "2025-05-28T01:12:34.257476"
+}"}
+{"time": "2025-05-28 01:12:34,259", "level": "INFO", "name": "blog_automation", "message": "[1748374954] Starting blog automation pipeline"}
+{"time": "2025-05-28 01:12:34,259", "level": "INFO", "name": "blog.process", "message": "Starting blog automation pipeline"}
+{"time": "2025-05-28 01:12:34,263", "level": "INFO", "name": "blog_automation", "message": "[1748374954] Starting step: Checking for recent trending topics"}
+{"time": "2025-05-28 01:12:34,264", "level": "INFO", "name": "blog.process", "message": "Starting step: Checking for recent trending topics
+Data: {
+  "step_id": "FETCH_TRENDING_TOPICS",
+  "step_name": "Checking for recent trending topics"
+}}"}
+{"time": "2025-05-28 01:12:34,275", "level": "INFO", "name": "blog_automation", "message": "[1748374954] No recent trending topics found, fetching new ones"}
+{"time": "2025-05-28 01:12:34,275", "level": "INFO", "name": "blog.process", "message": "No recent trending topics found, fetching new ones"}
+{"time": "2025-05-28 01:12:34,335", "level": "INFO", "name": "blog_automation", "message": "[1748374954] Fetching task started"}
+{"time": "2025-05-28 01:12:34,336", "level": "INFO", "name": "blog.process", "message": "Fetching task started
+Data: {
+  "task_id": "63a0a786-7759-455d-8013-2ab6b4edb932"
+}}"}
+{"time": "2025-05-28 01:12:39,342", "level": "INFO", "name": "blog_automation", "message": "[1748374954] Topics refresh complete"}
+{"time": "2025-05-28 01:12:39,343", "level": "INFO", "name": "blog.process", "message": "Topics refresh complete
+Data: {
+  "topics_count": 0
+}}"}
+{"time": "2025-05-28 01:12:39,346", "level": "ERROR", "name": "blog_automation", "message": "[1748374954] Failed step: FETCH_TRENDING_TOPICS - Still no trending topics available after fetching"}
+{"time": "2025-05-28 01:12:39,347", "level": "ERROR", "name": "blog.process", "message": "Failed step: FETCH_TRENDING_TOPICS - Still no trending topics available after fetching
+Data: {
+  "step_id": "FETCH_TRENDING_TOPICS",
+  "step_name": "FETCH_TRENDING_TOPICS",
+  "duration": 5.082981586456299,
+  "error": "Still no trending topics available after fetching"
+}}"}
+{"time": "2025-05-28 01:12:39,351", "level": "ERROR", "name": "blog_automation", "message": "[1748374954] Process 1748374954 FAILED in 5.09s"}
+{"time": "2025-05-28 01:12:39,352", "level": "ERROR", "name": "blog.process", "message": "Process 1748374954 FAILED in 5.09s
+Data: {
+  "reason": "Still no trending topics available after fetching"
+}}"}
+{"time": "2025-05-28 01:16:39,957", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748375199",
+  "timestamp": "2025-05-28T01:16:39.957279"
+}"}
+{"time": "2025-05-28 01:16:39,961", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Starting blog automation pipeline"}
+{"time": "2025-05-28 01:16:39,962", "level": "INFO", "name": "blog.process", "message": "Starting blog automation pipeline"}
+{"time": "2025-05-28 01:16:39,965", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Starting step: Checking for recent trending topics"}
+{"time": "2025-05-28 01:16:39,966", "level": "INFO", "name": "blog.process", "message": "Starting step: Checking for recent trending topics
+Data: {
+  "step_id": "FETCH_TRENDING_TOPICS",
+  "step_name": "Checking for recent trending topics"
+}}"}
+{"time": "2025-05-28 01:16:39,990", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Completed step: FETCH_TRENDING_TOPICS in 0.02s"}
+{"time": "2025-05-28 01:16:39,991", "level": "INFO", "name": "blog.process", "message": "Completed step: FETCH_TRENDING_TOPICS in 0.02s
+Data: {
+  "step_id": "FETCH_TRENDING_TOPICS",
+  "step_name": "FETCH_TRENDING_TOPICS",
+  "duration": 0.0248563289642334,
+  "data": {"topics_count": 1, "topics": [{"id": 6, "keyword": "artificial intelligence trends"}]}
+}}"}
+{"time": "2025-05-28 01:16:39,995", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Starting step: Selecting best topic using Gemini AI"}
+{"time": "2025-05-28 01:16:39,996", "level": "INFO", "name": "blog.process", "message": "Starting step: Selecting best topic using Gemini AI
+Data: {
+  "step_id": "SELECT_TOPIC",
+  "step_name": "Selecting best topic using Gemini AI"
+}}"}
+{"time": "2025-05-28 01:16:40,007", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Asking Gemini to select best trending topic"}
+{"time": "2025-05-28 01:16:40,007", "level": "INFO", "name": "blog.process", "message": "Asking Gemini to select best trending topic"}
+{"time": "2025-05-28 01:16:45,920", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Received response from Gemini: ```json
+{
+  "selected_topic_number": 1,
+  "reason": "Artificial intelligence trends offer a broad ye..."}
+{"time": "2025-05-28 01:16:45,921", "level": "INFO", "name": "blog.process", "message": "Received response from Gemini: ```json
+{
+  "selected_topic_number": 1,
+  "reason": "Artificial intelligence trends offer a broad ye..."}
+{"time": "2025-05-28 01:16:45,925", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Selected topic: artificial intelligence trends"}
+{"time": "2025-05-28 01:16:45,926", "level": "INFO", "name": "blog.process", "message": "Selected topic: artificial intelligence trends"}
+{"time": "2025-05-28 01:16:45,932", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Asking Gemini to select best template"}
+{"time": "2025-05-28 01:16:45,933", "level": "INFO", "name": "blog.process", "message": "Asking Gemini to select best template"}
+{"time": "2025-05-28 01:16:47,687", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Received template response from Gemini: ```json
+{
+  "template_id": null,
+  "template_key": null,
+  "template_name": null,
+  "reason": "No TE..."}
+{"time": "2025-05-28 01:16:47,688", "level": "INFO", "name": "blog.process", "message": "Received template response from Gemini: ```json
+{
+  "template_id": null,
+  "template_key": null,
+  "template_name": null,
+  "reason": "No TE..."}
+{"time": "2025-05-28 01:16:47,690", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Selected template: None (how_to)"}
+{"time": "2025-05-28 01:16:47,691", "level": "INFO", "name": "blog.process", "message": "Selected template: None (how_to)"}
+{"time": "2025-05-28 01:16:47,694", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Completed step: SELECT_TOPIC in 7.70s"}
+{"time": "2025-05-28 01:16:47,695", "level": "INFO", "name": "blog.process", "message": "Completed step: SELECT_TOPIC in 7.70s
+Data: {
+  "step_id": "SELECT_TOPIC",
+  "step_name": "SELECT_TOPIC",
+  "duration": 7.699415922164917,
+  "data": {"selected_topic": "artificial intelligence trends", "template_type": "how_to"}
+}}"}
+{"time": "2025-05-28 01:16:47,698", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Starting step: Generating blog content with Gemini AI"}
+{"time": "2025-05-28 01:16:47,699", "level": "INFO", "name": "blog.process", "message": "Starting step: Generating blog content with Gemini AI
+Data: {
+  "step_id": "GENERATE_CONTENT",
+  "step_name": "Generating blog content with Gemini AI"
+}}"}
+{"time": "2025-05-28 01:16:47,702", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Generating content for topic: artificial intelligence trends using template: how_to"}
+{"time": "2025-05-28 01:16:47,703", "level": "INFO", "name": "blog.process", "message": "Generating content for topic: artificial intelligence trends using template: how_to"}
+{"time": "2025-05-28 01:16:47,719", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Requesting content generation from Gemini"}
+{"time": "2025-05-28 01:16:47,720", "level": "INFO", "name": "blog.process", "message": "Requesting content generation from Gemini"}
+{"time": "2025-05-28 01:17:14,513", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Received 8210 characters of content from Gemini"}
+{"time": "2025-05-28 01:17:14,516", "level": "INFO", "name": "blog.process", "message": "Received 8210 characters of content from Gemini"}
+{"time": "2025-05-28 01:17:14,521", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Generated content with 6 sections and 5 FAQs"}
+{"time": "2025-05-28 01:17:14,521", "level": "INFO", "name": "blog.process", "message": "Generated content with 6 sections and 5 FAQs"}
+{"time": "2025-05-28 01:17:14,524", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Completed step: GENERATE_CONTENT in 26.83s"}
+{"time": "2025-05-28 01:17:14,525", "level": "INFO", "name": "blog.process", "message": "Completed step: GENERATE_CONTENT in 26.83s
+Data: {
+  "step_id": "GENERATE_CONTENT",
+  "step_name": "GENERATE_CONTENT",
+  "duration": 26.825719594955444,
+  "data": {"content_length": 7464, "sections_count": 6}
+}}"}
+{"time": "2025-05-28 01:17:14,527", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Starting step: Creating and publishing blog post"}
+{"time": "2025-05-28 01:17:14,528", "level": "INFO", "name": "blog.process", "message": "Starting step: Creating and publishing blog post
+Data: {
+  "step_id": "CREATE_BLOG_POST",
+  "step_name": "Creating and publishing blog post"
+}}"}
+{"time": "2025-05-28 01:17:14,531", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Creating blog post for topic: artificial intelligence trends"}
+{"time": "2025-05-28 01:17:14,532", "level": "INFO", "name": "blog.process", "message": "Creating blog post for topic: artificial intelligence trends"}
+{"time": "2025-05-28 01:17:14,534", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Converting JSON content to HTML"}
+{"time": "2025-05-28 01:17:14,534", "level": "INFO", "name": "blog.process", "message": "Converting JSON content to HTML"}
+{"time": "2025-05-28 01:17:14,540", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Creating blog post entry in database"}
+{"time": "2025-05-28 01:17:14,541", "level": "INFO", "name": "blog.process", "message": "Creating blog post entry in database"}
+{"time": "2025-05-28 01:17:14,568", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Successfully created blog post: How to Navigate the Top Artificial Intelligence Trends in 2024"}
+{"time": "2025-05-28 01:17:14,570", "level": "INFO", "name": "blog.process", "message": "Successfully created blog post: How to Navigate the Top Artificial Intelligence Trends in 2024
+Data: {
+  "blog_id": "2ed4dada-5cec-4392-8561-39ffd1d3c918",
+  "title": "How to Navigate the Top Artificial Intelligence Trends in 2024",
+  "template_type": "how_to",
+  "content_length": 6403,
+  "slug": "how-to-navigate-the-top-artificial-intelligence-trends-in-2024"
+}}"}
+{"time": "2025-05-28 01:17:14,572", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Content statistics: 6 sections, 5 FAQs"}
+{"time": "2025-05-28 01:17:14,573", "level": "INFO", "name": "blog.process", "message": "Content statistics: 6 sections, 5 FAQs"}
+{"time": "2025-05-28 01:17:14,587", "level": "INFO", "name": "blog_automation", "message": "[1748375199] Completed step: CREATE_BLOG_POST in 0.06s"}
+{"time": "2025-05-28 01:17:14,588", "level": "INFO", "name": "blog.process", "message": "Completed step: CREATE_BLOG_POST in 0.06s
+Data: {
+  "step_id": "CREATE_BLOG_POST",
+  "step_name": "CREATE_BLOG_POST",
+  "duration": 0.059858083724975586,
+  "data": {"blog_id": "2ed4dada-5cec-4392-8561-39ffd1d3c918", "blog_title": "How to Navigate the Top Artificial Intelligence Trends in 2024", "blog_status": "published", "blog_url": "how-to-navigate-the-top-artificial-intelligence-trends-in-2024"}
+}}"}
+{"time": "2025-05-28 01:17:14,591", "level": "INFO", "name": "blog_automation", "message": "[1748375199] SUCCESS: Successfully created and published blog post: How to Navigate the Top Artificial Intelligence Trends in 2024"}
+{"time": "2025-05-28 01:17:14,593", "level": "INFO", "name": "blog_automation", "message": "[1748375199] SUCCESS: Process 1748375199 COMPLETED in 34.64s"}
+{"time": "2025-05-28 01:22:21,850", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748375541",
+  "timestamp": "2025-05-28T01:22:21.850652"
+}"}
+{"time": "2025-05-28 01:22:21,862", "level": "INFO", "name": "blog_automation", "message": "[1748375541] Starting trending topics fetch"}
+{"time": "2025-05-28 01:22:21,863", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:22:21,867", "level": "INFO", "name": "blog_automation", "message": "[1748375541] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:22:21,868", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:22:21,873", "level": "INFO", "name": "blog_automation", "message": "[1748375541] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:22:21,874", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.0059621334075927734,
+  "data": {"region": "in", "category": "all"}
+}}"}
+{"time": "2025-05-28 01:22:21,883", "level": "INFO", "name": "blog_automation", "message": "[1748375541] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:22:21,885", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:22:23,057", "level": "INFO", "name": "blog_automation", "message": "[1748375541] Completed step: EXECUTE_SERPAPI in 1.17s"}
+{"time": "2025-05-28 01:22:23,059", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 1.17s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 1.1733975410461426,
+  "data": {"searches_count": 0}
+}}"}
+{"time": "2025-05-28 01:22:23,067", "level": "INFO", "name": "blog_automation", "message": "[1748375541] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:22:23,068", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:22:23,073", "level": "INFO", "name": "blog_automation", "message": "[1748375541] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:22:23,074", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.005693197250366211,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:22:23,080", "level": "INFO", "name": "blog_automation", "message": "[1748375541] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:22:23,085", "level": "INFO", "name": "blog_automation", "message": "[1748375541] SUCCESS: Process 1748375541 COMPLETED in 1.24s"}
+{"time": "2025-05-28 01:23:48,614", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748375628",
+  "timestamp": "2025-05-28T01:23:48.614680"
+}"}
+{"time": "2025-05-28 01:23:48,618", "level": "INFO", "name": "blog_automation", "message": "[1748375628] Starting trending topics fetch"}
+{"time": "2025-05-28 01:23:48,620", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:23:48,623", "level": "INFO", "name": "blog_automation", "message": "[1748375628] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:23:48,624", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:23:48,633", "level": "INFO", "name": "blog_automation", "message": "[1748375628] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:23:48,634", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.009384870529174805,
+  "data": {"region": "in", "category": "all"}
+}}"}
+{"time": "2025-05-28 01:23:48,646", "level": "INFO", "name": "blog_automation", "message": "[1748375628] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:23:48,647", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:23:49,478", "level": "INFO", "name": "blog_automation", "message": "[1748375628] Completed step: EXECUTE_SERPAPI in 0.83s"}
+{"time": "2025-05-28 01:23:49,480", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.83s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.8314015865325928,
+  "data": {"searches_count": 0}
+}}"}
+{"time": "2025-05-28 01:23:49,485", "level": "INFO", "name": "blog_automation", "message": "[1748375628] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:23:49,486", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:23:49,492", "level": "INFO", "name": "blog_automation", "message": "[1748375628] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:23:49,496", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.006494998931884766,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:23:49,501", "level": "INFO", "name": "blog_automation", "message": "[1748375628] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:23:49,504", "level": "INFO", "name": "blog_automation", "message": "[1748375628] SUCCESS: Process 1748375628 COMPLETED in 0.89s"}
+{"time": "2025-05-28 01:26:18,703", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748375778",
+  "timestamp": "2025-05-28T01:26:18.703557"
+}"}
+{"time": "2025-05-28 01:26:18,707", "level": "INFO", "name": "blog_automation", "message": "[1748375778] Starting trending topics fetch"}
+{"time": "2025-05-28 01:26:18,708", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:26:18,713", "level": "INFO", "name": "blog_automation", "message": "[1748375778] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:26:18,716", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:26:18,721", "level": "INFO", "name": "blog_automation", "message": "[1748375778] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:26:18,722", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.0076847076416015625,
+  "data": {"region": "in", "category": "all"}
+}}"}
+{"time": "2025-05-28 01:26:18,729", "level": "INFO", "name": "blog_automation", "message": "[1748375778] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:26:18,732", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:26:19,708", "level": "INFO", "name": "blog_automation", "message": "[1748375778] Completed step: EXECUTE_SERPAPI in 0.98s"}
+{"time": "2025-05-28 01:26:19,710", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.98s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.9792397022247314,
+  "data": {"searches_count": 0}
+}}"}
+{"time": "2025-05-28 01:26:19,717", "level": "INFO", "name": "blog_automation", "message": "[1748375778] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:26:19,718", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:26:19,723", "level": "INFO", "name": "blog_automation", "message": "[1748375778] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:26:19,725", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.0066356658935546875,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:26:19,734", "level": "INFO", "name": "blog_automation", "message": "[1748375778] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:26:19,737", "level": "INFO", "name": "blog_automation", "message": "[1748375778] SUCCESS: Process 1748375778 COMPLETED in 1.03s"}
+{"time": "2025-05-28 01:28:21,384", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748375901",
+  "timestamp": "2025-05-28T01:28:21.384489"
+}"}
+{"time": "2025-05-28 01:28:21,392", "level": "INFO", "name": "blog_automation", "message": "[1748375901] Starting trending topics fetch"}
+{"time": "2025-05-28 01:28:21,393", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:28:21,405", "level": "INFO", "name": "blog_automation", "message": "[1748375901] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:28:21,406", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:28:21,412", "level": "INFO", "name": "blog_automation", "message": "[1748375901] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:28:21,414", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.007306337356567383,
+  "data": {"region": "in", "category": "all"}
+}}"}
+{"time": "2025-05-28 01:28:21,420", "level": "INFO", "name": "blog_automation", "message": "[1748375901] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:28:21,422", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:28:22,392", "level": "INFO", "name": "blog_automation", "message": "[1748375901] Completed step: EXECUTE_SERPAPI in 0.97s"}
+{"time": "2025-05-28 01:28:22,394", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.97s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.9718053340911865,
+  "data": {"searches_count": 0}
+}}"}
+{"time": "2025-05-28 01:28:22,403", "level": "INFO", "name": "blog_automation", "message": "[1748375901] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:28:22,405", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:28:22,410", "level": "INFO", "name": "blog_automation", "message": "[1748375901] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:28:22,411", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.006321907043457031,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:28:22,423", "level": "INFO", "name": "blog_automation", "message": "[1748375901] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:28:22,425", "level": "INFO", "name": "blog_automation", "message": "[1748375901] SUCCESS: Process 1748375901 COMPLETED in 1.05s"}
+{"time": "2025-05-28 01:29:07,579", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748375947",
+  "timestamp": "2025-05-28T01:29:07.579945"
+}"}
+{"time": "2025-05-28 01:29:07,583", "level": "INFO", "name": "blog_automation", "message": "[1748375947] Starting trending topics fetch"}
+{"time": "2025-05-28 01:29:07,586", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:29:07,590", "level": "INFO", "name": "blog_automation", "message": "[1748375947] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:29:07,591", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:29:07,596", "level": "INFO", "name": "blog_automation", "message": "[1748375947] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:29:07,597", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.005999088287353516,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:29:07,605", "level": "INFO", "name": "blog_automation", "message": "[1748375947] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:29:07,606", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:29:08,261", "level": "INFO", "name": "blog_automation", "message": "[1748375947] Completed step: EXECUTE_SERPAPI in 0.66s"}
+{"time": "2025-05-28 01:29:08,264", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.66s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.6566741466522217,
+  "data": {"stories_count": 0}
+}}"}
+{"time": "2025-05-28 01:29:08,271", "level": "INFO", "name": "blog_automation", "message": "[1748375947] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:29:08,273", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:29:08,279", "level": "INFO", "name": "blog_automation", "message": "[1748375947] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:29:08,280", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.008245468139648438,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:29:08,287", "level": "INFO", "name": "blog_automation", "message": "[1748375947] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:29:08,290", "level": "INFO", "name": "blog_automation", "message": "[1748375947] SUCCESS: Process 1748375947 COMPLETED in 0.71s"}
+{"time": "2025-05-28 01:29:39,491", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748375979",
+  "timestamp": "2025-05-28T01:29:39.491431"
+}"}
+{"time": "2025-05-28 01:29:39,500", "level": "INFO", "name": "blog_automation", "message": "[1748375979] Starting trending topics fetch"}
+{"time": "2025-05-28 01:29:39,501", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:29:39,506", "level": "INFO", "name": "blog_automation", "message": "[1748375979] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:29:39,507", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:29:39,513", "level": "INFO", "name": "blog_automation", "message": "[1748375979] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:29:39,515", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.007021665573120117,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:29:39,521", "level": "INFO", "name": "blog_automation", "message": "[1748375979] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:29:39,522", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:29:40,345", "level": "INFO", "name": "blog_automation", "message": "[1748375979] Completed step: EXECUTE_SERPAPI in 0.82s"}
+{"time": "2025-05-28 01:29:40,347", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.82s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.824331521987915,
+  "data": {"stories_count": 0}
+}}"}
+{"time": "2025-05-28 01:29:40,353", "level": "INFO", "name": "blog_automation", "message": "[1748375979] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:29:40,354", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:29:40,360", "level": "INFO", "name": "blog_automation", "message": "[1748375979] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:29:40,361", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.006623029708862305,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:29:40,367", "level": "INFO", "name": "blog_automation", "message": "[1748375979] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:29:40,369", "level": "INFO", "name": "blog_automation", "message": "[1748375979] SUCCESS: Process 1748375979 COMPLETED in 0.88s"}
+{"time": "2025-05-28 01:30:19,035", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376019",
+  "timestamp": "2025-05-28T01:30:19.035428"
+}"}
+{"time": "2025-05-28 01:30:19,039", "level": "INFO", "name": "blog_automation", "message": "[1748376019] Starting trending topics fetch"}
+{"time": "2025-05-28 01:30:19,041", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:30:19,045", "level": "INFO", "name": "blog_automation", "message": "[1748376019] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:30:19,046", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:30:19,052", "level": "INFO", "name": "blog_automation", "message": "[1748376019] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:30:19,055", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.006561279296875,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:30:19,061", "level": "INFO", "name": "blog_automation", "message": "[1748376019] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:30:19,062", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:30:19,604", "level": "INFO", "name": "blog_automation", "message": "[1748376019] Completed step: EXECUTE_SERPAPI in 0.54s"}
+{"time": "2025-05-28 01:30:19,606", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.54s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.5429155826568604,
+  "data": {"stories_count": 0}
+}}"}
+{"time": "2025-05-28 01:30:19,612", "level": "INFO", "name": "blog_automation", "message": "[1748376019] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:30:19,613", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:30:19,618", "level": "INFO", "name": "blog_automation", "message": "[1748376019] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:30:19,620", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.006371021270751953,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:30:19,627", "level": "INFO", "name": "blog_automation", "message": "[1748376019] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:30:19,630", "level": "INFO", "name": "blog_automation", "message": "[1748376019] SUCCESS: Process 1748376019 COMPLETED in 0.60s"}
+{"time": "2025-05-28 01:31:13,157", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376073",
+  "timestamp": "2025-05-28T01:31:13.157728"
+}"}
+{"time": "2025-05-28 01:31:13,161", "level": "INFO", "name": "blog_automation", "message": "[1748376073] Starting trending topics fetch"}
+{"time": "2025-05-28 01:31:13,162", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:31:13,166", "level": "INFO", "name": "blog_automation", "message": "[1748376073] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:31:13,168", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:31:13,172", "level": "INFO", "name": "blog_automation", "message": "[1748376073] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:31:13,173", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.005650520324707031,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:31:13,184", "level": "INFO", "name": "blog_automation", "message": "[1748376073] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:31:13,186", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:31:14,013", "level": "INFO", "name": "blog_automation", "message": "[1748376073] Completed step: EXECUTE_SERPAPI in 0.83s"}
+{"time": "2025-05-28 01:31:14,015", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.83s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.8284263610839844,
+  "data": {"stories_count": 0}
+}}"}
+{"time": "2025-05-28 01:31:14,020", "level": "INFO", "name": "blog_automation", "message": "[1748376073] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:31:14,021", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:31:14,028", "level": "INFO", "name": "blog_automation", "message": "[1748376073] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:31:14,030", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.008170843124389648,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:31:14,035", "level": "INFO", "name": "blog_automation", "message": "[1748376073] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:31:14,037", "level": "INFO", "name": "blog_automation", "message": "[1748376073] SUCCESS: Process 1748376073 COMPLETED in 0.88s"}
+{"time": "2025-05-28 01:32:42,609", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376162",
+  "timestamp": "2025-05-28T01:32:42.609016"
+}"}
+{"time": "2025-05-28 01:32:42,613", "level": "INFO", "name": "blog_automation", "message": "[1748376162] Starting trending topics fetch"}
+{"time": "2025-05-28 01:32:42,615", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:32:42,620", "level": "INFO", "name": "blog_automation", "message": "[1748376162] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:32:42,624", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:32:42,628", "level": "INFO", "name": "blog_automation", "message": "[1748376162] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:32:42,630", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.008549690246582031,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:32:42,640", "level": "INFO", "name": "blog_automation", "message": "[1748376162] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:32:42,642", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:32:43,616", "level": "INFO", "name": "blog_automation", "message": "[1748376162] Completed step: EXECUTE_SERPAPI in 0.98s"}
+{"time": "2025-05-28 01:32:43,619", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.98s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.9759280681610107,
+  "data": {"stories_count": 0}
+}}"}
+{"time": "2025-05-28 01:32:43,625", "level": "INFO", "name": "blog_automation", "message": "[1748376162] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:32:43,626", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:32:43,630", "level": "INFO", "name": "blog_automation", "message": "[1748376162] Completed step: STORE_TOPICS in 0.01s"}
+{"time": "2025-05-28 01:32:43,632", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.01s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.005387306213378906,
+  "data": {"topics_count": 0, "topics": []}
+}}"}
+{"time": "2025-05-28 01:32:43,638", "level": "INFO", "name": "blog_automation", "message": "[1748376162] SUCCESS: Successfully fetched 0 trending topics"}
+{"time": "2025-05-28 01:32:43,640", "level": "INFO", "name": "blog_automation", "message": "[1748376162] SUCCESS: Process 1748376162 COMPLETED in 1.03s"}
+{"time": "2025-05-28 01:35:59,715", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376359",
+  "timestamp": "2025-05-28T01:35:59.715220"
+}"}
+{"time": "2025-05-28 01:35:59,720", "level": "INFO", "name": "blog_automation", "message": "[1748376359] Starting trending topics fetch"}
+{"time": "2025-05-28 01:35:59,722", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:35:59,726", "level": "INFO", "name": "blog_automation", "message": "[1748376359] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:35:59,729", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:35:59,734", "level": "INFO", "name": "blog_automation", "message": "[1748376359] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 01:35:59,736", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.007701396942138672,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:35:59,742", "level": "INFO", "name": "blog_automation", "message": "[1748376359] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:35:59,743", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:36:01,483", "level": "INFO", "name": "blog_automation", "message": "[1748376359] Completed step: EXECUTE_SERPAPI in 1.74s"}
+{"time": "2025-05-28 01:36:01,485", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 1.74s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 1.7409088611602783,
+  "data": {"stories_count": 235}
+}}"}
+{"time": "2025-05-28 01:36:01,496", "level": "INFO", "name": "blog_automation", "message": "[1748376359] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:36:01,497", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:36:02,827", "level": "INFO", "name": "blog_automation", "message": "[1748376359] Completed step: STORE_TOPICS in 1.33s"}
+{"time": "2025-05-28 01:36:02,830", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 1.33s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 1.331756591796875,
+  "data": {"topics_count": 235, "topics": [{"id": 7, "keyword": "lsg vs rcb", "rank": 1, "traffic": "5000000", "categories": "Sports"}, {"id": 8, "keyword": "matthew breetzke", "rank": 2, "traffic": "500000", "categories": "Sports"}, {"id": 9, "keyword": "rishabh pant", "rank": 3, "traffic": "500000", "categories": "Sports"}, {"id": 10, "keyword": "lsg \u092c\u0928\u093e\u092e rcb", "rank": 4, "traffic": "100000", "categories": "Sports"}, {"id": 11, "keyword": "jac 10th result 2025", "rank": 5, "traffic": "200000", "categories": "Jobs and Education"}]}
+}}"}
+{"time": "2025-05-28 01:36:02,836", "level": "INFO", "name": "blog_automation", "message": "[1748376359] SUCCESS: Successfully fetched 235 trending topics"}
+{"time": "2025-05-28 01:36:02,838", "level": "INFO", "name": "blog_automation", "message": "[1748376359] SUCCESS: Process 1748376359 COMPLETED in 3.12s"}
+{"time": "2025-05-28 01:39:47,845", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376587",
+  "timestamp": "2025-05-28T01:39:47.845198"
+}"}
+{"time": "2025-05-28 01:39:47,846", "level": "INFO", "name": "blog_automation", "message": "[1748376587] Starting trending topics fetch"}
+{"time": "2025-05-28 01:39:47,847", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:39:47,849", "level": "INFO", "name": "blog_automation", "message": "[1748376587] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:39:47,849", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:39:47,851", "level": "INFO", "name": "blog_automation", "message": "[1748376587] Completed step: CONFIGURE_SERPAPI in 0.00s"}
+{"time": "2025-05-28 01:39:47,851", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.00s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.0019996166229248047,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:39:47,853", "level": "INFO", "name": "blog_automation", "message": "[1748376587] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:39:47,853", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:39:48,429", "level": "INFO", "name": "blog_automation", "message": "[1748376587] Completed step: EXECUTE_SERPAPI in 0.58s"}
+{"time": "2025-05-28 01:39:48,430", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.58s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.5763320922851562,
+  "data": {"stories_count": 235}
+}}"}
+{"time": "2025-05-28 01:39:48,433", "level": "INFO", "name": "blog_automation", "message": "[1748376587] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:39:48,434", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:39:49,280", "level": "INFO", "name": "blog_automation", "message": "[1748376587] Completed step: STORE_TOPICS in 0.85s"}
+{"time": "2025-05-28 01:39:49,280", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 0.85s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 0.8465867042541504,
+  "data": {"topics_count": 235, "topics": [{"id": 242, "keyword": "lsg vs rcb", "rank": 1, "traffic": "5000000", "categories": "Sports"}, {"id": 243, "keyword": "matthew breetzke", "rank": 2, "traffic": "500000", "categories": "Sports"}, {"id": 244, "keyword": "rishabh pant", "rank": 3, "traffic": "500000", "categories": "Sports"}, {"id": 245, "keyword": "lsg \u092c\u0928\u093e\u092e rcb", "rank": 4, "traffic": "100000", "categories": "Sports"}, {"id": 246, "keyword": "jac 10th result 2025", "rank": 5, "traffic": "200000", "categories": "Jobs and Education"}]}
+}}"}
+{"time": "2025-05-28 01:39:49,282", "level": "INFO", "name": "blog_automation", "message": "[1748376587] SUCCESS: Successfully fetched 235 trending topics"}
+{"time": "2025-05-28 01:39:49,284", "level": "INFO", "name": "blog_automation", "message": "[1748376587] SUCCESS: Process 1748376587 COMPLETED in 1.44s"}
+{"time": "2025-05-28 01:40:41,385", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376641",
+  "timestamp": "2025-05-28T01:40:41.385568"
+}"}
+{"time": "2025-05-28 01:40:41,387", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Starting blog creation process for: Digital Marketing Trends"}
+{"time": "2025-05-28 01:40:41,387", "level": "INFO", "name": "blog.process", "message": "Starting blog creation process for: Digital Marketing Trends
+Data: {
+  "keyword": "Digital Marketing Trends",
+  "template_type": "how_to",
+  "publish_immediately": true,
+  "related_keywords_count": 3
+}}"}
+{"time": "2025-05-28 01:40:41,390", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Starting step: Creating trending topic entry"}
+{"time": "2025-05-28 01:40:41,391", "level": "INFO", "name": "blog.process", "message": "Starting step: Creating trending topic entry
+Data: {
+  "step_id": "CREATE_TRENDING_TOPIC",
+  "step_name": "Creating trending topic entry"
+}}"}
+{"time": "2025-05-28 01:40:41,406", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Completed step: CREATE_TRENDING_TOPIC in 0.02s"}
+{"time": "2025-05-28 01:40:41,407", "level": "INFO", "name": "blog.process", "message": "Completed step: CREATE_TRENDING_TOPIC in 0.02s
+Data: {
+  "step_id": "CREATE_TRENDING_TOPIC",
+  "step_name": "CREATE_TRENDING_TOPIC",
+  "duration": 0.015566587448120117,
+  "data": {"topic_id": 477, "keyword": "Digital Marketing Trends", "related_keywords_count": 3}
+}}"}
+{"time": "2025-05-28 01:40:41,409", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Starting step: Determining blog template type"}
+{"time": "2025-05-28 01:40:41,410", "level": "INFO", "name": "blog.process", "message": "Starting step: Determining blog template type
+Data: {
+  "step_id": "DETERMINE_TEMPLATE",
+  "step_name": "Determining blog template type"
+}}"}
+{"time": "2025-05-28 01:40:41,413", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Using provided template type: how_to"}
+{"time": "2025-05-28 01:40:41,415", "level": "INFO", "name": "blog.process", "message": "Using provided template type: how_to"}
+{"time": "2025-05-28 01:40:41,423", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Completed step: DETERMINE_TEMPLATE in 0.01s"}
+{"time": "2025-05-28 01:40:41,424", "level": "INFO", "name": "blog.process", "message": "Completed step: DETERMINE_TEMPLATE in 0.01s
+Data: {
+  "step_id": "DETERMINE_TEMPLATE",
+  "step_name": "DETERMINE_TEMPLATE",
+  "duration": 0.013524055480957031,
+  "data": {"template_type": "how_to", "engagement_score": 60}
+}}"}
+{"time": "2025-05-28 01:40:41,426", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Starting step: Generating blog content"}
+{"time": "2025-05-28 01:40:41,427", "level": "INFO", "name": "blog.process", "message": "Starting step: Generating blog content
+Data: {
+  "step_id": "GENERATE_CONTENT",
+  "step_name": "Generating blog content"
+}}"}
+{"time": "2025-05-28 01:40:41,430", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Generated SEO prompt"}
+{"time": "2025-05-28 01:40:41,430", "level": "INFO", "name": "blog.process", "message": "Generated SEO prompt
+Data: {
+  "prompt_length": 3095
+}}"}
+{"time": "2025-05-28 01:40:59,356", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Content generated successfully"}
+{"time": "2025-05-28 01:40:59,356", "level": "INFO", "name": "blog.process", "message": "Content generated successfully
+Data: {
+  "content_length": 5018
+}}"}
+{"time": "2025-05-28 01:40:59,359", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Completed step: GENERATE_CONTENT in 17.93s"}
+{"time": "2025-05-28 01:40:59,360", "level": "INFO", "name": "blog.process", "message": "Completed step: GENERATE_CONTENT in 17.93s
+Data: {
+  "step_id": "GENERATE_CONTENT",
+  "step_name": "GENERATE_CONTENT",
+  "duration": 17.932859897613525,
+  "data": {"title": "Top 7 Digital Marketing Trends to Watch in 2024", "sections_count": 7}
+}}"}
+{"time": "2025-05-28 01:40:59,363", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Starting step: Creating and publishing blog post"}
+{"time": "2025-05-28 01:40:59,364", "level": "INFO", "name": "blog.process", "message": "Starting step: Creating and publishing blog post
+Data: {
+  "step_id": "CREATE_BLOG_POST",
+  "step_name": "Creating and publishing blog post"
+}}"}
+{"time": "2025-05-28 01:40:59,366", "level": "INFO", "name": "blog_automation", "message": "[1748376641] HTML content formatted"}
+{"time": "2025-05-28 01:40:59,367", "level": "INFO", "name": "blog.process", "message": "HTML content formatted
+Data: {
+  "html_length": 3131
+}}"}
+{"time": "2025-05-28 01:40:59,377", "level": "INFO", "name": "blog_automation", "message": "[1748376641] Completed step: CREATE_BLOG_POST in 0.01s"}
+{"time": "2025-05-28 01:40:59,378", "level": "INFO", "name": "blog.process", "message": "Completed step: CREATE_BLOG_POST in 0.01s
+Data: {
+  "step_id": "CREATE_BLOG_POST",
+  "step_name": "CREATE_BLOG_POST",
+  "duration": 0.013966560363769531,
+  "data": {"blog_id": "e5c64481-1f8d-415b-aa50-89545d6e9dca", "blog_title": "Top 7 Digital Marketing Trends to Watch in 2024", "blog_status": "published", "blog_url": "top-7-digital-marketing-trends-to-watch-in-2024"}
+}}"}
+{"time": "2025-05-28 01:40:59,380", "level": "INFO", "name": "blog_automation", "message": "[1748376641] SUCCESS: Successfully published blog post: Top 7 Digital Marketing Trends to Watch in 2024"}
+{"time": "2025-05-28 01:40:59,382", "level": "INFO", "name": "blog_automation", "message": "[1748376641] SUCCESS: Process 1748376641 COMPLETED in 18.00s"}
+{"time": "2025-05-28 01:43:57,496", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376837",
+  "timestamp": "2025-05-28T01:43:57.496055"
+}"}
+{"time": "2025-05-28 01:43:57,496", "level": "INFO", "name": "blog_automation", "message": "[1748376837] Starting trending topics fetch"}
+{"time": "2025-05-28 01:43:57,497", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 01:43:57,499", "level": "INFO", "name": "blog_automation", "message": "[1748376837] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 01:43:57,499", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 01:43:57,501", "level": "INFO", "name": "blog_automation", "message": "[1748376837] Completed step: CONFIGURE_SERPAPI in 0.00s"}
+{"time": "2025-05-28 01:43:57,501", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.00s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.0019042491912841797,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 01:43:57,502", "level": "INFO", "name": "blog_automation", "message": "[1748376837] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 01:43:57,503", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 01:43:57,953", "level": "INFO", "name": "blog_automation", "message": "[1748376837] Completed step: EXECUTE_SERPAPI in 0.45s"}
+{"time": "2025-05-28 01:43:57,953", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.45s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.45011091232299805,
+  "data": {"stories_count": 235}
+}}"}
+{"time": "2025-05-28 01:43:57,955", "level": "INFO", "name": "blog_automation", "message": "[1748376837] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 01:43:57,956", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 01:43:59,009", "level": "INFO", "name": "blog_automation", "message": "[1748376837] Completed step: STORE_TOPICS in 1.05s"}
+{"time": "2025-05-28 01:43:59,010", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 1.05s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 1.0543694496154785,
+  "data": {"topics_count": 235, "topics": [{"id": 478, "keyword": "lsg vs rcb", "rank": 1, "traffic": "5000000", "categories": "Sports"}, {"id": 479, "keyword": "matthew breetzke", "rank": 2, "traffic": "500000", "categories": "Sports"}, {"id": 480, "keyword": "rishabh pant", "rank": 3, "traffic": "500000", "categories": "Sports"}, {"id": 481, "keyword": "lsg \u092c\u0928\u093e\u092e rcb", "rank": 4, "traffic": "100000", "categories": "Sports"}, {"id": 482, "keyword": "jac 10th result 2025", "rank": 5, "traffic": "200000", "categories": "Jobs and Education"}]}
+}}"}
+{"time": "2025-05-28 01:43:59,012", "level": "INFO", "name": "blog_automation", "message": "[1748376837] SUCCESS: Successfully fetched 235 trending topics"}
+{"time": "2025-05-28 01:43:59,013", "level": "INFO", "name": "blog_automation", "message": "[1748376837] SUCCESS: Process 1748376837 COMPLETED in 1.52s"}
+{"time": "2025-05-28 01:44:03,356", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748376843",
+  "timestamp": "2025-05-28T01:44:03.356038"
+}"}
+{"time": "2025-05-28 01:44:03,356", "level": "INFO", "name": "blog_automation", "message": "[1748376843] Starting blog automation pipeline"}
+{"time": "2025-05-28 01:44:03,357", "level": "INFO", "name": "blog.process", "message": "Starting blog automation pipeline"}
+{"time": "2025-05-28 01:44:03,358", "level": "INFO", "name": "blog_automation", "message": "[1748376843] Starting step: Checking for recent trending topics"}
+{"time": "2025-05-28 01:44:03,359", "level": "INFO", "name": "blog.process", "message": "Starting step: Checking for recent trending topics
+Data: {
+  "step_id": "FETCH_TRENDING_TOPICS",
+  "step_name": "Checking for recent trending topics"
+}}"}
+{"time": "2025-05-28 01:44:03,362", "level": "INFO", "name": "blog_automation", "message": "[1748376843] No recent trending topics found, fetching new ones"}
+{"time": "2025-05-28 01:44:03,362", "level": "INFO", "name": "blog.process", "message": "No recent trending topics found, fetching new ones"}
+{"time": "2025-05-28 01:44:03,364", "level": "INFO", "name": "blog_automation", "message": "[1748376843] Fetching task started"}
+{"time": "2025-05-28 01:44:03,365", "level": "INFO", "name": "blog.process", "message": "Fetching task started
+Data: {
+  "task_id": "fcc3bb59-3e57-4be0-a1c1-39ea676004ef"
+}}"}
+{"time": "2025-05-28 01:44:08,369", "level": "INFO", "name": "blog_automation", "message": "[1748376843] Topics refresh complete"}
+{"time": "2025-05-28 01:44:08,369", "level": "INFO", "name": "blog.process", "message": "Topics refresh complete
+Data: {
+  "topics_count": 0
+}}"}
+{"time": "2025-05-28 01:44:08,371", "level": "ERROR", "name": "blog_automation", "message": "[1748376843] Failed step: FETCH_TRENDING_TOPICS - Still no trending topics available after fetching"}
+{"time": "2025-05-28 01:44:08,372", "level": "ERROR", "name": "blog.process", "message": "Failed step: FETCH_TRENDING_TOPICS - Still no trending topics available after fetching
+Data: {
+  "step_id": "FETCH_TRENDING_TOPICS",
+  "step_name": "FETCH_TRENDING_TOPICS",
+  "duration": 5.012767791748047,
+  "error": "Still no trending topics available after fetching"
+}}"}
+{"time": "2025-05-28 01:44:08,373", "level": "ERROR", "name": "blog_automation", "message": "[1748376843] Process 1748376843 FAILED in 5.02s"}
+{"time": "2025-05-28 01:44:08,374", "level": "ERROR", "name": "blog.process", "message": "Process 1748376843 FAILED in 5.02s
+Data: {
+  "reason": "Still no trending topics available after fetching"
+}}"}
+{"time": "2025-05-28 02:06:27,689", "level": "INFO", "name": "blog.process", "message": "PROCESS STARTED
+Data: {
+  "process_id": "1748378187",
+  "timestamp": "2025-05-28T02:06:27.689843"
+}"}
+{"time": "2025-05-28 02:06:27,693", "level": "INFO", "name": "blog_automation", "message": "[1748378187] Starting trending topics fetch"}
+{"time": "2025-05-28 02:06:27,695", "level": "INFO", "name": "blog.process", "message": "Starting trending topics fetch"}
+{"time": "2025-05-28 02:06:27,699", "level": "INFO", "name": "blog_automation", "message": "[1748378187] Starting step: Configuring SerpAPI search parameters"}
+{"time": "2025-05-28 02:06:27,700", "level": "INFO", "name": "blog.process", "message": "Starting step: Configuring SerpAPI search parameters
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "Configuring SerpAPI search parameters"
+}}"}
+{"time": "2025-05-28 02:06:27,705", "level": "INFO", "name": "blog_automation", "message": "[1748378187] Completed step: CONFIGURE_SERPAPI in 0.01s"}
+{"time": "2025-05-28 02:06:27,707", "level": "INFO", "name": "blog.process", "message": "Completed step: CONFIGURE_SERPAPI in 0.01s
+Data: {
+  "step_id": "CONFIGURE_SERPAPI",
+  "step_name": "CONFIGURE_SERPAPI",
+  "duration": 0.006197690963745117,
+  "data": {"region": "in"}
+}}"}
+{"time": "2025-05-28 02:06:27,722", "level": "INFO", "name": "blog_automation", "message": "[1748378187] Starting step: Executing SerpAPI search"}
+{"time": "2025-05-28 02:06:27,725", "level": "INFO", "name": "blog.process", "message": "Starting step: Executing SerpAPI search
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "Executing SerpAPI search"
+}}"}
+{"time": "2025-05-28 02:06:28,387", "level": "INFO", "name": "blog_automation", "message": "[1748378187] Completed step: EXECUTE_SERPAPI in 0.66s"}
+{"time": "2025-05-28 02:06:28,389", "level": "INFO", "name": "blog.process", "message": "Completed step: EXECUTE_SERPAPI in 0.66s
+Data: {
+  "step_id": "EXECUTE_SERPAPI",
+  "step_name": "EXECUTE_SERPAPI",
+  "duration": 0.6645181179046631,
+  "data": {"stories_count": 235}
+}}"}
+{"time": "2025-05-28 02:06:28,396", "level": "INFO", "name": "blog_automation", "message": "[1748378187] Starting step: Storing trending topics in database"}
+{"time": "2025-05-28 02:06:28,401", "level": "INFO", "name": "blog.process", "message": "Starting step: Storing trending topics in database
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "Storing trending topics in database"
+}}"}
+{"time": "2025-05-28 02:06:29,703", "level": "INFO", "name": "blog_automation", "message": "[1748378187] Completed step: STORE_TOPICS in 1.31s"}
+{"time": "2025-05-28 02:06:29,706", "level": "INFO", "name": "blog.process", "message": "Completed step: STORE_TOPICS in 1.31s
+Data: {
+  "step_id": "STORE_TOPICS",
+  "step_name": "STORE_TOPICS",
+  "duration": 1.30692458152771,
+  "data": {"topics_count": 235, "topics": [{"id": 713, "keyword": "lsg vs rcb", "rank": 1, "traffic": "5000000", "categories": "Sports"}, {"id": 714, "keyword": "matthew breetzke", "rank": 2, "traffic": "500000", "categories": "Sports"}, {"id": 715, "keyword": "rishabh pant", "rank": 3, "traffic": "500000", "categories": "Sports"}, {"id": 716, "keyword": "lsg \u092c\u0928\u093e\u092e rcb", "rank": 4, "traffic": "100000", "categories": "Sports"}, {"id": 717, "keyword": "jac 10th result 2025", "rank": 5, "traffic": "200000", "categories": "Jobs and Education"}]}
+}}"}
+{"time": "2025-05-28 02:06:29,714", "level": "INFO", "name": "blog_automation", "message": "[1748378187] SUCCESS: Successfully fetched 235 trending topics"}
+{"time": "2025-05-28 02:06:29,717", "level": "INFO", "name": "blog_automation", "message": "[1748378187] SUCCESS: Process 1748378187 COMPLETED in 2.03s"}

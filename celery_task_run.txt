@@ -1,0 +1,2 @@
+   celery -A blogify worker --loglevel=INFO
+   celery -A blogify beat --loglevel=INFO

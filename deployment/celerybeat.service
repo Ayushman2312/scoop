@@ -1,0 +1,15 @@
+[Unit]
+Description=Blogify Celery Beat
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/blogify
+ExecStart=/var/www/blogify/venv/bin/celery -A blogify beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+Restart=always
+RestartSec=5
+Environment="PATH=/var/www/blogify/venv/bin"
+
+[Install]
+WantedBy=multi-user.target 

@@ -1,0 +1,1195 @@
+{% include "blog_templates/header.html" with 
+    title=title|default:"Blog Template" 
+    meta_description=meta_description|default:"" 
+    page_url=page_url|default:"" 
+    featured_image=featured_image|default:"" 
+    schema_type="Article"
+    published_date=published_date|default:"" 
+    modified_date=modified_date|default:"" 
+%}
+
+<!-- Main Content -->
+<!-- Navigation Bar -->
+    <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="{% url 'home' %}" class="text-xl font-bold text-primary">
+                        <i class="fas fa-blog mr-2"></i>
+                        {{ site_name|default:"BlogBrand" }}
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    {% for nav_item in nav_items %}
+                        <a href="{{ nav_item.url }}" class="text-gray-600 hover:text-primary transition-colors">{{ nav_item.title }}</a>
+                    {% empty %}
+                        <a href="{% url 'home' %}" class="text-gray-600 hover:text-primary transition-colors">Home</a>
+                        <a href="{% url 'reviews' %}" class="text-gray-600 hover:text-primary transition-colors">Reviews</a>
+                        <a href="{% url 'comparisons' %}" class="text-gray-600 hover:text-primary transition-colors">Comparisons</a>
+                        <a href="{% url 'guides' %}" class="text-gray-600 hover:text-primary transition-colors">Guides</a>
+                        <a href="{% url 'about' %}" class="text-gray-600 hover:text-primary transition-colors">About</a>
+                    {% endfor %}
+                </div>
+                <div class="md:hidden">
+                    <button class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumbs -->
+        <div class="text-sm mb-6 text-gray-500">
+            <a href="{% url 'home' %}" class="hover:text-primary">Home</a> 
+            <span class="mx-2">/</span> 
+            <a href="{% url 'comparisons' %}" class="hover:text-primary">Comparisons</a> 
+            <span class="mx-2">/</span> 
+            <span class="text-gray-700">{{ product_a.name }} vs {{ product_b.name }}</span>
+        </div>
+        
+        <div class="prose lg:prose-xl mx-auto">
+            <header class="mb-8">
+                <h1 class="animate-fadeIn">{{ product_a.name }} vs {{ product_b.name }}: In-Depth Comparison</h1>
+                <div class="flex justify-center items-center space-x-4 text-sm text-gray-600 mt-4">
+                    <span><i class="far fa-calendar-alt mr-1"></i> {{ publication_date|date:"F j, Y" }}</span>
+                    <span><i class="far fa-user mr-1"></i> By {{ author.name }}</span>
+                    <span><i class="far fa-clock mr-1"></i> {{ reading_time }} min read</span>
+                    <span><i class="far fa-comment mr-1"></i> {{ comments.count }} Comments</span>
+                </div>
+                
+                <!-- Social Share Buttons -->
+                <div class="flex justify-center mt-6 space-x-3">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors">
+                        <i class="fab fa-facebook-f w-5 h-5 flex items-center justify-center"></i>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ product_a.name }}%20vs%20{{ product_b.name }}%20comparison" target="_blank" class="bg-blue-400 text-white p-2 rounded-full hover:bg-blue-500 transition-colors">
+                        <i class="fab fa-twitter w-5 h-5 flex items-center justify-center"></i>
+                    </a>
+                    <a href="https://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri }}&media={{ product_a.image_url }}&description={{ product_a.name }}%20vs%20{{ product_b.name }}" target="_blank" class="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors">
+                        <i class="fab fa-pinterest w-5 h-5 flex items-center justify-center"></i>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?text={{ product_a.name }}%20vs%20{{ product_b.name }}%20{{ request.build_absolute_uri }}" target="_blank" class="bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition-colors">
+                        <i class="fab fa-whatsapp w-5 h-5 flex items-center justify-center"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ product_a.name }}%20vs%20{{ product_b.name }}" target="_blank" class="bg-blue-700 text-white p-2 rounded-full hover:bg-blue-800 transition-colors">
+                        <i class="fab fa-linkedin-in w-5 h-5 flex items-center justify-center"></i>
+                    </a>
+                </div>
+            </header>
+            
+            <main>
+                <!-- Introduction Section -->
+                <section class="mb-12 bg-white rounded-lg shadow-custom p-6 border-l-4 border-primary">
+                    <div class="flex items-start">
+                        <div class="hidden md:block mr-6">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-light text-white">
+                                <i class="fas fa-info-circle text-2xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-lg leading-relaxed">
+                                Welcome to our comprehensive comparison between <span class="font-semibold text-primary">{{ product_a.name }}</span> and <span class="font-semibold text-primary">{{ product_b.name }}</span>. If you're trying to decide between these two popular options, you've come to the right place. In this detailed guide, we'll break down their features, pros and cons, pricing structures, and ultimately help you determine which one better suits your specific needs. By the end of this article, you'll have all the information necessary to make an informed purchasing decision.
+                            </p>
+                            <p class="text-lg">
+                                <a href="#internal-link" class="internal-link flex items-center hover:underline">
+                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                    Looking for more options? Check out our complete [Category] buying guide here
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Table of Contents -->
+                    <div class="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 text-center border-b pb-2">Table of Contents</h4>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <li>
+                                <a href="#comparison-table" class="flex items-center text-primary hover:text-primary-dark">
+                                    <i class="fas fa-table mr-2"></i> Quick Comparison
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#features" class="flex items-center text-primary hover:text-primary-dark">
+                                    <i class="fas fa-list-ul mr-2"></i> Features Comparison
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pros-cons" class="flex items-center text-primary hover:text-primary-dark">
+                                    <i class="fas fa-plus-minus mr-2"></i> Pros & Cons
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pricing" class="flex items-center text-primary hover:text-primary-dark">
+                                    <i class="fas fa-tag mr-2"></i> Pricing
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#verdict" class="flex items-center text-primary hover:text-primary-dark">
+                                    <i class="fas fa-gavel mr-2"></i> Verdict
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#faq" class="flex items-center text-primary hover:text-primary-dark">
+                                    <i class="fas fa-question-circle mr-2"></i> FAQ
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- Quick Comparison Table -->
+                <section id="comparison-table" class="mb-12 scroll-mt-24">
+                    <h2 class="group">
+                        Quick Comparison Table
+                        <a href="#comparison-table" class="ml-2 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-link text-sm"></i>
+                        </a>
+                    </h2>
+                    
+                    <div class="overflow-x-auto rounded-lg shadow-custom">
+                        <table class="w-full border-collapse bg-white">
+                            <thead>
+                                <tr>
+                                    <th class="bg-primary text-white py-4 px-6 text-left">Parameter</th>
+                                    <th class="bg-primary text-white py-4 px-6 text-left">
+                                        <div class="flex items-center">
+                                            <img src="https://via.placeholder.com/30" alt="Product A Logo" class="w-6 h-6 mr-2 rounded-full bg-white">
+                                            {{ product_a.name }}
+                                        </div>
+                                    </th>
+                                    <th class="bg-primary text-white py-4 px-6 text-left">
+                                        <div class="flex items-center">
+                                            <img src="https://via.placeholder.com/30" alt="Product B Logo" class="w-6 h-6 mr-2 rounded-full bg-white">
+                                            {{ product_b.name }}
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-200 py-3 px-6 font-medium">Parameter 1</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_a.value }}</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_b.value }}</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="border border-gray-200 py-3 px-6 font-medium">Parameter 2</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_a.value }}</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_b.value }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-200 py-3 px-6 font-medium">Parameter 3</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_a.value }}</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_b.value }}</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="border border-gray-200 py-3 px-6 font-medium">Parameter 4</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_a.value }}</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_b.value }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-200 py-3 px-6 font-medium">Parameter 5</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_a.value }}</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_b.value }}</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="border border-gray-200 py-3 px-6 font-medium">Best For</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_a.ideal_user }}</td>
+                                    <td class="border border-gray-200 py-3 px-6">{{ product_b.ideal_user }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row justify-center gap-4 mt-6">
+                        <a href="#product-a-link" class="cta-button flex items-center justify-center group">
+                            <i class="fas fa-tag mr-2 group-hover:animate-wiggle"></i>
+                            Check {{ product_a.name }} Price
+                        </a>
+                        <a href="#product-b-link" class="cta-button flex items-center justify-center group">
+                            <i class="fas fa-tag mr-2 group-hover:animate-wiggle"></i>
+                            Check {{ product_b.name }} Price
+                        </a>
+                    </div>
+                    
+                    <!-- Winner Badge -->
+                    <div class="relative mt-8 bg-gradient-to-r from-amber-100 to-amber-50 p-6 rounded-lg border border-amber-200 shadow-custom">
+                        <div class="absolute -top-5 -right-5 bg-amber-500 text-white p-3 rounded-full shadow-lg transform rotate-12">
+                            <i class="fas fa-trophy text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-amber-800 mb-3">Quick Winner: [Winning Product]</h3>
+                        <p class="text-amber-700 mb-0">
+                            Based on our detailed analysis, [Winning Product] edges out for most users because of [key winning factors]. However, read our full comparison below to find the best option for YOUR specific needs.
+                        </p>
+                    </div>
+                </section>
+                
+                <!-- Features Comparison -->
+                <section id="features" class="mb-12 scroll-mt-24">
+                    <h2 class="group">
+                        Features Comparison
+                        <a href="#features" class="ml-2 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-link text-sm"></i>
+                        </a>
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Product A Features -->
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden transform transition-transform hover:scale-[1.02]">
+                            <div class="bg-primary text-white p-4 flex items-center">
+                                <img src="https://via.placeholder.com/50" alt="Product A Logo" class="w-10 h-10 mr-3 rounded-full bg-white p-1">
+                                <h3 class="text-xl font-bold m-0 text-white">{{ product_a.name }} Features</h3>
+                            </div>
+                            <div class="p-6">
+                                <p class="text-gray-700 mb-4">
+                                    [Detailed description of Product A's features, including standout capabilities, specifications, and what makes it unique. Discuss the most important aspects that potential buyers would care about.]
+                                </p>
+                                
+                                <div class="mt-4 space-y-3">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 h-5 w-5 text-primary">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p class="ml-3 text-sm">Key feature highlight 1</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 h-5 w-5 text-primary">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p class="ml-3 text-sm">Key feature highlight 2</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 h-5 w-5 text-primary">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p class="ml-3 text-sm">Key feature highlight 3</p>
+                                    </div>
+                                </div>
+                                
+                                <a href="#product-a-link" class="cta-button mt-6 block text-center">
+                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                    See {{ product_a.name }} Features
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Product B Features -->
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden transform transition-transform hover:scale-[1.02]">
+                            <div class="bg-primary text-white p-4 flex items-center">
+                                <img src="https://via.placeholder.com/50" alt="Product B Logo" class="w-10 h-10 mr-3 rounded-full bg-white p-1">
+                                <h3 class="text-xl font-bold m-0 text-white">{{ product_b.name }} Features</h3>
+                            </div>
+                            <div class="p-6">
+                                <p class="text-gray-700 mb-4">
+                                    [Detailed description of Product B's features, highlighting its unique selling points, specifications, and how it differs from Product A. Make sure to cover the same categories as discussed for Product A to enable fair comparison.]
+                                </p>
+                                
+                                <div class="mt-4 space-y-3">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 h-5 w-5 text-primary">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p class="ml-3 text-sm">Key feature highlight 1</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 h-5 w-5 text-primary">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p class="ml-3 text-sm">Key feature highlight 2</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 h-5 w-5 text-primary">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p class="ml-3 text-sm">Key feature highlight 3</p>
+                                    </div>
+                                </div>
+                                
+                                <a href="#product-b-link" class="cta-button mt-6 block text-center">
+                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                    See {{ product_b.name }} Features
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature Comparison Chart -->
+                    <div class="mt-8 bg-white rounded-lg shadow-custom p-6">
+                        <h3 class="text-xl font-bold mb-4">Head-to-Head Feature Comparison</h3>
+                        <div class="flex justify-center">
+                            <div class="w-full max-w-4xl">
+                                <!-- Replace with an actual chart using chart.js or another library -->
+                                <div class="p-4 border border-dashed border-gray-300 rounded text-center text-gray-500">
+                                    [Interactive feature comparison chart/graph would appear here]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Pros and Cons -->
+                <section id="pros-cons" class="mb-12 scroll-mt-24">
+                    <h2 class="group">
+                        Pros & Cons
+                        <a href="#pros-cons" class="ml-2 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-link text-sm"></i>
+                        </a>
+                    </h2>
+                    
+                    <!-- Product A Pros & Cons -->
+                    <div class="mb-8">
+                        <div class="flex items-center mb-4">
+                            <img src="https://via.placeholder.com/40" alt="Product A Logo" class="w-8 h-8 mr-3 rounded-full bg-white">
+                            <h3 class="text-xl font-bold">{{ product_a.name }} Pros & Cons</h3>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-lg shadow-custom p-6 border border-green-100">
+                                <h4 class="text-center font-bold text-green-700 mb-4 flex justify-center items-center">
+                                    <i class="fas fa-thumbs-up text-green-600 mr-2"></i> Pros
+                                </h4>
+                                <ul class="pros-list space-y-3">
+                                    {% for pro in product_a.pros %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">{{ pro }}</li>
+                                    {% empty %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 1</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 2</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 3</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 4</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-lg shadow-custom p-6 border border-red-100">
+                                <h4 class="text-center font-bold text-red-700 mb-4 flex justify-center items-center">
+                                    <i class="fas fa-thumbs-down text-red-600 mr-2"></i> Cons
+                                </h4>
+                                <ul class="cons-list space-y-3">
+                                    {% for con in product_a.cons %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">{{ con }}</li>
+                                    {% empty %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Con point 1</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Con point 2</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Con point 3</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product B Pros & Cons -->
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <img src="https://via.placeholder.com/40" alt="Product B Logo" class="w-8 h-8 mr-3 rounded-full bg-white">
+                            <h3 class="text-xl font-bold">{{ product_b.name }} Pros & Cons</h3>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-lg shadow-custom p-6 border border-green-100">
+                                <h4 class="text-center font-bold text-green-700 mb-4 flex justify-center items-center">
+                                    <i class="fas fa-thumbs-up text-green-600 mr-2"></i> Pros
+                                </h4>
+                                <ul class="pros-list space-y-3">
+                                    {% for pro in product_b.pros %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">{{ pro }}</li>
+                                    {% empty %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 1</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 2</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 3</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Pro point 4</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-lg shadow-custom p-6 border border-red-100">
+                                <h4 class="text-center font-bold text-red-700 mb-4 flex justify-center items-center">
+                                    <i class="fas fa-thumbs-down text-red-600 mr-2"></i> Cons
+                                </h4>
+                                <ul class="cons-list space-y-3">
+                                    {% for con in product_b.cons %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">{{ con }}</li>
+                                    {% empty %}
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Con point 1</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Con point 2</li>
+                                    <li class="bg-white p-3 rounded shadow-sm hover:shadow-md transition-shadow">Con point 3</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Pricing Comparison -->
+                <section id="pricing" class="mb-12 scroll-mt-24">
+                    <h2 class="group">
+                        Pricing
+                        <a href="#pricing" class="ml-2 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-link text-sm"></i>
+                        </a>
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                        <!-- Product A Pricing -->
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                            <div class="bg-primary text-white p-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <img src="https://via.placeholder.com/40" alt="Product A Logo" class="w-8 h-8 mr-3 rounded-full bg-white p-1">
+                                        <h3 class="text-xl font-bold text-white m-0">{{ product_a.name }} Pricing</h3>
+                                    </div>
+                                    <div class="text-xs px-2 py-1 bg-yellow-400 text-yellow-800 rounded-full font-bold">
+                                        Best Value
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="flex justify-center mb-6">
+                                    <div class="text-center">
+                                        <span class="text-gray-500 text-sm">Starting from</span>
+                                        <div class="text-4xl font-bold text-primary">$XX</div>
+                                        <span class="text-gray-500 text-sm">per month</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700 mb-6">
+                                    [Detailed breakdown of Product A's pricing structure, including different tiers, subscription models, one-time costs, and any additional fees or hidden costs. Consider including a small pricing table if there are multiple options.]
+                                </p>
+                                
+                                <!-- Pricing tiers -->
+                                <div class="space-y-4 mb-6">
+                                    <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 transition-colors">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Basic Plan</span>
+                                            <span class="font-bold">$XX/mo</span>
+                                        </div>
+                                        <div class="text-sm text-gray-500 mt-1">Features: Feature 1, Feature 2, Feature 3</div>
+                                    </div>
+                                    
+                                    <div class="border border-gray-200 rounded p-3 bg-blue-50 border-blue-200 hover:bg-blue-100 transition-colors">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Pro Plan</span>
+                                            <span class="font-bold">$XX/mo</span>
+                                        </div>
+                                        <div class="text-sm text-gray-500 mt-1">All Basic features plus: Feature 4, Feature 5</div>
+                                        <div class="mt-1 text-xs inline-block bg-blue-500 text-white px-2 py-0.5 rounded">Popular</div>
+                                    </div>
+                                    
+                                    <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 transition-colors">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Enterprise Plan</span>
+                                            <span class="font-bold">$XX/mo</span>
+                                        </div>
+                                        <div class="text-sm text-gray-500 mt-1">All Pro features plus: Feature 6, Feature 7</div>
+                                    </div>
+                                </div>
+                                
+                                <a href="#product-a-link" class="cta-button block text-center">
+                                    <i class="fas fa-tag mr-2"></i>
+                                    Check Current {{ product_a.name }} Price
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Product B Pricing -->
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                            <div class="bg-primary text-white p-4">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/40" alt="Product B Logo" class="w-8 h-8 mr-3 rounded-full bg-white p-1">
+                                    <h3 class="text-xl font-bold text-white m-0">{{ product_b.name }} Pricing</h3>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="flex justify-center mb-6">
+                                    <div class="text-center">
+                                        <span class="text-gray-500 text-sm">Starting from</span>
+                                        <div class="text-4xl font-bold text-primary">$XX</div>
+                                        <span class="text-gray-500 text-sm">per month</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700 mb-6">
+                                    [Comprehensive analysis of Product B's pricing options, following the same structure as Product A to enable easy comparison. Highlight any significant price differences and explain the value proposition of each.]
+                                </p>
+                                
+                                <!-- Pricing tiers -->
+                                <div class="space-y-4 mb-6">
+                                    <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 transition-colors">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Basic Plan</span>
+                                            <span class="font-bold">$XX/mo</span>
+                                        </div>
+                                        <div class="text-sm text-gray-500 mt-1">Features: Feature 1, Feature 2, Feature 3</div>
+                                    </div>
+                                    
+                                    <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 transition-colors">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Pro Plan</span>
+                                            <span class="font-bold">$XX/mo</span>
+                                        </div>
+                                        <div class="text-sm text-gray-500 mt-1">All Basic features plus: Feature 4, Feature 5</div>
+                                    </div>
+                                    
+                                    <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 transition-colors">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Enterprise Plan</span>
+                                            <span class="font-bold">$XX/mo</span>
+                                        </div>
+                                        <div class="text-sm text-gray-500 mt-1">All Pro features plus: Feature 6, Feature 7</div>
+                                    </div>
+                                </div>
+                                
+                                <a href="#product-b-link" class="cta-button block text-center">
+                                    <i class="fas fa-tag mr-2"></i>
+                                    Check Current {{ product_b.name }} Price
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Comparison Chart -->
+                    <div class="bg-white rounded-lg shadow-custom p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center">Price Comparison Chart</h3>
+                        <div class="flex justify-center">
+                            <div class="w-full max-w-3xl">
+                                <!-- Replace with an actual chart using chart.js or another library -->
+                                <div class="p-4 border border-dashed border-gray-300 rounded text-center text-gray-500">
+                                    [Interactive price comparison chart would appear here]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Verdict Section -->
+                <section id="verdict" class="mb-12 scroll-mt-24">
+                    <h2 class="group">
+                        Verdict
+                        <a href="#verdict" class="ml-2 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-link text-sm"></i>
+                        </a>
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                        <!-- Product A Verdict -->
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                            <div class="bg-primary text-white p-4 flex items-center">
+                                <img src="https://via.placeholder.com/40" alt="Product A Logo" class="w-8 h-8 mr-3 rounded-full bg-white p-1">
+                                <h3 class="text-xl font-bold text-white m-0">{{ product_a.name }} Final Verdict</h3>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="mb-4 flex justify-center">
+                                    <div class="inline-flex items-center justify-center p-1 bg-gray-100 rounded-full">
+                                        <div class="flex">
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="ml-2 text-sm font-medium text-gray-600">4.0/5</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700">
+                                    [Final assessment of Product A, summarizing its strengths and weaknesses. Include specific scenarios where this product would be the better choice, and the type of user who would benefit most from it.]
+                                </p>
+                                
+                                <div class="mt-4 bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                    <div class="font-medium text-blue-800 mb-1">Best suited for:</div>
+                                    <ul class="list-disc pl-5 text-sm text-blue-700 space-y-1">
+                                        {% for user_type in product_a.best_for %}
+                                        <li>{{ user_type }}</li>
+                                        {% empty %}
+                                        <li>User type 1</li>
+                                        <li>User type 2</li>
+                                        <li>User type 3</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product B Verdict -->
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                            <div class="bg-primary text-white p-4 flex items-center">
+                                <img src="https://via.placeholder.com/40" alt="Product B Logo" class="w-8 h-8 mr-3 rounded-full bg-white p-1">
+                                <h3 class="text-xl font-bold text-white m-0">{{ product_b.name }} Final Verdict</h3>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="mb-4 flex justify-center">
+                                    <div class="inline-flex items-center justify-center p-1 bg-gray-100 rounded-full">
+                                        <div class="flex">
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="ml-2 text-sm font-medium text-gray-600">5.0/5</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700">
+                                    [Conclusive evaluation of Product B, highlighting its advantages and limitations. Specify the circumstances where this product would be preferable, and describe the ideal user profile.]
+                                </p>
+                                
+                                <div class="mt-4 bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                    <div class="font-medium text-blue-800 mb-1">Best suited for:</div>
+                                    <ul class="list-disc pl-5 text-sm text-blue-700 space-y-1">
+                                        {% for user_type in product_b.best_for %}
+                                        <li>{{ user_type }}</li>
+                                        {% empty %}
+                                        <li>User type 1</li>
+                                        <li>User type 2</li>
+                                        <li>User type 3</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Editor's Recommendation Box -->
+                    <div class="relative mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-custom p-8 border-t-4 border-primary">
+                        <div class="absolute -top-6 left-8 bg-primary text-white py-1 px-4 rounded-t-lg font-bold">
+                            Editor's Choice
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="hidden md:flex items-center justify-center h-16 w-16 rounded-full bg-primary bg-opacity-20 mr-6 flex-shrink-0">
+                                <i class="fas fa-award text-3xl text-primary"></i>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-2xl font-bold text-primary mb-4">Editor's Recommendation</h3>
+                                
+                                <div class="prose text-gray-700">
+                                    <p>
+                                        After thoroughly comparing {{ product_a.name }} and {{ product_b.name }}, our editor recommends <span class="font-semibold text-primary">{{ preferred_product }}</span> for [specific use case/user type]. This recommendation is based on [key decision factors] which make it the superior choice for most users looking for [primary benefit].
+                                    </p>
+                                    <p>
+                                        However, if you prioritize [alternative priority], then [Other Product] might be a better fit for your specific needs.
+                                    </p>
+                                </div>
+                                
+                                <div class="mt-6 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-4">
+                                    <a href="#recommended-product-link" class="cta-button flex items-center group">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        Get {{ recommended_product }} Now
+                                    </a>
+                                    
+                                    <div class="text-sm text-gray-500 flex items-center">
+                                        <i class="fas fa-shield-alt mr-2 text-green-600"></i>
+                                        With Exclusive Discount
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- FAQ Section -->
+                <section id="faq" class="mb-12 scroll-mt-24">
+                    <h2 class="group">
+                        Frequently Asked Questions
+                        <a href="#faq" class="ml-2 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-link text-sm"></i>
+                        </a>
+                    </h2>
+                    
+                    <div class="bg-white rounded-lg shadow-custom overflow-hidden divide-y divide-gray-200">
+                        <div class="faq-item">
+                            <button class="faq-question w-full py-4 px-6 text-left font-medium flex items-center justify-between focus:outline-none">
+                                <span>Is {{ product_a.name }} better than {{ product_b.name }} for [specific use case]?</span>
+                                <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer px-6 pb-4">
+                                <p class="text-gray-700">[Detailed answer comparing the two products for this specific use case]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question w-full py-4 px-6 text-left font-medium flex items-center justify-between focus:outline-none">
+                                <span>What are the main differences between {{ product_a.name }} and {{ product_b.name }}?</span>
+                                <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer px-6 pb-4">
+                                <p class="text-gray-700">[Concise summary of the key differences between the products]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question w-full py-4 px-6 text-left font-medium flex items-center justify-between focus:outline-none">
+                                <span>Can I switch from {{ product_a.name }} to {{ product_b.name }} easily?</span>
+                                <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer px-6 pb-4">
+                                <p class="text-gray-700">[Information about migration process, compatibility, and potential challenges]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question w-full py-4 px-6 text-left font-medium flex items-center justify-between focus:outline-none">
+                                <span>Which product offers better value for money?</span>
+                                <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer px-6 pb-4">
+                                <p class="text-gray-700">[Analysis of price-to-features ratio and overall value proposition]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question w-full py-4 px-6 text-left font-medium flex items-center justify-between focus:outline-none">
+                                <span>What do other users say about {{ product_a.name }} vs {{ product_b.name }}?</span>
+                                <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer px-6 pb-4">
+                                <p class="text-gray-700">[Summary of user reviews and testimonials for both products]</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ask a Question -->
+                    <div class="mt-8 bg-gray-50 rounded-lg shadow-sm p-6 border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Still have questions?</h3>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <input type="text" placeholder="Ask your question here..." class="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <button class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-6 rounded-md transition-colors">
+                                Ask Question
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            
+            <!-- Author Bio -->
+            <div class="bg-white rounded-lg shadow-custom p-6 mb-12">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                    <img src="https://via.placeholder.com/128" alt="Author" class="w-24 h-24 rounded-full object-cover">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">About the Author</h3>
+                        <p class="text-gray-700 mb-4">
+                            [Author Name] is a [profession/expertise] with over [X] years of experience in [relevant field]. They specialize in [area of expertise] and have reviewed over [number] products in the [category] space.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-blue-600 hover:text-blue-800">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-blue-800 hover:text-blue-900">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-800 hover:text-black">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Related Articles -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold mb-6">Related Comparisons</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {% for article in related_articles %}
+                    <a href="{{ article.url }}" class="block group">
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden transition-transform group-hover:scale-[1.02]">
+                            <img src="{{ article.image_url }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{{ article.title }}</h3>
+                                <p class="text-gray-600 text-sm">Published {{ article.date|date:"F j, Y" }} • {{ article.read_time }} min read</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% empty %}
+                    <a href="#" class="block group">
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden transition-transform group-hover:scale-[1.02]">
+                            <img src="https://via.placeholder.com/400x225" alt="Related Article 1" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">[Related Product C] vs [Related Product D]</h3>
+                                <p class="text-gray-600 text-sm">Published [Date] • [X] min read</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="block group">
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden transition-transform group-hover:scale-[1.02]">
+                            <img src="https://via.placeholder.com/400x225" alt="Related Article 2" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">[Related Product E] vs [Related Product F]</h3>
+                                <p class="text-gray-600 text-sm">Published [Date] • [X] min read</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="block group">
+                        <div class="bg-white rounded-lg shadow-custom overflow-hidden transition-transform group-hover:scale-[1.02]">
+                            <img src="https://via.placeholder.com/400x225" alt="Related Article 3" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">Best [Category] Products in [Current Year]</h3>
+                                <p class="text-gray-600 text-sm">Published [Date] • [X] min read</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Comments Section -->
+            <div class="bg-white rounded-lg shadow-custom p-6 mb-12">
+                <h3 class="text-xl font-bold mb-6">Comments ({{ comments.count|default:"0" }})</h3>
+                
+                <!-- Comment Form -->
+                <div class="mb-8">
+                    <form method="post" action="{% url 'add_comment' product_a.slug product_b.slug %}">
+                        {% csrf_token %}
+                        <div class="flex items-start gap-4 mb-4">
+                            <img src="{% if user.is_authenticated %}{{ user.profile_image }}{% else %}https://via.placeholder.com/40{% endif %}" alt="User" class="w-10 h-10 rounded-full">
+                            <textarea name="comment_text" placeholder="Join the discussion..." class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" rows="3"></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-6 rounded-md transition-colors">
+                                Post Comment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Sample Comments -->
+                <div class="space-y-6">
+                    {% for comment in comments %}
+                    <div class="{% if not forloop.last %}border-b border-gray-200 pb-6{% endif %}">
+                        <div class="flex items-start gap-4">
+                            <img src="{{ comment.user.profile_image|default:'https://via.placeholder.com/40' }}" alt="{{ comment.user.name }}" class="w-10 h-10 rounded-full">
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold">{{ comment.user.name }}</h4>
+                                    <span class="text-sm text-gray-500">{{ comment.created_at|timesince }} ago</span>
+                                </div>
+                                <p class="text-gray-700 mb-2">{{ comment.text }}</p>
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors" data-comment-id="{{ comment.id }}">
+                                        <i class="far fa-thumbs-up"></i> {{ comment.likes }}
+                                    </button>
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors reply-btn" data-comment-id="{{ comment.id }}">
+                                        <i class="far fa-comment"></i> Reply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="border-b border-gray-200 pb-6">
+                        <div class="flex items-start gap-4">
+                            <img src="https://via.placeholder.com/40" alt="Commenter 1" class="w-10 h-10 rounded-full">
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold">John Doe</h4>
+                                    <span class="text-sm text-gray-500">2 days ago</span>
+                                </div>
+                                <p class="text-gray-700 mb-2">Thanks for this detailed comparison! I've been using {{ product_a.name }} for a while now and was considering switching to {{ product_b.name }}. This helped me make my decision.</p>
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors">
+                                        <i class="far fa-thumbs-up"></i> 14
+                                    </button>
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors">
+                                        <i class="far fa-comment"></i> Reply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-start gap-4">
+                            <img src="https://via.placeholder.com/40" alt="Commenter 2" class="w-10 h-10 rounded-full">
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold">Jane Smith</h4>
+                                    <span class="text-sm text-gray-500">5 days ago</span>
+                                </div>
+                                <p class="text-gray-700 mb-2">I think you missed a couple of important features in {{ product_b.name }} that make it stand out from {{ product_a.name }} for professional use. Would be great to see those added to the comparison.</p>
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors">
+                                        <i class="far fa-thumbs-up"></i> 7
+                                    </button>
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors">
+                                        <i class="far fa-comment"></i> Reply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                {% if comments.has_more %}
+                <div class="mt-6 text-center">
+                    <a href="{% url 'more_comments' product_a.slug product_b.slug %}?page={{ comments.next_page }}" class="text-primary hover:text-primary-dark font-medium transition-colors">
+                        Load More Comments
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <footer class="bg-gray-800 text-white py-12">
+            <div class="w-full px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">{{ site_name|default:"BlogBrand" }}</h3>
+                        <p class="text-gray-400 mb-4">{{ site_description|default:"Your trusted source for in-depth product comparisons and reviews." }}</p>
+                        <div class="flex space-x-4">
+                            {% if social_links.facebook %}<a href="{{ social_links.facebook }}" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                            {% if social_links.twitter %}<a href="{{ social_links.twitter }}" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>{% endif %}
+                            {% if social_links.instagram %}<a href="{{ social_links.instagram }}" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>{% endif %}
+                            {% if social_links.pinterest %}<a href="{{ social_links.pinterest }}" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-pinterest"></i></a>{% endif %}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Categories</h4>
+                        <ul class="space-y-2">
+                            {% for category in categories %}
+                            <li><a href="{{ category.url }}" class="text-gray-400 hover:text-white transition-colors">{{ category.name }}</a></li>
+                            {% empty %}
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tech Reviews</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Software Comparisons</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Buying Guides</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Product News</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            {% for link in quick_links %}
+                            <li><a href="{{ link.url }}" class="text-gray-400 hover:text-white transition-colors">{{ link.name }}</a></li>
+                            {% empty %}
+                            <li><a href="{% url 'about' %}" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                            <li><a href="{% url 'contact' %}" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                            <li><a href="{% url 'privacy' %}" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="{% url 'terms' %}" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Newsletter</h4>
+                        <p class="text-gray-400 mb-4">Subscribe to get the latest product comparisons and reviews delivered to your inbox.</p>
+                        <form action="{% url 'newsletter_signup' %}" method="post" class="flex">
+                            {% csrf_token %}
+                            <input type="email" name="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full focus:outline-none text-gray-800" required>
+                            <button type="submit" class="bg-primary hover:bg-primary-dark px-4 py-2 rounded-r-md transition-colors">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                    <p>Last updated: {{ publication_date|date:"F j, Y" }} • This comparison is based on thorough research and testing.</p>
+                    <p class="mt-2">© {{ current_year }} {{ site_name|default:"BlogBrand" }}. All rights reserved. Some links on this page may be affiliate links.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- JavaScript for FAQ interaction -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = question.querySelector('i');
+                
+                // Hide all answers initially
+                answer.style.maxHeight = '0';
+                answer.style.overflow = 'hidden';
+                answer.style.transition = 'max-height 0.3s ease, padding 0.3s ease';
+                
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all other answers
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            const otherAnswer = otherItem.querySelector('.faq-answer');
+                            const otherIcon = otherItem.querySelector('.faq-question i');
+                            
+                            otherItem.classList.remove('active');
+                            otherAnswer.style.maxHeight = '0';
+                            otherAnswer.style.paddingTop = '0';
+                            otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    
+                    // Toggle current answer
+                    if (isActive) {
+                        item.classList.remove('active');
+                        answer.style.maxHeight = '0';
+                        answer.style.paddingTop = '0';
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        answer.style.paddingTop = '1rem';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "itemReviewed": {
+            "@type": "Product",
+            "name": "{{ product_a.name }} vs {{ product_b.name }} Comparison",
+            "description": "A comprehensive comparison between {{ product_a.name }} and {{ product_b.name }}."
+        },
+        "author": {
+            "@type": "Person",
+            "name": "[Author Name]"
+        },
+        "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "4.5",
+            "bestRating": "5"
+        },
+        "datePublished": "[Publication Date in ISO format]"
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "{{ product_a.name }}",
+        "description": "{{ product_a.description }}",
+        "review": {
+            "@type": "Review",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4.5",
+                "bestRating": "5"
+            },
+            "author": {
+                "@type": "Person",
+                "name": "[Author Name]"
+            },
+            "reviewBody": "[Review summary of Product A]"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "reviewCount": "100"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "{{ product_b.name }}",
+        "description": "{{ product_b.description }}",
+        "review": {
+            "@type": "Review",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4.2",
+                "bestRating": "5"
+            },
+            "author": {
+                "@type": "Person",
+                "name": "[Author Name]"
+            },
+            "reviewBody": "[Review summary of Product B]"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.2",
+            "reviewCount": "85"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is {{ product_a.name }} better than {{ product_b.name }} for [specific use case]?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "[Answer to the FAQ question]"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What are the main differences between {{ product_a.name }} and {{ product_b.name }}?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "[Answer to the FAQ question]"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I switch from {{ product_a.name }} to {{ product_b.name }} easily?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "[Answer to the FAQ question]"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which product offers better value for money?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "[Answer to the FAQ question]"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What do other users say about {{ product_a.name }} vs {{ product_b.name }}?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "[Answer to the FAQ question]"
+                }
+            }
+        ]
+    }
+    </script>
+
+{% include "blog_templates/footer.html" %}
