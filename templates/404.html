@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Blogify</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #94a3b8;
+            --light: #f8fafc;
+            --dark: #1e293b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        .error-code {
+            font-size: clamp(5rem, 12vw, 8rem);
+            font-weight: 200;
+            color: var(--primary);
+            line-height: 1;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .error-code span {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .error-code span:hover {
+            transform: translateY(-5px);
+        }
+        
+        .message {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .description {
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.8rem;
+            background-color: transparent;
+            color: var(--primary);
+            font-weight: 400;
+            border: 1px solid var(--primary);
+            border-radius: 0.25rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .illustration {
+            max-width: 180px;
+            width: 100%;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .illustration svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .lost-astronaut {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="illustration">
+            <svg class="lost-astronaut" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                <path d="M324.7,279.4c-3.4-2-6.1-4.9-7.9-8.3c-1.8-3.5-2.3-7.4-1.5-11.2c0.8-3.8,2.9-7.2,5.9-9.7c3-2.5,6.7-4,10.6-4.2
+                c3.9-0.3,7.7,0.7,10.9,2.8c3.3,2.1,5.9,5.1,7.4,8.6c1.5,3.5,1.8,7.4,0.9,11.1c-0.9,3.7-3.1,7-6.2,9.4c-2.3,1.8-5,3-7.9,3.6
+                c-2.9,0.5-5.9,0.3-8.6-0.7C326.9,280.4,325.8,280,324.7,279.4z" fill="#3b82f6"/>
+                <path d="M336.8,264.2c0,0-6.2,33.5-15.1,45.6c-8.9,12.1-31.6,32.5-31.6,32.5l-9.4-7.9c0,0,13.7-25.1,17.3-37.1
+                c3.6-12,7.4-44.9,7.4-44.9L336.8,264.2z" fill="#f8fafc"/>
+                <path d="M330.3,270.8c0,0-41-14.5-69.9-14.5c-28.9,0-47.6,9.3-47.6,9.3l-5.1-11.4c0,0,9.4-12.6,43.4-17.3
+                c33.9-4.7,76.8,6.8,76.8,6.8L330.3,270.8z" fill="#f8fafc"/>
+                <circle cx="218.7" cy="235.5" r="40" fill="#f8fafc"/>
+                <circle cx="218.7" cy="235.5" r="30" fill="#3b82f6"/>
+                <path d="M236.1,214.1c0,0-5.8,8.1-17.4,8.1c-11.6,0-19-5.8-19-5.8s1.8-13.2,18.4-13.2C234.8,203.2,236.1,214.1,236.1,214.1z" fill="#f8fafc"/>
+                <path d="M292.9,338.5c0,0-28.8,38.7-46.8,53c-18,14.3-45.9,22.2-45.9,22.2s-14.4-30.2-2.9-68.9c11.5-38.7,32.6-62.3,32.6-62.3
+                L292.9,338.5z" fill="#f8fafc"/>
+                <path d="M223.7,359.3c0,0-14.4,2.2-17.3,16.5c-2.9,14.4,5.8,28.1,5.8,28.1s23.8-8.6,27.4-14.4c3.6-5.8,7.9-27.4,7.9-27.4
+                L223.7,359.3z" fill="#3b82f6"/>
+                <path d="M278.2,228.4c0,0-12.2-22.3-38.3-22.3c-26,0-40.8,18.7-40.8,18.7s4.7,36.7,39.3,36.7
+                C273,261.5,278.2,228.4,278.2,228.4z" fill="#f8fafc"/>
+                <path d="M207.8,224.9c0,0,10.1,23,41.3,23c31.3,0,33.5-22.3,33.5-22.3s-13.7-17.3-35.3-17.3
+                C225.8,208.4,207.8,224.9,207.8,224.9z" fill="#3b82f6"/>
+                <circle cx="221.5" cy="231.9" r="5" fill="white"/>
+                <circle cx="258.7" cy="231.9" r="5" fill="white"/>
+            </svg>
+        </div>
+        
+        <h1 class="error-code">
+            <span>4</span><span>0</span><span>4</span>
+        </h1>
+        <h2 class="message">Page Not Found</h2>
+        <p class="description">The page you're looking for doesn't exist or has been moved.</p>
+        <a href="/" class="btn">Back to Home</a>
+    </div>
+
+    <script>
+        // Make the 404 digits interactive
+        document.querySelectorAll('.error-code span').forEach(span => {
+            span.addEventListener('mouseenter', function() {
+                this.style.transform = `translateY(-5px)`;
+            });
+            span.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
