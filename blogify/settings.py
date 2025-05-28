@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', '1fd#=p&%@$d@7_lc#p24f7yv($w!9+ob1)e#feb&x%fw72=xpb')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["theblogifyhub.com", "www.theblogifyhub.com"]
 
 
 # Application definition
@@ -79,6 +79,18 @@ WSGI_APPLICATION = 'blogify.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blogify',
+        'USER': 'blogify',
+        'PASSWORD': 'ENCANTADO()@23ok',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+
 
 DATABASES = {
     'default': {
