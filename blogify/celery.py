@@ -19,25 +19,25 @@ app.conf.beat_schedule = {
     # Every 4 hours, fetch trending topics from Google
     'fetch-trending-topics': {
         'task': 'blog.tasks.fetch_trending_topics',
-        'schedule': crontab(minute=0, hour='*/4'),  # Run every 4 hours at XX:00
+        'schedule': crontab(minute=0, hour='*'),  # Run every 4 hours at XX:00
     },
     
     # 10 minutes after fetching trending topics, process them
     'process-new-trending-topics': {
         'task': 'blog.tasks.process_trending_topics',
-        'schedule': crontab(minute=10, hour='*/4'),  # Run every 4 hours at XX:10
+        'schedule': crontab(minute=10, hour='*'),  # Run every 4 hours at XX:10
     },
     
     # Run the main blog automation pipeline every 4 hours
     'automated-blog-pipeline': {
         'task': 'blog.automation.run_blog_automation_pipeline',
-        'schedule': crontab(minute=15, hour='*/4'),  # Run every 4 hours at XX:15
+        'schedule': crontab(minute=20, hour='*'),  # Run every 4 hours at XX:15
     },
     
     # Check for scheduled blogs to publish every 10 minutes
     'publish-scheduled-blogs': {
         'task': 'blog.tasks.publish_scheduled_blogs',
-        'schedule': crontab(minute='*/10'),  # Run every 10 minutes
+        'schedule': crontab(minute=60, hour='*'),  # Run every 10 minutes
     },
     
     # Update blog analytics every 6 hours
