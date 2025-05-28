@@ -15,35 +15,36 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 # Configure the Celery Beat schedule
+# Configure the Celery Beat schedule
 app.conf.beat_schedule = {
-    # Every 4 hours, fetch trending topics from Google
+    # Fetch trending topics at the start of each hour
     'fetch-trending-topics': {
         'task': 'blog.tasks.fetch_trending_topics',
-        'schedule': crontab(minute=0, hour='*'),  # Run every 4 hours at XX:00
+        'schedule': crontab(minute=0, hour='*'),  # Run at XX:00
     },
     
-    # 10 minutes after fetching trending topics, process them
+    # Process trending topics 10 minutes after fetching
     'process-new-trending-topics': {
         'task': 'blog.tasks.process_trending_topics',
-        'schedule': crontab(minute=10, hour='*'),  # Run every 4 hours at XX:10
+        'schedule': crontab(minute=10, hour='*'),  # Run at XX:10
     },
     
-    # Run the main blog automation pipeline every 4 hours
+    # Run the main blog automation pipeline 20 minutes after the hour
     'automated-blog-pipeline': {
         'task': 'blog.automation.run_blog_automation_pipeline',
-        'schedule': crontab(minute=20, hour='*'),  # Run every 4 hours at XX:15
+        'schedule': crontab(minute=20, hour='*'),  # Run at XX:20
     },
     
-    # Check for scheduled blogs to publish every 10 minutes
+    # Check for scheduled blogs to publish every hour at 30 minutes past
     'publish-scheduled-blogs': {
         'task': 'blog.tasks.publish_scheduled_blogs',
-        'schedule': crontab(minute=60, hour='*'),  # Run every 10 minutes
+        'schedule': crontab(minute=30, hour='*'),  # Run at XX:30
     },
     
-    # Update blog analytics every 6 hours
+    # Update blog analytics every hour at 40 minutes past
     'update-blog-analytics': {
         'task': 'blog.tasks.update_blog_analytics',
-        'schedule': crontab(hour='*/6', minute=30),  # Run every 6 hours at XX:30
+        'schedule': crontab(minute=40, hour='*'),  # Run at XX:40
     },
     
     # Weekly database backup
