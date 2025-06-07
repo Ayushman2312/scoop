@@ -1,7 +1,13 @@
+#!/usr/bin/env python
+"""
+Test script to verify template selection for different keywords
+"""
 import os
+import django
 import sys
 import json
 import logging
+import re
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -26,45 +32,86 @@ print("Environment variables loaded")
 
 # Import after environment setup
 try:
-    from blog.blog_ai import ConversationCache
-    print("Successfully imported ConversationCache")
+    from blog.blog_ai import GeminiChatbot, ConversationCache
+    print("Successfully imported GeminiChatbot and ConversationCache")
 except Exception as e:
-    print(f"Error importing ConversationCache: {e}")
+    print(f"Error importing GeminiChatbot and ConversationCache: {e}")
     sys.exit(1)
 
-def test_preferred_template():
-    """Test the template selection based on templates.txt and context_cache.json."""
-    print("\n=== Testing preferred template selection ===")
+# Setup Django environment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogify.settings')
+django.setup()
+
+from blog.tasks import predict_template_type
+from blog.logger import BlogProcessLogger
+
+def test_template_selection():
+    """
+    Test template selection for different types of keywords
+    """
+    logger = BlogProcessLogger()
+    logger.info("Testing template selection for different keywords")
     
-    # Create a conversation cache instance
-    try:
-        cache = ConversationCache()
-        print("ConversationCache instance created")
-    except Exception as e:
-        print(f"Error creating ConversationCache: {e}")
-        return False
-    
-    # Test topics that should match different templates
-    test_topics = [
-        "Best SEO Practices for 2025",                      # Should match template1 (Evergreen)
-        "Latest AI Update from Google",                     # Should match template2 (News)
-        "iPhone 14 vs Samsung Galaxy S22",                  # Should match template3 (Comparison)
-        "Top Restaurants in New York City",                 # Should match template4 (Local)
-        "How to Build a WordPress Website",                 # Should match template5 (How-To)
+    test_keywords = [
+        # Evergreen content tests
+        "What is content marketing",
+        "Complete guide to SEO",
+        "Understanding artificial intelligence",
+        "Ultimate guide to email marketing",
+        
+        # Trending content tests
+        "Breaking news about Apple's latest iPhone",
+        "New updates to Windows 11",
+        "Latest developments in the Ukraine conflict",
+        "Recent changes to Google's algorithm",
+        
+        # Comparison content tests
+        "iPhone vs Samsung Galaxy comparison",
+        "Best email marketing platforms",
+        "Top 10 CRM solutions compared",
+        "WordPress vs Wix: Which is better?",
+        
+        # Local content tests
+        "Best restaurants near me",
+        "Things to do in New York City",
+        "Chicago real estate market trends",
+        "Local SEO strategies for small businesses",
+        
+        # How-to content tests
+        "How to build a website",
+        "Step by step guide to content creation",
+        "Tutorial for setting up WordPress",
+        "Guide to Instagram marketing"
     ]
     
-    # Test each topic
-    for topic in test_topics:
-        print(f"\nTesting topic: {topic}")
-        try:
-            template = cache.get_preferred_template(topic)
-            print(f"Selected template: ID {template['id']}, Key: {template['template_key']}")
-            print(f"Template name: {template['name']}")
-            print(f"Template type: {template['template_type']}")
-        except Exception as e:
-            print(f"Error getting preferred template for {topic}: {e}")
+    results = {}
     
-    return True
+    print("\nTEMPLATE SELECTION TEST RESULTS")
+    print("===============================")
+    
+    for keyword in test_keywords:
+        template_type = predict_template_type(keyword)
+        results[keyword] = template_type
+        print(f"Keyword: '{keyword}'")
+        print(f"Template selected: '{template_type}'")
+        print("---")
+    
+    # Count template types
+    template_counts = {}
+    for template in results.values():
+        if template in template_counts:
+            template_counts[template] += 1
+        else:
+            template_counts[template] = 1
+    
+    print("\nSUMMARY")
+    print("=======")
+    for template, count in template_counts.items():
+        print(f"{template}: {count} keywords")
+    
+    logger.info(f"Tested {len(test_keywords)} keywords with the following results: {template_counts}")
+    
+    return results
 
 def test_template_context():
     """Test that template context is properly loaded and contains both structured and raw data."""
@@ -104,18 +151,21 @@ def test_template_context():
     return True
 
 if __name__ == "__main__":
-    print("=== Testing template selection implementation ===")
+    print("\n=== Starting Template Selection Tests ===")
     
-    # Test template context loading
-    if test_template_context():
-        print("✅ Template context test passed")
+    # First test template context loading
+    context_test_passed = test_template_context()
+    
+    if context_test_passed:
+        # Then test template selection
+        selection_test_passed = test_template_selection()
+        
+        if selection_test_passed:
+            print("\n✅ All tests passed!")
+            sys.exit(0)
+        else:
+            print("\n❌ Template selection test failed")
+            sys.exit(1)
     else:
-        print("❌ Template context test failed")
-    
-    # Test template selection
-    if test_preferred_template():
-        print("✅ Preferred template test passed")
-    else:
-        print("❌ Preferred template test failed")
-    
-    print("Tests completed") 
+        print("\n❌ Template context test failed")
+        sys.exit(1) 

@@ -1,0 +1,28 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment files
+.env
+*.env
+
+# SQLite database
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Deployment folders or temporary files
+deployment/
+cache/
+*.tmp
+*.bak
+
+# VSCode settings
+.vscode/
+
+
+# Ignore templates backup or text
+templates.txt

@@ -18,6 +18,7 @@ from datetime import timedelta
 from .automation import BlogProcessLogger
 from django.conf import settings
 import os
+from django.db import models
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -153,16 +154,27 @@ def admin_dashboard(request):
     """
     Admin dashboard showing statistics and content management
     """
+    # Get post statistics
     stats = {
         'total_posts': BlogPost.objects.count(),
         'published_posts': BlogPost.objects.filter(status='published').count(),
         'draft_posts': BlogPost.objects.filter(status='draft').count(),
         'scheduled_posts': BlogPost.objects.filter(status='scheduled').count(),
-        'total_views': sum(p.view_count for p in BlogPost.objects.all()),
+        'total_views': BlogPost.objects.aggregate(models.Sum('view_count'))['view_count__sum'] or 0,
     }
     
-    recent_posts = BlogPost.objects.order_by('-created_at')[:5]
-    trending_posts = BlogPost.objects.filter(status='published').order_by('-view_count')[:5]
+    # Get recent and trending posts with error handling
+    try:
+        recent_posts = BlogPost.objects.order_by('-created_at')[:5]
+    except Exception as e:
+        logger.error(f"Error fetching recent posts: {e}")
+        recent_posts = []
+        
+    try:
+        trending_posts = BlogPost.objects.filter(status='published').order_by('-view_count')[:5]
+    except Exception as e:
+        logger.error(f"Error fetching trending posts: {e}")
+        trending_posts = []
     
     return render(request, 'admin/dashboard.html', {
         'stats': stats,
@@ -728,4 +740,27 @@ def view_process_logs(request, log_file=None):
         'selected_log': log_file,
         'log_content': log_content,
         'processes': processes
-    }) 
+    })
+
+@csrf_exempt
+@require_http_methods(["POST"])
+@login_required
+def publish_post(request, post_id):
+    """
+    Publish a blog post via AJAX
+    """
+    try:
+        post = get_object_or_404(BlogPost, id=post_id)
+        post.publish()
+        return JsonResponse({
+            'success': True,
+            'message': f'Post "{post.title}" has been published successfully.',
+            'post_id': str(post.id),
+            'post_url': f'/blog/{post.slug}/'
+        })
+    except Exception as e:
+        logger.error(f"Error publishing post {post_id}: {e}")
+        return JsonResponse({
+            'success': False,
+            'message': f'Error publishing post: {str(e)}'
+        }, status=500) 

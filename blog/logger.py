@@ -6,231 +6,273 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 from django.conf import settings
+import sys
+
+# Force UTF-8 encoding for all file operations
+if sys.platform == 'win32':
+    # Windows-specific fix for console output
+    import codecs
+    # Change console code page to UTF-8
+    os.system('chcp 65001 > nul')
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+
+def safe_message(message):
+    """Make message safe for any console by replacing problematic characters"""
+    if isinstance(message, str):
+        # Replace non-ASCII chars with ASCII approximations for console display
+        try:
+            return message.encode('ascii', 'replace').decode('ascii')
+        except:
+            return "[Complex Unicode Content]"
+    return str(message)
+
+class SafeFormatter(logging.Formatter):
+    """Formatter that handles Unicode characters safely"""
+    def format(self, record):
+        # Save original message
+        original_msg = record.getMessage()
+        
+        # Replace message with safe version for formatting
+        if hasattr(record, 'msg') and isinstance(record.msg, str):
+            record.msg = safe_message(record.msg)
+            if record.args:
+                record.args = tuple(safe_message(arg) if isinstance(arg, str) else arg 
+                                  for arg in record.args)
+        
+        # Get formatted message
+        formatted = super().format(record)
+        
+        # Restore original for file loggers that can handle Unicode
+        record.msg = original_msg
+        
+        return formatted
+
+def get_safe_console_handler():
+    """Create a console handler that safely handles Unicode characters"""
+    handler = logging.StreamHandler()
+    formatter = SafeFormatter('%(asctime)s [%(levelname)s] %(message)s')
+    handler.setFormatter(formatter)
+    return handler
+
+def get_utf8_file_handler(filename):
+    """Create a file handler with UTF-8 encoding"""
+    try:
+        # Ensure parent directory exists
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        
+        # Create handler with explicit UTF-8 encoding
+        handler = logging.FileHandler(filename, encoding='utf-8')
+        formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+        handler.setFormatter(formatter)
+        return handler
+    except Exception as e:
+        print(f"Error creating log file {filename}: {e}")
+        # Fallback to a local logs directory
+        try:
+            if not os.path.exists('logs'):
+                os.makedirs('logs')
+            handler = logging.FileHandler(f"logs/fallback_{datetime.now().strftime('%Y%m%d')}.log", 
+                                         encoding='utf-8')
+            formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+            handler.setFormatter(formatter)
+            return handler
+        except:
+            # Last resort: create a null handler that doesn't log anything
+            return logging.NullHandler()
 
 class BlogProcessLogger:
     """
-    Process logger for blog automation process
-    Provides structured logging with steps, timing, and error handling
+    Logger class for tracking and logging the blog generation process with proper Unicode handling
     """
-    
     def __init__(self):
-        self.logger = logging.getLogger('blog_automation')
-        self.process_logger = logging.getLogger('blog.process')
-        self.process_id = str(int(time.time()))
-        self.start_time = time.time()
-        self.steps = {}
-        self.current_step = None
+        self.process_id = uuid.uuid4().hex[:10]
+        self.start_time = datetime.now()
+        self.steps = []
         
-        # Create logs directory if it doesn't exist
-        logs_dir = Path('logs')
-        logs_dir.mkdir(exist_ok=True)
+        # Create log directory if it doesn't exist
+        logs_dir = getattr(settings, 'LOGS_DIR', Path('logs'))
+        os.makedirs(logs_dir, exist_ok=True)
         
-        # Create automation_structured.log for backward compatibility
-        self.json_log_path = logs_dir / 'automation_structured.log'
+        # Main logger for console output
+        self.logger = logging.getLogger(f'blog_automation_{self.process_id}')
+        self.logger.setLevel(logging.INFO)
         
-        # Create process specific log file
-        process_log_dir = logs_dir / 'blog_process'
-        process_log_dir.mkdir(exist_ok=True)
-        self.process_log_path = process_log_dir / f'blog_process_{self.process_id}.log'
+        # Clear existing handlers to avoid duplication
+        if self.logger.handlers:
+            self.logger.handlers.clear()
         
-        self.process_logger.info(f"PROCESS STARTED\nData: {{\n  \"process_id\": \"{self.process_id}\",\n  \"timestamp\": \"{datetime.now().isoformat()}\"\n}}")
+        # Add safe console handler
+        self.logger.addHandler(get_safe_console_handler())
+        
+        # Add UTF-8 file handler
+        log_file = Path(logs_dir) / f'blog_process_{datetime.now().strftime("%Y%m%d")}.log'
+        self.logger.addHandler(get_utf8_file_handler(str(log_file)))
+        
+        # Detailed process logger (file only)
+        process_log_dir = getattr(settings, 'PROCESS_LOG_DIR', Path('logs/processes'))
+        os.makedirs(process_log_dir, exist_ok=True)
+        
+        self.process_log_path = Path(process_log_dir) / f'process_{self.process_id}.log'
+        self.process_logger = logging.getLogger(f'process_{self.process_id}')
+        self.process_logger.setLevel(logging.INFO)
+        
+        # Clear existing handlers to avoid duplication
+        if self.process_logger.handlers:
+            self.process_logger.handlers.clear()
+        
+        # Add UTF-8 file handler
+        self.process_logger.addHandler(get_utf8_file_handler(str(self.process_log_path)))
+        
+        # Start logging
+        self.info("Process started", {"process_id": self.process_id})
     
-    def _log_to_json(self, log_entry):
-        """
-        Append a log entry to the JSON log file
-        """
+    def _safe_json_dumps(self, data):
+        """Convert data to JSON string safely"""
         try:
-            log_entry['timestamp'] = datetime.now().isoformat()
-            log_entry['process_id'] = self.process_id
-            
-            with open(self.json_log_path, 'a') as f:
-                f.write(json.dumps(log_entry) + '\n')
-                
-            # Also log to process-specific file
-            with open(self.process_log_path, 'a') as f:
-                f.write(json.dumps(log_entry) + '\n')
-        except Exception as e:
-            self.logger.error(f"Error writing to JSON log: {e}")
+            return json.dumps(data, ensure_ascii=False)
+        except:
+            # If JSON serialization fails, use a simpler representation
+            try:
+                # Try with ASCII encoding
+                return json.dumps(data, ensure_ascii=True)
+            except:
+                # Last resort: convert to string
+                return str(data)
     
     def info(self, message, data=None):
-        """
-        Log an info message
-        """
-        self.logger.info(f"[{self.process_id}] {message}")
-        
-        # Format data as JSON string if present
-        data_str = ""
-        if data:
-            data_str = f"\nData: {{\n  " + ",\n  ".join([f"\"{k}\": {json.dumps(v)}" for k, v in data.items()]) + "\n}}"
-        
-        self.process_logger.info(f"{message}{data_str}")
-        
-        log_entry = {
-            'level': 'INFO',
-            'message': message
-        }
-        
-        if data:
-            log_entry['data'] = data
+        """Log an info message with optional data"""
+        try:
+            # Create safe versions for console display
+            safe_msg = safe_message(message)
             
-        self._log_to_json(log_entry)
+            # Log to main logger (will handle Unicode safely via formatter)
+            self.logger.info(f"[{self.process_id}] {message}")
+            
+            # For process logger (file), use full Unicode support
+            if data:
+                data_str = f" - {self._safe_json_dumps(data)}"
+                self.process_logger.info(f"{message}{data_str}")
+            else:
+                self.process_logger.info(message)
+                
+        except Exception as e:
+            # Fallback logging in case of errors
+            print(f"Logging error: {str(e)} - Message: {safe_message(message)}")
     
     def warning(self, message, data=None):
-        """
-        Log a warning message
-        """
-        self.logger.warning(f"[{self.process_id}] {message}")
-        
-        # Format data as JSON string if present
-        data_str = ""
-        if data:
-            data_str = f"\nData: {{\n  " + ",\n  ".join([f"\"{k}\": {json.dumps(v)}" for k, v in data.items()]) + "\n}}"
-        
-        self.process_logger.warning(f"{message}{data_str}")
-        
-        log_entry = {
-            'level': 'WARNING',
-            'message': message
-        }
-        
-        if data:
-            log_entry['data'] = data
+        """Log a warning message with optional data"""
+        try:
+            # Log to main logger
+            self.logger.warning(f"[{self.process_id}] {message}")
             
-        self._log_to_json(log_entry)
+            # For process logger (file)
+            if data:
+                data_str = f" - {self._safe_json_dumps(data)}"
+                self.process_logger.warning(f"{message}{data_str}")
+            else:
+                self.process_logger.warning(message)
+                
+        except Exception as e:
+            # Fallback logging
+            print(f"Logging error: {str(e)} - Message: {safe_message(message)}")
     
     def error(self, message, data=None):
-        """
-        Log an error message
-        """
-        self.logger.error(f"[{self.process_id}] {message}")
-        
-        # Format data as JSON string if present
-        data_str = ""
-        if data:
-            data_str = f"\nData: {{\n  " + ",\n  ".join([f"\"{k}\": {json.dumps(v)}" for k, v in data.items()]) + "\n}}"
-        
-        self.process_logger.error(f"{message}{data_str}")
-        
-        log_entry = {
-            'level': 'ERROR',
-            'message': message
-        }
-        
-        if data:
-            log_entry['data'] = data
+        """Log an error message with optional data"""
+        try:
+            # Log to main logger
+            self.logger.error(f"[{self.process_id}] {message}")
             
-        self._log_to_json(log_entry)
+            # For process logger (file)
+            if data:
+                data_str = f" - {self._safe_json_dumps(data)}"
+                self.process_logger.error(f"{message}{data_str}")
+            else:
+                self.process_logger.error(message)
+                
+        except Exception as e:
+            # Fallback logging
+            print(f"Logging error: {str(e)} - Message: {safe_message(message)}")
+    
+    def success(self, message, data=None):
+        """Log a success message with optional data"""
+        try:
+            # Log to main logger
+            self.logger.info(f"[{self.process_id}] SUCCESS: {message}")
+            
+            # For process logger (file)
+            if data:
+                data_str = f" - {self._safe_json_dumps(data)}"
+                self.process_logger.info(f"SUCCESS: {message}{data_str}")
+            else:
+                self.process_logger.info(f"SUCCESS: {message}")
+                
+        except Exception as e:
+            # Fallback logging
+            print(f"Logging error: {str(e)} - Message: {safe_message(message)}")
     
     def step(self, step_id, step_name):
-        """
-        Begin a new step in the process
-        
-        Returns:
-            str: The step ID for use with complete_step
-        """
-        self.current_step = step_id
-        step_start_time = time.time()
-        
-        self.steps[step_id] = {
+        """Start a new step in the process and return the step ID"""
+        step = {
+            'id': step_id,
             'name': step_name,
-            'start_time': step_start_time,
+            'start_time': datetime.now().isoformat(),
             'status': 'IN_PROGRESS'
         }
-        
-        self.info(f"Starting step: {step_name}", {
-            'step_id': step_id,
-            'step_name': step_name
-        })
-        
+        self.steps.append(step)
+        self.info(f"Starting step: {step_name}", {'step_id': step_id})
         return step_id
     
     def complete_step(self, step_id, step_name, data=None):
-        """
-        Complete a step
-        """
-        if step_id in self.steps:
-            step = self.steps[step_id]
-            step['end_time'] = time.time()
-            step['duration'] = step['end_time'] - step['start_time']
-            step['status'] = 'COMPLETED'
-            
-            if data:
+        """Mark a step as completed"""
+        for step in self.steps:
+            if step['id'] == step_id:
+                step['end_time'] = datetime.now().isoformat()
+                step['status'] = 'COMPLETED'
                 step['data'] = data
-            
-            self.info(f"Completed step: {step_name} in {step['duration']:.2f}s", {
-                'step_id': step_id,
-                'step_name': step_name,
-                'duration': step['duration'],
-                'data': data
-            })
-            
-            if step_id == self.current_step:
-                self.current_step = None
-    
-    def fail_step(self, step_id, step_name, error_message):
-        """
-        Mark a step as failed
-        """
-        if step_id in self.steps:
-            step = self.steps[step_id]
-            step['end_time'] = time.time()
-            step['duration'] = step['end_time'] - step['start_time']
-            step['status'] = 'FAILED'
-            step['error'] = error_message
-            
-            self.error(f"Failed step: {step_name} - {error_message}", {
-                'step_id': step_id,
-                'step_name': step_name,
-                'duration': step['duration'],
-                'error': error_message
-            })
-            
-            if step_id == self.current_step:
-                self.current_step = None
-    
-    def success(self, message, data=None):
-        """
-        Log a success message
-        """
-        self.logger.info(f"[{self.process_id}] SUCCESS: {message}")
+                break
         
-        log_entry = {
-            'level': 'SUCCESS',
-            'message': message
-        }
+        self.info(f"Completed step: {step_name}", {'step_id': step_id, 'data': data})
+    
+    def fail_step(self, step_id, step_name, reason):
+        """Mark a step as failed"""
+        for step in self.steps:
+            if step['id'] == step_id:
+                step['end_time'] = datetime.now().isoformat()
+                step['status'] = 'FAILED'
+                step['reason'] = reason
+                break
         
-        if data:
-            log_entry['data'] = data
-            
-        self._log_to_json(log_entry)
+        self.error(f"Failed step: {step_name}", {'step_id': step_id, 'reason': reason})
     
     def end_process(self, status, data=None):
-        """
-        End the current process
-        """
-        duration = time.time() - self.start_time
+        """End the process with a status and optional data"""
+        end_time = datetime.now()
+        duration = (end_time - self.start_time).total_seconds()
         
-        log_message = f"Process {self.process_id} {status} in {duration:.2f}s"
-        if status == 'COMPLETED':
-            self.success(log_message, data)
-        else:
-            self.error(log_message, data)
-        
-        # Log a summary of all steps
-        steps_summary = {}
-        for step_id, step in self.steps.items():
-            steps_summary[step_id] = {
-                'name': step.get('name'),
-                'status': step.get('status'),
-                'duration': step.get('duration')
-            }
-        
-        self._log_to_json({
-            'level': 'SUMMARY',
-            'message': f"Process summary for {self.process_id}",
-            'process_id': self.process_id,
-            'duration': duration,
-            'status': status,
-            'steps': steps_summary,
+        self.info(f"Process ended with status: {status}", {
+            'duration_seconds': duration,
             'data': data
-        }) 
+        })
+        
+        # Save final process state to JSON
+        process_state = {
+            'process_id': self.process_id,
+            'start_time': self.start_time.isoformat(),
+            'end_time': end_time.isoformat(),
+            'duration_seconds': duration,
+            'status': status,
+            'steps': self.steps,
+            'data': data
+        }
+        
+        # Save as JSON
+        try:
+            logs_dir = getattr(settings, 'LOGS_DIR', Path('logs'))
+            os.makedirs(logs_dir, exist_ok=True)
+            
+            json_path = Path(logs_dir) / f'process_{self.process_id}.json'
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(process_state, f, ensure_ascii=False, indent=2, default=str)
+        except Exception as e:
+            self.error(f"Failed to save process state: {str(e)}") 

@@ -1,12 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
 
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/media/favicon.png">
 
     {% if meta_description %}
 
@@ -18,55 +20,1393 @@
 
     
 
-    <!-- Tailwind CSS -->
+    <!-- Core Dependencies -->
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+
+    <!-- Tailwind Config -->
 
     <script>
-
         tailwind.config = {
-
             theme: {
-
-                extend: {
-
-                    colors: {
-
-                        primary: {
-
-                            50: '#f0f9ff',
-
-                            100: '#e0f2fe',
-
-                            200: '#bae6fd',
-
-                            300: '#7dd3fc',
-
-                            400: '#38bdf8',
-
-                            500: '#0ea5e9',
-
-                            600: '#0284c7',
-
-                            700: '#0369a1',
-
-                            800: '#075985',
-
-                            900: '#0c4a6e',
-
-                        },
-
-                    },
-
+                fontFamily: {
+                    'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    'display': ['Poppins', 'sans-serif'],
                 },
-
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            400: '#a78bfa',
+                            500: '#8B5CF6',
+                            600: '#7C3AED',
+                            700: '#6D28D9',
+                        },
+                        success: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                        },
+                        warning: {
+                            50: '#fffbeb',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        danger: {
+                            50: '#fef2f2',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        },
+                        dark: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'tilt': 'tilt 10s infinite linear',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
+                        },
+                        tilt: {
+                            '0%, 50%, 100%': {
+                                transform: 'rotate(0deg)',
+                            },
+                            '25%': {
+                                transform: 'rotate(1deg)',
+                            },
+                            '75%': {
+                                transform: 'rotate(-1deg)',
+                            },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-conic': 'conic-gradient(var(--tw-gradient-stops))',
+                        'gradient-diagonal': 'linear-gradient(45deg, var(--tw-gradient-stops))',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 15px rgba(14, 165, 233, 0.5)',
+                        'neumorph': '5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff',
+                        'neumorph-dark': '5px 5px 10px rgba(0,0,0,0.2), -5px -5px 10px rgba(255,255,255,0.05)',
+                    },
+                    dropShadow: {
+                        'blue': '0 0 10px rgba(14, 165, 233, 0.5)',
+                        'purple': '0 0 10px rgba(139, 92, 246, 0.5)',
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    },
+                    typography: {
+                        DEFAULT: {
+                            css: {
+                                maxWidth: '70ch',
+                                color: '#333',
+                                lineHeight: '1.6',
+                                '> *': {
+                                    marginTop: '1.25em',
+                                    marginBottom: '1.25em',
+                                },
+                                'p, li': {
+                                    marginTop: '0.75em',
+                                    marginBottom: '0.75em',
+                                },
+                                'h1, h2, h3, h4': {
+                                    fontWeight: '600',
+                                    lineHeight: '1.25',
+                                    fontFamily: 'Poppins, sans-serif',
+                                },
+                            },
+                        },
+                    },
+                    letterSpacing: {
+                        'comfortable': '0.015em',
+                    },
+                },
             },
-
+            plugins: [
+                function({ addUtilities }) {
+                    const newUtilities = {
+                        '.text-shadow-sm': {
+                            textShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+                        },
+                        '.text-shadow': {
+                            textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                        },
+                        '.text-shadow-md': {
+                            textShadow: '0 4px 8px rgba(0, 0, 0, 0.12)',
+                        },
+                        '.text-shadow-lg': {
+                            textShadow: '0 8px 16px rgba(0, 0, 0, 0.15)',
+                        },
+                        '.text-shadow-none': {
+                            textShadow: 'none',
+                        },
+                    };
+                    addUtilities(newUtilities);
+                },
+            ],
         }
-
     </script>
 
     
+
+    <style>
+        /* Basic Typography */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #000000;
+            letter-spacing: 0.015em;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f8fafc;
+        }
+        
+        .dark body {
+            color: #ffffff;
+            background-color: #0f172a;
+        }
+        
+        /* Headings */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 0.75em;
+        }
+        
+        .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+            color: #ffffff;
+        }
+        
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.5rem; }
+        h5 { font-size: 1.25rem; }
+        h6 { font-size: 1rem; }
+        
+        /* Paragraphs and text */
+        p, li, blockquote {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #000000;
+            margin-bottom: 1.5em;
+            max-width: 75ch;
+        }
+        
+        .dark p, .dark li, .dark blockquote {
+            color: #ffffff;
+        }
+        
+        /* Links */
+        a {
+            color: #1d4ed8;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+        
+        a:hover {
+            color: #1e40af;
+        }
+        
+        .dark a {
+            color: #60a5fa;
+        }
+        
+        .dark a:hover {
+            color: #93c5fd;
+        }
+        
+        /* Emphasis */
+        strong, b {
+            font-weight: 700;
+            color: #000000;
+        }
+        
+        .dark strong, .dark b {
+            color: #ffffff;
+        }
+        
+        em, i {
+            font-style: italic;
+        }
+        
+        /* High contrast elements */
+        .high-contrast {
+            color: #000000;
+            font-weight: 600;
+        }
+        
+        .dark .high-contrast {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        /* Additional dark mode adjustments */
+        .dark .text-gray-900 {
+            color: #ffffff !important;
+        }
+        
+        .dark .text-gray-800 {
+            color: #f1f5f9 !important;
+        }
+        
+        .dark .text-gray-700 {
+            color: #e2e8f0 !important;
+        }
+        
+        .dark .text-gray-600 {
+            color: #cbd5e1 !important;
+        }
+        
+        .dark .text-gray-500 {
+            color: #94a3b8 !important;
+        }
+        
+        .dark .bg-white {
+            background-color: #1e293b !important;
+        }
+        
+        /* Navigation */
+        .dark nav a {
+            color: #f1f5f9 !important;
+        }
+        
+        .dark nav a:hover {
+            color: #60a5fa !important;
+        }
+        
+        /* Menu Items */
+        .dark .text-gray-700, .dark .text-gray-600 {
+            color: #e2e8f0 !important;
+        }
+        
+        /* Card text */
+        .dark .card-hover .text-gray-900 {
+            color: #ffffff !important;
+        }
+        
+        .dark .card-hover .text-gray-700 {
+            color: #e2e8f0 !important;
+        }
+        
+        /* User Menu */
+        .dark #userMenu a {
+            color: #f1f5f9 !important;
+        }
+        
+        .dark #userMenu a:hover {
+            color: #60a5fa !important;
+            background-color: #334155 !important;
+        }
+        
+        /* Mobile Menu */
+        .dark #mobile-menu a {
+            color: #f1f5f9 !important;
+        }
+        
+        .dark #mobile-menu a:hover {
+            color: #60a5fa !important;
+        }
+        
+        /* Search */
+        .dark #searchOverlay input {
+            color: #ffffff !important;
+        }
+        
+        .dark #searchOverlay input::placeholder {
+            color: #94a3b8 !important;
+        }
+        
+        /* Cookie Consent Banner */
+        .dark #cookieConsent p {
+            color: #f1f5f9 !important;
+        }
+        
+        /* Article Content */
+        .dark .article-content p {
+            color: #f1f5f9 !important;
+        }
+        
+        /* Sidebar Elements */
+        .dark #dynamicSidebar h3, 
+        .dark #dynamicSidebar h4 {
+            color: #ffffff !important;
+        }
+        
+        .dark #dynamicSidebar p {
+            color: #e2e8f0 !important;
+        }
+        
+        /* Reading Preferences Panel */
+        .dark #readingPrefsPanel label {
+            color: #f1f5f9 !important;
+        }
+        
+        /* Ensure all input text is visible */
+        .dark input, 
+        .dark textarea {
+            color: #ffffff !important;
+        }
+        
+        /* Fix notification text */
+        .dark .notification-item p {
+            color: #f1f5f9 !important;
+        }
+        
+        /* Share Modal */
+        .dark #shareModal h3 {
+            color: #ffffff !important;
+        }
+        
+        .dark #shareModal p {
+            color: #e2e8f0 !important;
+        }
+        
+        /* Welcome Banner */
+        .dark #welcomeBanner h1 {
+            color: #ffffff !important;
+        }
+        
+        .dark #welcomeBanner p {
+            color: #f1f5f9 !important;
+        }
+        
+        /* Container spacing */
+        .container {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            max-width: 1400px; /* Increase max width for better spacing */
+        }
+        
+        @media (min-width: 640px) {
+            .container {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+        
+        /* Section Spacing */
+        .section-container {
+            margin-bottom: 3rem; /* Increased spacing between sections */
+            padding: 1.5rem;
+        }
+        
+        /* Category Icons and Cards */
+        .category-card {
+            padding: 1.5rem;
+            margin: 0.75rem;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .trending-card {
+            height: 180px; /* Increased height */
+            padding: 1.5rem;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .content-value-card {
+            height: 100%;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px; /* Set minimum height */
+        }
+        
+        /* Value proposition section */
+        .value-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* Enhanced Responsive Styles */
+        @media (max-width: 1280px) {
+            #secondarySidebar {
+                display: none;
+            }
+            
+            .xl\:w-2\/4 {
+                width: 66.666667%;
+            }
+            
+            .xl\:w-1\/4 {
+                width: 33.333333%;
+            }
+            
+            .value-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .lg\:w-2\/3 {
+                width: 100%;
+            }
+            
+            .lg\:w-1\/3 {
+                width: 100%;
+            }
+            
+            #dynamicSidebar {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+            
+            .card-hover {
+                height: 100%;
+            }
+            
+            .content-value-card {
+                min-height: 250px;
+            }
+
+            #welcomeBanner .welcome-banner-content {
+                padding: 2rem;
+            }
+
+            #welcomeBanner h1 {
+                font-size: 2.25rem;
+            }
+
+            #welcomeBanner p {
+                font-size: 1.125rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #dynamicSidebar {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-primary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+            
+            .text-3xl {
+                font-size: 1.5rem;
+            }
+            
+            .trending-topics-bar {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 0.5rem;
+            }
+            
+            .section-container {
+                margin-bottom: 2rem;
+                padding: 1rem;
+            }
+            
+            .category-card {
+                min-height: 100px;
+                padding: 1.25rem;
+                margin: 0.5rem;
+            }
+            
+            .trending-card {
+                height: 160px;
+                margin: 0.5rem 0;
+            }
+            
+            .value-cards-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .content-value-card {
+                min-height: 220px;
+            }
+
+            #welcomeBanner .welcome-banner-content {
+                padding: 1.5rem;
+            }
+
+            #welcomeBanner h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            #welcomeBanner p {
+                margin-bottom: 1.5rem;
+            }
+
+            #welcomeBanner .relative > div:first-child {
+                width: 160px;
+                height: 160px;
+            }
+
+            #welcomeBanner svg {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .p-8 {
+                padding: 1.5rem;
+            }
+            
+            .welcome-banner-content {
+                padding: 1.5rem !important;
+            }
+            
+            .text-xl {
+                font-size: 1.125rem;
+            }
+            
+            .button-primary {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .section-container {
+                margin-bottom: 1.5rem;
+                padding: 0.75rem;
+            }
+            
+            .category-card {
+                min-height: 90px;
+                padding: 1rem;
+                margin: 0.25rem;
+            }
+            
+            .content-value-card {
+                min-height: 200px;
+                padding: 1.25rem;
+            }
+
+            #welcomeBanner h1 {
+                font-size: 1.75rem;
+            }
+
+            #welcomeBanner p {
+                font-size: 1rem;
+                margin-bottom: 1.25rem;
+            }
+
+            #welcomeBanner a {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            #welcomeBanner .relative > div:first-child {
+                width: 120px;
+                height: 120px;
+            }
+
+            #welcomeBanner svg {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        /* Keep necessary existing styles */
+        // ... keep remaining necessary styles ...
+        
+        /* Interactive UI Elements */
+        .scroll-indicator {
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            width: 0%;
+        }
+        
+        .button-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, rgba(255,255,255,0) 10%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0) 30%);
+            transform: rotate(30deg);
+            animation: shine 3s infinite linear;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+        
+        /* Marquee animation */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+        }
+        
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        /* Card interactions */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark .card-hover {
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: rgba(14, 165, 233, 0.2);
+        }
+        
+        .dark .card-hover:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            border-color: rgba(96, 165, 250, 0.2);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        
+        /* Custom Selection Color */
+        ::selection {
+            background-color: rgba(37, 99, 235, 0.2);
+            color: #2563eb;
+        }
+        
+        .dark ::selection {
+            background-color: rgba(96, 165, 250, 0.3);
+            color: #60a5fa;
+        }
+        
+        /* Text gradient animation */
+        .text-gradient-animated {
+            background-image: linear-gradient(90deg, #0ea5e9, #8b5cf6, #0ea5e9);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: textGradient 8s linear infinite;
+        }
+        
+        @keyframes textGradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        /* Reading preference controls */
+        .control-button {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .dark .control-button {
+            background-color: #334155;
+            color: #cbd5e1;
+        }
+        
+        .control-button:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+        
+        .dark .control-button:hover {
+            background-color: #475569;
+            color: #f1f5f9;
+        }
+
+        /* Content wrappers */
+        .content-wrapper {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark .content-wrapper {
+            background-color: #1e293b;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Additional dark mode adjustments */
+        .dark .text-gray-900 {
+            color: #ffffff !important;
+        }
+        
+        /* Button animations and improvements */
+        .button-primary {
+            background-color: #0ea5e9;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.2), 0 2px 4px -2px rgba(14, 165, 233, 0.1);
+            z-index: 1;
+        }
+        
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3), 0 4px 6px -4px rgba(14, 165, 233, 0.2);
+        }
+        
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        
+        .button-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .button-primary:hover::before {
+            left: 100%;
+        }
+        
+        /* Card hover enhancements */
+        
+        /* Glass morphism effects */
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+        
+        .dark .glass-morphism {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        .glass-card {
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px 0 rgba(31, 38, 135, 0.15);
+        }
+        
+        .dark .glass-card:hover {
+            box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Image hover effects */
+        .img-hover-zoom {
+            overflow: hidden;
+        }
+        
+        .img-hover-zoom img {
+            transition: transform 0.5s ease;
+        }
+        
+        .img-hover-zoom:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Content wrappers */
+        
+        /* Advanced animations */
+        @keyframes float-shadow {
+            0%, 100% { 
+                transform: translateY(0); 
+                box-shadow: 0 10px 20px -15px rgba(0, 0, 0, 0.3);
+            }
+            50% { 
+                transform: translateY(-10px); 
+                box-shadow: 0 25px 20px -15px rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        .float-animation {
+            animation: float-shadow 6s ease-in-out infinite;
+        }
+        
+        .dark .float-animation {
+            animation-name: float-shadow-dark;
+        }
+        
+        @keyframes float-shadow-dark {
+            0%, 100% { 
+                transform: translateY(0); 
+                box-shadow: 0 10px 20px -15px rgba(0, 0, 0, 0.6);
+            }
+            50% { 
+                transform: translateY(-10px); 
+                box-shadow: 0 25px 20px -15px rgba(0, 0, 0, 0.4);
+            }
+        }
+        
+        /* Highlight pulse for new elements */
+        @keyframes highlight-pulse {
+            0%, 100% { 
+                background-color: transparent; 
+            }
+            50% { 
+                background-color: rgba(14, 165, 233, 0.15); 
+            }
+        }
+        
+        .highlight-new {
+            animation: highlight-pulse 2s ease-in-out 2;
+        }
+        
+        .dark .highlight-new {
+            animation-name: highlight-pulse-dark;
+        }
+        
+        @keyframes highlight-pulse-dark {
+            0%, 100% { 
+                background-color: transparent; 
+            }
+            50% { 
+                background-color: rgba(14, 165, 233, 0.25); 
+            }
+        }
+        
+        /* Container spacing */
+        .content-section {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .content-section-title {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .content-value-section {
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: rgba(15, 23, 42, 0.5);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .value-card {
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            min-height: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .value-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-card-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .category-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .category-item:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        /* Latest Articles Section */
+        .latest-articles-section {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            padding: 2.5rem;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sort-dropdown {
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: #fff;
+            font-size: 0.875rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Trending Topics Section */
+        .trending-section {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .trending-item {
+            aspect-ratio: 1.5;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .trending-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .trending-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            z-index: 1;
+        }
+
+        .trending-content {
+            position: relative;
+            z-index: 2;
+            padding: 1rem;
+        }
+
+        .trending-title {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        .trending-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Responsive adjustments for these sections */
+        @media (max-width: 1024px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.25rem;
+            }
+            
+            .trending-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.25rem;
+            }
+            
+            .value-card {
+                min-height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-section-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.25rem;
+            }
+            
+            .content-value-section {
+                padding: 1.5rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .trending-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .category-icon {
+                width: 3rem;
+                height: 3rem;
+                font-size: 1.25rem;
+            }
+            
+            .value-card {
+                padding: 1.25rem;
+                min-height: 160px;
+            }
+            
+            .trending-content {
+                padding: 0.75rem;
+            }
+            
+            .trending-name {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-section {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .content-section-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .content-value-section {
+                padding: 1.25rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            
+            .trending-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .category-item {
+                padding: 1.25rem;
+            }
+            
+            .category-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.125rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .category-name {
+                font-size: 0.875rem;
+            }
+            
+            .article-container {
+                padding: 2rem;
+                min-height: 200px;
+            }
+            
+            .value-card {
+                min-height: 140px;
+                padding: 1rem;
+            }
+        }
+    </style>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white dark:bg-dark-800 shadow-lg p-6 z-40 transform translate-y-full transition-transform duration-500">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 md:mr-8">
+                <p class="text-gray-900 dark:text-gray-100 text-base font-medium">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            </div>
+            <div class="flex gap-4">
+                <button id="cookieAccept" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-base button-shine font-semibold shadow-md">Accept</button>
+                <button id="cookieDecline" class="px-6 py-3 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition text-base font-semibold">Decline</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reading Progress Bar -->
+    <div id="readingProgressContainer" class="sticky top-16 z-20 h-1 bg-gray-200 dark:bg-dark-700 w-full mb-6 hidden">
+        <div id="readingProgress" class="h-full bg-gradient-to-r from-blue-600 to-purple-600 w-0"></div>
+    </div>
+    
+    <!-- AI Content Quality Badge -->
+    <div id="aiQualityBadge" class="fixed bottom-24 left-6 z-40 bg-white dark:bg-dark-800 rounded-full shadow-lg p-3 flex items-center opacity-0 transform -translate-x-12 transition-all duration-500">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white mr-3">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="pr-4">
+            <p class="text-sm font-bold text-gray-900 dark:text-white font-display">AI Content</p>
+            <div class="flex items-center">
+                <div class="flex space-x-1">
+                    <i class="fas fa-star text-yellow-500"></i>
+                    <i class="fas fa-star text-yellow-500"></i>
+                    <i class="fas fa-star text-yellow-500"></i>
+                    <i class="fas fa-star text-yellow-500"></i>
+                    <i class="fas fa-star-half-alt text-yellow-500"></i>
+                </div>
+                <span class="text-xs text-gray-700 dark:text-gray-300 ml-2 font-medium">4.5/5</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reading Preferences Panel -->
+    <div id="readingPrefsButton" class="fixed left-6 top-1/2 transform -translate-y-1/2 z-40 bg-white dark:bg-dark-800 rounded-full shadow-lg p-3 hover:bg-gray-100 dark:hover:bg-dark-700 transition cursor-pointer hover:shadow-xl">
+        <i class="fas fa-text-height text-blue-600 dark:text-blue-400"></i>
+    </div>
+    
+    <div id="readingPrefsPanel" class="fixed left-0 top-1/2 transform -translate-y-1/2 translate-x-[-100%] z-40 bg-white dark:bg-dark-800 rounded-r-lg shadow-xl p-6 transition-transform duration-300 w-72">
+        <div class="flex justify-between items-center mb-6">
+            <h4 class="font-bold text-gray-900 dark:text-white text-lg font-display">Reading Preferences</h4>
+            <button id="closeReadingPrefs" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Text Size</label>
+                <div class="flex items-center space-x-3">
+                    <button id="decreaseFont" class="control-button">
+                        <i class="fas fa-minus text-xs"></i>
+                    </button>
+                    <div id="fontSizeIndicator" class="flex-grow bg-gray-200 dark:bg-dark-700 rounded-full h-2 relative">
+                        <div class="absolute inset-y-0 left-0 bg-blue-600 rounded-full" style="width: 50%;"></div>
+                    </div>
+                    <button id="increaseFont" class="control-button">
+                        <i class="fas fa-plus text-xs"></i>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Line Height</label>
+                <div class="flex items-center space-x-3">
+                    <button id="decreaseLineHeight" class="control-button">
+                        <i class="fas fa-compress-alt text-xs"></i>
+                    </button>
+                    <div id="lineHeightIndicator" class="flex-grow bg-gray-200 dark:bg-dark-700 rounded-full h-2 relative">
+                        <div class="absolute inset-y-0 left-0 bg-blue-600 rounded-full" style="width: 50%;"></div>
+                    </div>
+                    <button id="increaseLineHeight" class="control-button">
+                        <i class="fas fa-expand-alt text-xs"></i>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" id="toggleDyslexicFont" class="sr-only">
+                        <div class="block bg-gray-200 dark:bg-dark-700 w-12 h-6 rounded-full"></div>
+                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                    </div>
+                    <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Dyslexic Font</span>
+                </label>
+            </div>
+            <div>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" id="toggleFocusMode" class="sr-only">
+                        <div class="block bg-gray-200 dark:bg-dark-700 w-12 h-6 rounded-full"></div>
+                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                    </div>
+                    <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Focus Mode</span>
+                </label>
+            </div>
+        </div>
+    </div>
 
     <!-- Google AdSense -->
 
@@ -101,213 +1441,1305 @@
     
 
     {% block extra_head %}{% endblock %}
-
 </head>
 
 <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+    
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed z-50 bottom-6 right-6 p-3 rounded-full bg-white dark:bg-dark-800 shadow-lg hover:shadow-xl transition-all duration-300" aria-label="Toggle Dark Mode">
+        <i class="fas fa-moon text-dark-800 dark:hidden"></i>
+        <i class="fas fa-sun text-yellow-400 hidden dark:block"></i>
+    </button>
 
+    <!-- Floating Action Menu -->
+    <div class="fixed z-40 bottom-20 right-6 flex flex-col gap-3 items-center">
+        <button id="shareButton" class="p-3 rounded-full bg-primary-600 text-white shadow-lg transform transition-all duration-300 hover:scale-110">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button id="scrollTopButton" class="p-3 rounded-full bg-accent-500 text-white shadow-lg transform transition-all duration-300 hover:scale-110 opacity-0">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+    
     <!-- Header -->
-
-    <header class="bg-white shadow-sm">
+    <header class="sticky top-0 z-30 bg-white dark:bg-dark-900 shadow-md transition-all duration-300">
+        <!-- Trending Topics Bar -->
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 relative overflow-hidden">
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <div class="flex items-center space-x-6 px-4">
+                        <span class="font-bold">Trending:</span>
+                        <span class="flex items-center"><i class="fas fa-fire-alt text-yellow-300 mr-2"></i> Top 10 AI Tools for Content Creation</span>
+                        <span class="text-white opacity-50">•</span>
+                        <span class="flex items-center"><i class="fas fa-chart-line text-green-300 mr-2"></i> How to Boost Your Blog Traffic</span>
+                        <span class="text-white opacity-50">•</span>
+                        <span class="flex items-center"><i class="fas fa-rocket text-purple-300 mr-2"></i> Latest Web Development Trends</span>
+                        <span class="text-white opacity-50">•</span>
+                        <span class="flex items-center"><i class="fas fa-brain text-blue-300 mr-2"></i> AI-Powered Writing: The Future is Here</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-
-            <a href="{% url 'index' %}" class="text-2xl font-bold text-primary-600">Blogify</a>
-
+            <a href="{% url 'index' %}" class="flex items-center gap-3 group">
+                <div class="relative w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                    <span class="text-xl font-extrabold text-white">B</span>
+                </div>
+                <span class="text-2xl font-extrabold text-gray-900 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Blogify</span>
+            </a>
             
-
-            <nav class="hidden md:flex space-x-6">
-
-                <a href="{% url 'index' %}" class="text-gray-600 hover:text-primary-600 transition">Home</a>
-
-                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Categories</a>
-
-                <a href="#" class="text-gray-600 hover:text-primary-600 transition">About</a>
-
-                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Contact</a>
-
+            <nav class="hidden md:flex space-x-8">
+                <a href="{% url 'index' %}" class="group flex items-center text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">
+                    <i class="fas fa-home mr-2"></i>
+                    <span>Home</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-600 mt-0.5"></span>
+                </a>
+                <a href="#" class="group flex items-center text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">
+                    <i class="fas fa-th mr-2"></i>
+                    <span>Categories</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-600 mt-0.5"></span>
+                </a>
+                <a href="#" class="group flex items-center text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    <span>About</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-600 mt-0.5"></span>
+                </a>
+                <a href="#" class="group flex items-center text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">
+                    <i class="fas fa-envelope mr-2"></i>
+                    <span>Contact</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-600 mt-0.5"></span>
+                </a>
             </nav>
-
             
-
-            <div class="flex items-center">
-
-                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-primary-600 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-
-                    </svg>
-
+            <div class="flex items-center gap-4">
+                <!-- Search Button -->
+                <button id="searchToggle" class="p-2 rounded-full text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-dark-800 transition hover:shadow-md">
+                    <i class="fas fa-search"></i>
                 </button>
-
+                
+                <!-- Notification Bell -->
+                <div class="relative">
+                    <button id="notificationButton" class="p-2 rounded-full text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-dark-800 transition hover:shadow-md">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                </div>
+                
+                <!-- User Menu -->
+                <div class="relative">
+                    <button id="userMenuToggle" class="flex items-center gap-2 p-1 pr-3 rounded-full text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-dark-800 transition hover:shadow-md">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white">
+                            <i class="fas fa-user-alt text-xs"></i>
+                        </div>
+                        <span class="hidden md:block text-sm font-medium">Guest</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="userMenu" class="absolute right-0 mt-2 w-48 bg-white dark:bg-dark-800 rounded-lg shadow-xl py-2 z-50 transform scale-95 opacity-0 pointer-events-none transition-all duration-200">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-dark-700">
+                            <i class="fas fa-user-circle mr-3 text-primary-500"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-dark-700">
+                            <i class="fas fa-cog mr-3 text-primary-500"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="border-t border-gray-200 dark:border-dark-700 my-1"></div>
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-dark-700">
+                            <i class="fas fa-sign-in-alt mr-3 text-primary-500"></i>
+                            <span>Login / Register</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
-
         </div>
-
         
-
-        <!-- Mobile Menu -->
-
-        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
-
-            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
-
-                <a href="{% url 'index' %}" class="text-gray-600 hover:text-primary-600 transition">Home</a>
-
-                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Categories</a>
-
-                <a href="#" class="text-gray-600 hover:text-primary-600 transition">About</a>
-
-                <a href="#" class="text-gray-600 hover:text-primary-600 transition">Contact</a>
-
+        <!-- Search Overlay -->
+        <div id="searchOverlay" class="absolute top-full left-0 w-full bg-white dark:bg-dark-900 shadow-md p-4 hidden z-40">
+            <div class="container mx-auto">
+                <div class="relative">
+                    <input type="text" placeholder="Search articles..." class="w-full px-4 py-3 pl-12 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-dark-800 dark:text-white text-lg">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <div class="absolute right-4 top-1/2 transform -translate-y-1/2 flex space-x-2">
+                        <span class="text-sm text-gray-500 dark:text-gray-400 hidden md:inline">Press ESC to close</span>
+                        <button id="closeSearch" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Quick Search Suggestions -->
+                <div class="mt-4">
+                    <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Popular Searches:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-primary-100 dark:hover:bg-primary-900 hover:text-primary-700 dark:hover:text-primary-300 transition">AI Writing</a>
+                        <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-primary-100 dark:hover:bg-primary-900 hover:text-primary-700 dark:hover:text-primary-300 transition">SEO Tips</a>
+                        <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-primary-100 dark:hover:bg-primary-900 hover:text-primary-700 dark:hover:text-primary-300 transition">Content Marketing</a>
+                        <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-primary-100 dark:hover:bg-primary-900 hover:text-primary-700 dark:hover:text-primary-300 transition">Blogging</a>
+                    </div>
+                </div>
             </div>
-
         </div>
-
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-dark-900 shadow-md">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="{% url 'index' %}" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition py-2">
+                    <i class="fas fa-home mr-2"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition py-2">
+                    <i class="fas fa-th mr-2"></i>
+                    <span>Categories</span>
+                </a>
+                <a href="#" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition py-2">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    <span>About</span>
+                </a>
+                <a href="#" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition py-2">
+                    <i class="fas fa-envelope mr-2"></i>
+                    <span>Contact</span>
+                </a>
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+                    <a href="#" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition py-2">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition py-2">
+                        <i class="fas fa-cog mr-2"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition py-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        <span>Login / Register</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </header>
-
     
-
-    <!-- Header Ad Placement -->
-
-    {% if header_ads %}
-
-    <div class="w-full bg-gray-100 py-3 text-center">
-
-        {% for ad in header_ads %}
-
-        <div class="ad-container">{{ ad.ad_code|safe }}</div>
-
-        {% endfor %}
-
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="fixed top-16 right-4 w-80 bg-white dark:bg-dark-800 shadow-lg rounded-lg z-50 transition-all duration-300 transform translate-x-full opacity-0">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200">Notifications</h3>
+            <button id="closeNotifications" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="p-4 max-h-80 overflow-y-auto">
+            <div class="notification-item p-3 border-b border-gray-100 dark:border-gray-700">
+                <div class="flex items-start">
+                    <div class="bg-primary-100 text-primary-600 rounded-full p-2 mr-3">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800 dark:text-gray-200">New article published</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">2 hours ago</p>
+                    </div>
+                </div>
+            </div>
+            <div class="notification-item p-3 border-b border-gray-100 dark:border-gray-700">
+                <div class="flex items-start">
+                    <div class="bg-accent-100 text-accent-600 rounded-full p-2 mr-3">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800 dark:text-gray-200">Your article was featured</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Yesterday</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-2 text-center">
+            <a href="#" class="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300">View all notifications</a>
+        </div>
     </div>
-
+    
+    <!-- Share Modal -->
+    <div id="shareModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50" id="shareModalBg"></div>
+        <div class="relative bg-white dark:bg-dark-800 rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="shareModalContent">
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="font-semibold text-gray-800 dark:text-gray-200">Share This Page</h3>
+                <button id="closeShareModal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex justify-center space-x-4 mb-6">
+                    <a href="#" class="p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="p-3 bg-blue-400 text-white rounded-full hover:bg-blue-500 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="p-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition"><i class="fab fa-pinterest"></i></a>
+                    <a href="#" class="p-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="p-3 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Or copy link:</p>
+                    <div class="flex">
+                        <input type="text" id="shareUrl" readonly value="https://blogify.com/current-page" class="flex-grow px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-l-md focus:outline-none dark:bg-dark-900 dark:text-white text-sm">
+                        <button id="copyShareLink" class="px-3 py-2 bg-primary-600 text-white rounded-r-md hover:bg-primary-700 transition">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <p id="copyMessage" class="text-xs text-green-600 mt-1 hidden">Link copied!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header Ad Placement -->
+    {% if header_ads %}
+    <div class="w-full bg-gray-100 dark:bg-dark-800 py-3 text-center">
+        {% for ad in header_ads %}
+        <div class="ad-container">{{ ad.ad_code|safe }}</div>
+        {% endfor %}
+    </div>
     {% endif %}
 
-    
-
     <!-- Main Content -->
-
     <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- Interactive Welcome Banner (only on homepage) -->
+        <div id="welcomeBanner" class="relative overflow-hidden rounded-2xl mb-12 bg-white dark:bg-dark-900 border border-gray-200 dark:border-gray-800 shadow-xl glass-morphism">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-accent-500/20"></div>
+            <div class="absolute -bottom-16 -right-16 w-80 h-80 bg-accent-500/15 rounded-full"></div>
+            <div class="absolute -top-16 -left-16 w-64 h-64 bg-primary-500/15 rounded-full"></div>
+            
+            <div class="relative p-10 md:p-16 z-10 welcome-banner-content">
+                <div class="flex flex-col md:flex-row gap-10 items-center">
+                    <div class="md:w-2/3">
+                        <h1 class="text-3xl md:text-5xl font-extrabold mb-8 text-dark-900 dark:text-white font-display tracking-tight leading-tight">
+                            Welcome to <span class="text-gradient-animated font-black">Blogify</span>
+                        </h1>
+                        <p class="text-gray-900 dark:text-white mb-10 text-xl tracking-normal max-w-prose font-medium leading-relaxed">
+                            Discover AI-powered content that reads like it was crafted by human experts. Explore our trending topics and stay informed with high-quality articles.
+                        </p>
+                        <div class="flex flex-wrap gap-5">
+                            <a href="#" class="button-primary px-8 py-4 rounded-lg text-lg font-bold">
+                                Get Started
+                            </a>
+                            <a href="#" class="px-8 py-4 bg-white/80 dark:bg-dark-800/80 backdrop-blur-sm text-gray-900 dark:text-white rounded-lg hover:shadow-lg border-2 border-gray-200 dark:border-dark-700 transition-all duration-300 font-bold text-lg">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="relative">
+                            <div class="w-64 h-64 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center opacity-20 animate-pulse-slow"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-32 h-32 text-blue-600 dark:text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Why Choose Our Content Section -->
+        <section class="content-section">
+            <h2 class="content-section-title">Why Choose Our Content</h2>
+            <div class="content-value-section">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="value-card">
+                        <div class="flex items-start">
+                            <div class="mr-4 p-3 rounded-full bg-blue-900/50 text-blue-400">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="value-card-title">Always Current</h3>
+                                <p class="value-card-text">Our valuable content platform delivers high-quality articles that keep you informed on the latest trends.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="flex items-start">
+                            <div class="mr-4 p-3 rounded-full bg-green-900/50 text-green-400">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="value-card-title">High Quality</h3>
+                                <p class="value-card-text">Our content is crafted with precision and care to ensure accuracy, readability, and valuable insights.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="flex items-start">
+                            <div class="mr-4 p-3 rounded-full bg-purple-900/50 text-purple-400">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="value-card-title">Diverse Topics</h3>
+                                <p class="value-card-text">Explore a wide range of subjects from technology to lifestyle, all curated to expand your knowledge base.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Explore Categories Section -->
+        <section class="categories-section">
+            <h2 class="content-section-title">Explore Categories</h2>
+            <div class="category-grid">
+                <div class="category-item">
+                    <div class="category-icon bg-blue-900/50 text-blue-400">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <span class="category-name">Technology</span>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon bg-green-900/50 text-green-400">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <span class="category-name">Business</span>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon bg-red-900/50 text-red-400">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <span class="category-name">Health</span>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon bg-yellow-900/50 text-yellow-400">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <span class="category-name">Science</span>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon bg-purple-900/50 text-purple-400">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <span class="category-name">Education</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Latest Articles Section -->
+        <section class="latest-articles-section">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="content-section-title mb-0">Latest Articles</h2>
+                <select class="sort-dropdown">
+                    <option value="newest">Sort by Newest</option>
+                    <option value="popular">Sort by Popular</option>
+                    <option value="trending">Sort by Trending</option>
+                </select>
+            </div>
+            <div class="article-container">
+                <div class="text-center">
+                    <svg class="w-16 h-16 mx-auto mb-6 text-gray-400 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="text-gray-400 dark:text-gray-500 text-lg">Check back soon for new content or try a different category</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Trending Topics Section -->
+        <section class="trending-section">
+            <h2 class="content-section-title">Trending Topics</h2>
+            <div class="trending-grid">
+                <div class="trending-item bg-gradient-to-br from-pink-700 to-purple-900">
+                    <div class="trending-content">
+                        <div class="trending-title">Technology</div>
+                        <div class="trending-name">AI Evolution</div>
+                    </div>
+                </div>
+                <div class="trending-item bg-gradient-to-br from-blue-700 to-indigo-900">
+                    <div class="trending-content">
+                        <div class="trending-title">Health</div>
+                        <div class="trending-name">Wellness Trends</div>
+                    </div>
+                </div>
+                <div class="trending-item bg-gradient-to-br from-amber-700 to-orange-900">
+                    <div class="trending-content">
+                        <div class="trending-title">Business</div>
+                        <div class="trending-name">Remote Work</div>
+                    </div>
+                </div>
+                <div class="trending-item bg-gradient-to-br from-green-700 to-teal-900">
+                    <div class="trending-content">
+                        <div class="trending-title">Environment</div>
+                        <div class="trending-name">Sustainability</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Content Wrapper with Sidebar Layout Option -->
+        <div class="flex flex-col xl:flex-row gap-8">
+            <!-- Main Content Area -->
+            <div class="xl:w-2/4 lg:w-2/3" id="contentContainer">
+                <!-- Sample Article Preview -->
+                <article class="card-hover mb-12 bg-white/90 dark:bg-dark-900/90 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-gray-200/50 dark:border-gray-800/50 glass-card">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900 dark:text-white font-display tracking-tight leading-tight">
+                        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-500 transition">
+                            How AI is Revolutionizing Content Creation in 2023
+                        </a>
+                    </h2>
+                    <div class="flex flex-wrap items-center gap-6 mb-6 text-sm text-gray-700 dark:text-gray-300">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="font-medium">June 15, 2023</span>
+                        </span>
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-accent-500 dark:text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            <span class="font-medium">by Blogify AI</span>
+                        </span>
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                            </svg>
+                            <span class="font-medium">Technology</span>
+                        </span>
+                    </div>
+                    <div class="article-content">
+                        <p class="text-lg text-gray-900 dark:text-white mb-6 leading-relaxed font-normal">
+                            Artificial intelligence has transformed numerous industries, and content creation is no exception. 
+                            From generating blog posts to creating marketing copy, AI tools are changing how we produce written content. 
+                            This article explores the latest developments in AI-powered content creation and how they're reshaping the industry.
+                        </p>
+                        <p class="text-lg text-gray-900 dark:text-white mb-8 leading-relaxed font-normal">
+                            Recent advancements in natural language processing have made AI-generated content nearly indistinguishable from human writing. 
+                            These tools can now understand context, maintain consistent tone, and even adapt to specific brand guidelines.
+                        </p>
+                    </div>
+                    <a href="#" class="inline-flex items-center px-6 py-3 button-primary rounded-lg font-semibold text-base">
+                        Continue Reading
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </article>
+                
+                {% block content %}{% endblock %}
+            </div>
+            
+            <!-- Primary Sidebar -->
+            <aside class="xl:w-1/4 lg:w-1/3 space-y-6" id="dynamicSidebar">
+                <!-- Featured Posts Widget -->
+                <div class="bg-white/90 dark:bg-dark-900/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-200/50 dark:border-gray-800/50 glass-card">
+                    <h3 class="text-xl font-bold mb-6 flex items-center font-display border-b border-gray-200 dark:border-gray-800 pb-3">
+                        <svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                        <span class="text-gradient-animated">Featured Posts</span>
+                    </h3>
+                    <div class="space-y-6" id="featuredPostsWidget">
+                        <!-- Featured Post Item -->
+                        <a href="#" class="block group">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-16 h-16 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                                    <svg class="w-8 h-8 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-grow">
+                                    <h4 class="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition line-clamp-2">How AI is Transforming Content Creation</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1 font-medium">3 days ago</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="#" class="block group">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-16 h-16 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                                    <svg class="w-8 h-8 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-grow">
+                                    <h4 class="font-semibold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition line-clamp-2">10 SEO Strategies for 2023 You Need to Know</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1 font-medium">1 week ago</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Newsletter Subscription -->
+                <div class="glass-morphism rounded-xl shadow-lg p-8 text-white relative overflow-hidden glass-card">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 z-0"></div>
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mt-10 -mr-10"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 bg-white opacity-10 rounded-full -mb-8 -ml-8"></div>
+                    
+                    <h3 class="text-xl font-bold mb-4 flex items-center relative z-10 font-display">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        <span class="text-gradient-animated">Subscribe to Newsletter</span>
+                    </h3>
+                    <p class="text-base mb-6 text-white opacity-90 relative z-10 font-medium">Get the latest articles delivered straight to your inbox.</p>
+                    <form id="newsletterForm" class="space-y-4 relative z-10">
+                        <div class="relative">
+                            <input type="email" placeholder="Your email address" class="w-full px-4 py-3 pl-10 rounded-lg bg-white bg-opacity-20 backdrop-blur-sm border border-white border-opacity-20 text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-40 text-base">
+                            <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-3 bg-white text-blue-600 rounded-lg hover:bg-opacity-90 transition font-bold text-base shadow-md button-shine">
+                            Subscribe
+                        </button>
+                    </form>
+                    <p id="newsletterSuccess" class="text-sm mt-3 hidden relative z-10 font-medium">Thank you for subscribing!</p>
+                </div>
+                
+                <!-- Popular Tags Cloud -->
+                <div class="bg-white/90 dark:bg-dark-900/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-200/50 dark:border-gray-800/50 glass-card">
+                    <h3 class="text-xl font-bold mb-6 flex items-center font-display border-b border-gray-200 dark:border-gray-800 pb-3">
+                        <svg class="w-5 h-5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <span class="text-gradient-animated">Popular Tags</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="#" class="px-4 py-2 bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition transform hover:scale-105 font-medium">Technology</a>
+                        <a href="#" class="px-4 py-2 bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition transform hover:scale-105 font-medium">AI</a>
+                        <a href="#" class="px-4 py-2 bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition transform hover:scale-105 font-medium">Web Development</a>
+                        <a href="#" class="px-4 py-2 bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition transform hover:scale-105 font-medium highlight-new">Machine Learning</a>
+                        <a href="#" class="px-4 py-2 bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition transform hover:scale-105 font-medium">Productivity</a>
+                        <a href="#" class="px-4 py-2 bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition transform hover:scale-105 font-medium">Content Strategy</a>
+                        <a href="#" class="px-4 py-2 bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition transform hover:scale-105 font-medium">SEO</a>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- NEW: Secondary Sidebar (Right Side) -->
+            <aside class="xl:w-1/4 hidden xl:block space-y-6" id="secondarySidebar">
+                <!-- Reading Progress Widget -->
+                <div class="bg-white/90 dark:bg-dark-900/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-200/50 dark:border-gray-800/50 glass-card sticky top-24">
+                    <h3 class="text-xl font-bold mb-4 flex items-center font-display border-b border-gray-200 dark:border-gray-800 pb-3">
+                        <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                        <span class="text-gradient-animated">Your Reading</span>
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Current Progress</h4>
+                            <div class="w-full h-2 bg-gray-200 dark:bg-dark-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" style="width: 65%;"></div>
+                            </div>
+                            <div class="flex justify-between mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                <span>65% Complete</span>
+                                <span>~4 min left</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Reading Stats</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-gray-100 dark:bg-dark-800 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">12</div>
+                                    <div class="text-xs text-gray-600 dark:text-gray-400">Articles Read</div>
+                                </div>
+                                <div class="bg-gray-100 dark:bg-dark-800 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-accent-600 dark:text-accent-400">42</div>
+                                    <div class="text-xs text-gray-600 dark:text-gray-400">Reading Streak</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        {% block content %}{% endblock %}
+                <!-- Interactive Poll Widget -->
+                <div class="bg-white/90 dark:bg-dark-900/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-200/50 dark:border-gray-800/50 glass-card">
+                    <h3 class="text-xl font-bold mb-4 flex items-center font-display border-b border-gray-200 dark:border-gray-800 pb-3">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        <span class="text-gradient-animated">Quick Poll</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="text-gray-900 dark:text-white font-medium">What content would you like to see more of?</div>
+                        <form id="pollForm" class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="option1" name="poll" class="mr-3 h-4 w-4 text-blue-600">
+                                <label for="option1" class="text-gray-800 dark:text-gray-200 text-sm">AI & Machine Learning</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="option2" name="poll" class="mr-3 h-4 w-4 text-blue-600">
+                                <label for="option2" class="text-gray-800 dark:text-gray-200 text-sm">Web Development</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="option3" name="poll" class="mr-3 h-4 w-4 text-blue-600">
+                                <label for="option3" class="text-gray-800 dark:text-gray-200 text-sm">Content Marketing</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="option4" name="poll" class="mr-3 h-4 w-4 text-blue-600">
+                                <label for="option4" class="text-gray-800 dark:text-gray-200 text-sm">Productivity Tips</label>
+                            </div>
+                            <button type="submit" class="w-full py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm">
+                                Vote Now
+                            </button>
+                        </form>
+                        <div id="pollResults" class="hidden space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-800 dark:text-gray-200">AI & Machine Learning</span>
+                                    <span class="text-gray-800 dark:text-gray-200 font-medium">45%</span>
+                                </div>
+                                <div class="w-full h-2 bg-gray-200 dark:bg-dark-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-800 dark:text-gray-200">Web Development</span>
+                                    <span class="text-gray-800 dark:text-gray-200 font-medium">30%</span>
+                                </div>
+                                <div class="w-full h-2 bg-gray-200 dark:bg-dark-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-800 dark:text-gray-200">Content Marketing</span>
+                                    <span class="text-gray-800 dark:text-gray-200 font-medium">15%</span>
+                                </div>
+                                <div class="w-full h-2 bg-gray-200 dark:bg-dark-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full" style="width: 15%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-800 dark:text-gray-200">Productivity Tips</span>
+                                    <span class="text-gray-800 dark:text-gray-200 font-medium">10%</span>
+                                </div>
+                                <div class="w-full h-2 bg-gray-200 dark:bg-dark-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full" style="width: 10%;"></div>
+                                </div>
+                            </div>
+                            <div class="text-center text-sm text-gray-600 dark:text-gray-400">
+                                Based on 423 votes
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Daily Challenge Widget -->
+                <div class="bg-white/90 dark:bg-dark-900/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-200/50 dark:border-gray-800/50 glass-card">
+                    <h3 class="text-xl font-bold mb-4 flex items-center font-display border-b border-gray-200 dark:border-gray-800 pb-3">
+                        <svg class="w-5 h-5 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <span class="text-gradient-animated">Daily Challenge</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="text-gray-900 dark:text-white font-medium">Today's Writing Prompt:</div>
+                        <div class="bg-gray-100 dark:bg-dark-800 p-4 rounded-lg text-gray-800 dark:text-gray-200 text-sm italic">
+                            "Describe how artificial intelligence might change your industry in the next five years."
+                        </div>
+                        <div class="text-gray-700 dark:text-gray-300 text-sm">
+                            Complete this challenge and share it on social media with #BlogifyChallenge to get featured!
+                        </div>
+                        <a href="#" class="block w-full py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-center text-white rounded-lg font-medium hover:opacity-90 transition text-sm">
+                            Accept Challenge
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </main>
 
-    
-
     <!-- Footer -->
-
-    <footer class="bg-gray-800 text-white py-8">
-
-        <div class="container mx-auto px-4">
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                <div>
-
-                    <h3 class="text-lg font-bold mb-4">About Blogify</h3>
-
-                    <p class="text-gray-400">Blogify provides high-quality, valuable content on trending topics. Our articles are optimized for readability.</p>
-
-                </div>
-
-                <div>
-
-                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
-
-                    <ul class="space-y-2">
-
-                        <li><a href="{% url 'index' %}" class="text-gray-400 hover:text-white transition">Home</a></li>
-
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Categories</a></li>
-
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">About</a></li>
-
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
-
-                    </ul>
-
-                </div>
-
-                <div>
-
-                    <h3 class="text-lg font-bold mb-4">Connect With Us</h3>
-
-                    <div class="flex space-x-4">
-
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-
-                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
-
-                            </svg>
-
-                        </a>
-
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-
-                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-
-                            </svg>
-
-                        </a>
-
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-
-                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
-
-                            </svg>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="mt-8 border-t border-gray-700 pt-6 text-center">
-
-                <p class="text-gray-400">&copy; {{ year }} Blogify. All rights reserved.</p>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-    
-
-    <script>
-
-        // Mobile menu toggle
-
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-
-        const mobileMenu = document.getElementById('mobile-menu');
-
+    <footer class="relative overflow-hidden bg-gradient-to-br from-dark-800 to-dark-900 text-white py-12">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-accent-500"></div>
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-primary-500 opacity-10 rounded-full"></div>
+        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-accent-500 opacity-10 rounded-full"></div>
         
-
-        mobileMenuButton.addEventListener('click', () => {
-
-            mobileMenu.classList.toggle('hidden');
-
-        });
-
-    </script>
-
+        <!-- Newsletter Strip -->
+        <div class="relative mb-12 py-6 bg-gradient-diagonal from-primary-700/30 to-accent-700/30 backdrop-blur-sm">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="md:w-1/2">
+                        <h3 class="text-xl font-bold mb-2 text-white">Stay Updated with Our Newsletter</h3>
+                        <p class="text-gray-300">Get the latest articles, resources, and news delivered to your inbox.</p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <form class="flex flex-col sm:flex-row gap-3">
+                            <input type="email" placeholder="Enter your email" class="flex-grow px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-30">
+                            <button type="submit" class="px-6 py-3 bg-white text-primary-600 rounded-lg font-medium hover:bg-opacity-90 transition button-shine whitespace-nowrap">
+                                Subscribe Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4">
+            <!-- Footer Top Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="relative w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center animate-pulse-slow">
+                            <span class="text-xl font-bold text-white">B</span>
+                        </div>
+                        <span class="text-2xl font-bold text-gradient-animated">Blogify</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Blogify provides high-quality, valuable content on trending topics. Our AI-powered platform creates engaging articles optimized for readability and SEO.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-dark-700 hover:bg-primary-600 text-gray-400 hover:text-white transition transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-dark-700 hover:bg-primary-600 text-gray-400 hover:text-white transition transform hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-dark-700 hover:bg-primary-600 text-gray-400 hover:text-white transition transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-dark-700 hover:bg-primary-600 text-gray-400 hover:text-white transition transform hover:scale-110">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-lg font-bold mb-6 relative">
+                        <span class="inline-block pb-2">Quick Links</span>
+                        <span class="absolute bottom-0 left-0 w-10 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500"></span>
+                    </h3>
+                    <ul class="space-y-3">
+                        <li><a href="{% url 'index' %}" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Categories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-lg font-bold mb-6 relative">
+                        <span class="inline-block pb-2">Categories</span>
+                        <span class="absolute bottom-0 left-0 w-10 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500"></span>
+                    </h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Technology</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Business</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Lifestyle</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Science</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center group"><i class="fas fa-chevron-right text-xs mr-2 text-primary-500 group-hover:translate-x-1 transition-transform"></i> Health</a></li>
+                    </ul>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-lg font-bold mb-6 relative">
+                        <span class="inline-block pb-2">Contact Us</span>
+                        <span class="absolute bottom-0 left-0 w-10 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500"></span>
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="mt-1 mr-3 w-8 h-8 flex-shrink-0 bg-gradient-to-r from-primary-500/20 to-accent-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-primary-500"></i>
+                            </div>
+                            <span class="text-gray-400">123 Blog Street, Content City, 10001</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="mr-3 w-8 h-8 flex-shrink-0 bg-gradient-to-r from-primary-500/20 to-accent-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-primary-500"></i>
+                            </div>
+                            <a href="mailto:contact@blogify.com" class="text-gray-400 hover:text-white transition">contact@blogify.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="mr-3 w-8 h-8 flex-shrink-0 bg-gradient-to-r from-primary-500/20 to-accent-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone-alt text-primary-500"></i>
+                            </div>
+                            <a href="tel:+1234567890" class="text-gray-400 hover:text-white transition">+123 456 7890</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            <!-- Footer Bottom Section -->
+            <div class="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">&copy; {{ year }} Blogify. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
     
-
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-24 p-3 rounded-full bg-primary-600 text-white shadow-lg transform transition-all duration-300 hover:scale-110 opacity-0 translate-y-10 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Core Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="{% static 'js/load-images.js' %}"></script>
+    <script>
+        // Initialize AOS animation library
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // Show cookie consent after 2 seconds
+            setTimeout(() => {
+                const cookieConsent = document.getElementById('cookieConsent');
+                if (cookieConsent && !localStorage.getItem('cookieConsent')) {
+                    cookieConsent.classList.remove('translate-y-full');
+                }
+            }, 2000);
+            
+            // Show AI Quality Badge after 5 seconds
+            setTimeout(() => {
+                const aiQualityBadge = document.getElementById('aiQualityBadge');
+                if (aiQualityBadge) {
+                    aiQualityBadge.classList.remove('opacity-0', '-translate-x-12');
+                    
+                    // Hide it after 5 more seconds
+                    setTimeout(() => {
+                        aiQualityBadge.classList.add('opacity-0', '-translate-x-12');
+                    }, 5000);
+                }
+            }, 5000);
+            
+            // Scroll progress indicator
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                if (scrollIndicator) scrollIndicator.style.width = scrolled + '%';
+                
+                // Show back to top button
+                const backToTop = document.getElementById('backToTop');
+                if (backToTop) {
+                    if (winScroll > 300) {
+                        backToTop.classList.remove('opacity-0', 'translate-y-10');
+                    } else {
+                        backToTop.classList.add('opacity-0', 'translate-y-10');
+                    }
+                }
+                
+                // Reading progress for blog posts
+                const articleContent = document.querySelector('.article-content');
+                const readingProgress = document.getElementById('readingProgress');
+                const readingProgressContainer = document.getElementById('readingProgressContainer');
+                
+                if (articleContent && readingProgress && readingProgressContainer) {
+                    readingProgressContainer.classList.remove('hidden');
+                    const articleBox = articleContent.getBoundingClientRect();
+                    const articleStart = articleBox.top + winScroll;
+                    const articleEnd = articleBox.bottom + winScroll;
+                    const currentScroll = winScroll + window.innerHeight / 2;
+                    
+                    if (currentScroll > articleStart && currentScroll < articleEnd) {
+                        const articleScrolled = ((currentScroll - articleStart) / (articleEnd - articleStart)) * 100;
+                        readingProgress.style.width = articleScrolled + '%';
+                    }
+                }
+                
+                // Update reading progress in sidebar widget
+                const sidebarReadingProgress = document.querySelector('#secondarySidebar .bg-gradient-to-r');
+                if (sidebarReadingProgress && articleContent) {
+                    const articleBox = articleContent.getBoundingClientRect();
+                    const articleStart = articleBox.top + winScroll;
+                    const articleEnd = articleBox.bottom + winScroll;
+                    const currentScroll = winScroll + window.innerHeight / 2;
+                    
+                    if (currentScroll > articleStart && currentScroll < articleEnd) {
+                        const articleScrolled = ((currentScroll - articleStart) / (articleEnd - articleStart)) * 100;
+                        sidebarReadingProgress.style.width = articleScrolled + '%';
+                        
+                        // Update percentage text
+                        const percentageText = document.querySelector('#secondarySidebar .flex.justify-between span:first-child');
+                        if (percentageText) {
+                            percentageText.textContent = Math.round(articleScrolled) + '% Complete';
+                        }
+                        
+                        // Update time left (very rough estimate)
+                        const timeLeftText = document.querySelector('#secondarySidebar .flex.justify-between span:last-child');
+                        if (timeLeftText) {
+                            const remainingPercentage = 100 - articleScrolled;
+                            const minutesLeft = Math.max(1, Math.round(remainingPercentage / 25)); // Assuming 25% per minute reading speed
+                            timeLeftText.textContent = `~${minutesLeft} min left`;
+                        }
+                    }
+                }
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Search toggle
+            const searchToggle = document.getElementById('searchToggle');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const closeSearch = document.getElementById('closeSearch');
+            
+            if (searchToggle && searchOverlay) {
+                searchToggle.addEventListener('click', () => {
+                    searchOverlay.classList.toggle('hidden');
+                    if (!searchOverlay.classList.contains('hidden')) {
+                        searchOverlay.querySelector('input').focus();
+                    }
+                });
+                
+                if (closeSearch) {
+                    closeSearch.addEventListener('click', () => {
+                        searchOverlay.classList.add('hidden');
+                    });
+                }
+                
+                // Close search on ESC key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) {
+                        searchOverlay.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // User Menu Toggle
+            const userMenuToggle = document.getElementById('userMenuToggle');
+            const userMenu = document.getElementById('userMenu');
+            
+            if (userMenuToggle && userMenu) {
+                userMenuToggle.addEventListener('click', () => {
+                    userMenu.classList.toggle('opacity-0');
+                    userMenu.classList.toggle('scale-95');
+                    userMenu.classList.toggle('pointer-events-none');
+                    
+                    // Click outside to close
+                    if (!userMenu.classList.contains('opacity-0')) {
+                        const closeUserMenu = (e) => {
+                            if (!userMenuToggle.contains(e.target) && !userMenu.contains(e.target)) {
+                                userMenu.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+                                document.removeEventListener('click', closeUserMenu);
+                            }
+                        };
+                        
+                        // Add delay to prevent immediate closing
+                        setTimeout(() => {
+                            document.addEventListener('click', closeUserMenu);
+                        }, 100);
+                    }
+                });
+            }
+            
+            // Reading Preferences Panel
+            const readingPrefsButton = document.getElementById('readingPrefsButton');
+            const readingPrefsPanel = document.getElementById('readingPrefsPanel');
+            const closeReadingPrefs = document.getElementById('closeReadingPrefs');
+            
+            if (readingPrefsButton && readingPrefsPanel && closeReadingPrefs) {
+                readingPrefsButton.addEventListener('click', () => {
+                    readingPrefsPanel.classList.toggle('translate-x-[-100%]');
+                });
+                
+                closeReadingPrefs.addEventListener('click', () => {
+                    readingPrefsPanel.classList.add('translate-x-[-100%]');
+                });
+            }
+            
+            // Font Size Controls
+            const decreaseFont = document.getElementById('decreaseFont');
+            const increaseFont = document.getElementById('increaseFont');
+            const fontSizeIndicator = document.getElementById('fontSizeIndicator');
+            
+            if (decreaseFont && increaseFont && fontSizeIndicator) {
+                let fontSizePercentage = 50; // Default mid-point
+                
+                const updateFontSize = () => {
+                    const contentContainer = document.getElementById('contentContainer');
+                    if (contentContainer) {
+                        fontSizeIndicator.querySelector('div').style.width = fontSizePercentage + '%';
+                        // Scale from 90% to 150% based on the indicator
+                        const scaleFactor = 0.9 + (fontSizePercentage / 100) * 0.6;
+                        contentContainer.style.fontSize = `${scaleFactor * 100}%`;
+                        localStorage.setItem('blogifyFontSize', fontSizePercentage);
+                    }
+                };
+                
+                // Load saved preference
+                const savedFontSize = localStorage.getItem('blogifyFontSize');
+                if (savedFontSize) {
+                    fontSizePercentage = parseInt(savedFontSize);
+                    updateFontSize();
+                }
+                
+                decreaseFont.addEventListener('click', () => {
+                    if (fontSizePercentage > 0) {
+                        fontSizePercentage -= 10;
+                        updateFontSize();
+                    }
+                });
+                
+                increaseFont.addEventListener('click', () => {
+                    if (fontSizePercentage < 100) {
+                        fontSizePercentage += 10;
+                        updateFontSize();
+                    }
+                });
+            }
+            
+            // Line Height Controls
+            const decreaseLineHeight = document.getElementById('decreaseLineHeight');
+            const increaseLineHeight = document.getElementById('increaseLineHeight');
+            const lineHeightIndicator = document.getElementById('lineHeightIndicator');
+            
+            if (decreaseLineHeight && increaseLineHeight && lineHeightIndicator) {
+                let lineHeightPercentage = 50; // Default mid-point
+                
+                const updateLineHeight = () => {
+                    const contentContainer = document.getElementById('contentContainer');
+                    if (contentContainer) {
+                        lineHeightIndicator.querySelector('div').style.width = lineHeightPercentage + '%';
+                        // Scale from 1.4 to 2.0 based on the indicator
+                        const lineHeight = 1.4 + (lineHeightPercentage / 100) * 0.6;
+                        contentContainer.style.lineHeight = lineHeight;
+                        localStorage.setItem('blogifyLineHeight', lineHeightPercentage);
+                    }
+                };
+                
+                // Load saved preference
+                const savedLineHeight = localStorage.getItem('blogifyLineHeight');
+                if (savedLineHeight) {
+                    lineHeightPercentage = parseInt(savedLineHeight);
+                    updateLineHeight();
+                }
+                
+                decreaseLineHeight.addEventListener('click', () => {
+                    if (lineHeightPercentage > 0) {
+                        lineHeightPercentage -= 10;
+                        updateLineHeight();
+                    }
+                });
+                
+                increaseLineHeight.addEventListener('click', () => {
+                    if (lineHeightPercentage < 100) {
+                        lineHeightPercentage += 10;
+                        updateLineHeight();
+                    }
+                });
+            }
+            
+            // Toggle Switches
+            // Dyslexic Font Toggle
+            const toggleDyslexicFont = document.getElementById('toggleDyslexicFont');
+            
+            if (toggleDyslexicFont) {
+                // Update the visual state of the toggle
+                const updateToggleState = (checkbox) => {
+                    const dot = checkbox.parentElement.querySelector('.dot');
+                    if (checkbox.checked) {
+                        dot.classList.add('transform', 'translate-x-6', 'bg-blue-600');
+                        dot.parentElement.classList.add('bg-blue-100', 'dark:bg-blue-900');
+                        dot.parentElement.classList.remove('bg-gray-200', 'dark:bg-dark-700');
+                    } else {
+                        dot.classList.remove('transform', 'translate-x-6', 'bg-blue-600');
+                        dot.parentElement.classList.remove('bg-blue-100', 'dark:bg-blue-900');
+                        dot.parentElement.classList.add('bg-gray-200', 'dark:bg-dark-700');
+                    }
+                };
+                
+                // Load saved preference
+                if (localStorage.getItem('blogifyDyslexicFont') === 'true') {
+                    toggleDyslexicFont.checked = true;
+                    updateToggleState(toggleDyslexicFont);
+                    document.documentElement.classList.add('dyslexic-font');
+                }
+                
+                toggleDyslexicFont.addEventListener('change', () => {
+                    updateToggleState(toggleDyslexicFont);
+                    
+                    if (toggleDyslexicFont.checked) {
+                        document.documentElement.classList.add('dyslexic-font');
+                        localStorage.setItem('blogifyDyslexicFont', 'true');
+                        
+                        // If font is not already loaded, add it
+                        if (!document.getElementById('dyslexicFontCSS')) {
+                            const dyslexicFontLink = document.createElement('link');
+                            dyslexicFontLink.id = 'dyslexicFontCSS';
+                            dyslexicFontLink.rel = 'stylesheet';
+                            dyslexicFontLink.href = 'https://cdn.jsdelivr.net/npm/opendyslexic@1.0.0/dist/opendyslexic.min.css';
+                            document.head.appendChild(dyslexicFontLink);
+                            
+                            // Add style for the font
+                            const dyslexicStyle = document.createElement('style');
+                            dyslexicStyle.textContent = '.dyslexic-font { font-family: "OpenDyslexic", sans-serif !important; }';
+                            document.head.appendChild(dyslexicStyle);
+                        }
+                    } else {
+                        document.documentElement.classList.remove('dyslexic-font');
+                        localStorage.setItem('blogifyDyslexicFont', 'false');
+                    }
+                });
+            }
+            
+            // Focus Mode Toggle
+            const toggleFocusMode = document.getElementById('toggleFocusMode');
+            
+            if (toggleFocusMode) {
+                // Load saved preference and update toggle state
+                if (localStorage.getItem('blogifyFocusMode') === 'true') {
+                    toggleFocusMode.checked = true;
+                    const dot = toggleFocusMode.parentElement.querySelector('.dot');
+                    dot.classList.add('transform', 'translate-x-6', 'bg-blue-600');
+                    dot.parentElement.classList.add('bg-blue-100', 'dark:bg-blue-900');
+                    dot.parentElement.classList.remove('bg-gray-200', 'dark:bg-dark-700');
+                    document.documentElement.classList.add('focus-mode');
+                }
+                
+                toggleFocusMode.addEventListener('change', () => {
+                    const dot = toggleFocusMode.parentElement.querySelector('.dot');
+                    
+                    if (toggleFocusMode.checked) {
+                        dot.classList.add('transform', 'translate-x-6', 'bg-blue-600');
+                        dot.parentElement.classList.add('bg-blue-100', 'dark:bg-blue-900');
+                        dot.parentElement.classList.remove('bg-gray-200', 'dark:bg-dark-700');
+                        
+                        document.documentElement.classList.add('focus-mode');
+                        localStorage.setItem('blogifyFocusMode', 'true');
+                        
+                        // Add focus mode styles if not already present
+                        if (!document.getElementById('focusModeCSS')) {
+                            const focusModeStyle = document.createElement('style');
+                            focusModeStyle.id = 'focusModeCSS';
+                            focusModeStyle.textContent = `
+                                .focus-mode #contentContainer p {
+                                    max-width: 70ch;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                }
+                                .focus-mode .article-content p:hover {
+                                    background-color: rgba(37, 99, 235, 0.05);
+                                    border-radius: 4px;
+                                    padding: 0.5rem;
+                                    margin: 0.5rem -0.5rem;
+                                }
+                                .focus-mode #dynamicSidebar,
+                                .focus-mode .article-sidebar {
+                                    opacity: 0.5;
+                                    transition: opacity 0.3s ease;
+                                }
+                                .focus-mode #dynamicSidebar:hover,
+                                .focus-mode .article-sidebar:hover {
+                                    opacity: 1;
+                                }
+                            `;
+                            document.head.appendChild(focusModeStyle);
+                        }
+                    } else {
+                        dot.classList.remove('transform', 'translate-x-6', 'bg-blue-600');
+                        dot.parentElement.classList.remove('bg-blue-100', 'dark:bg-blue-900');
+                        dot.parentElement.classList.add('bg-gray-200', 'dark:bg-dark-700');
+                        
+                        document.documentElement.classList.remove('focus-mode');
+                        localStorage.setItem('blogifyFocusMode', 'false');
+                    }
+                });
+            }
+            
+            // Cookie consent handlers
+            const cookieAccept = document.getElementById('cookieAccept');
+            const cookieDecline = document.getElementById('cookieDecline');
+            const cookieConsent = document.getElementById('cookieConsent');
+            
+            if (cookieAccept && cookieDecline && cookieConsent) {
+                cookieAccept.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    cookieConsent.classList.add('translate-y-full');
+                });
+                
+                cookieDecline.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'declined');
+                    cookieConsent.classList.add('translate-y-full');
+                });
+            }
+            
+            // Dark mode toggle
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                // Always use dark mode
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('darkMode', 'true');
+                
+                // Hide the toggle button since dark mode is permanent
+                themeToggle.style.display = 'none';
+            }
+            
+            // Poll functionality
+            const pollForm = document.getElementById('pollForm');
+            const pollResults = document.getElementById('pollResults');
+            
+            if (pollForm && pollResults) {
+                pollForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show results and hide form
+                    pollForm.classList.add('hidden');
+                    pollResults.classList.remove('hidden');
+                    
+                    // Store in localStorage that user has voted
+                    localStorage.setItem('blogifyPollVoted', 'true');
+                });
+                
+                // If user has already voted, show results instead of form
+                if (localStorage.getItem('blogifyPollVoted') === 'true') {
+                    pollForm.classList.add('hidden');
+                    pollResults.classList.remove('hidden');
+                }
+            }
+            
+            // Make sure secondary sidebar is visible on larger screens
+            const checkScreenSize = () => {
+                const secondarySidebar = document.getElementById('secondarySidebar');
+                if (secondarySidebar) {
+                    if (window.innerWidth >= 1280) { // xl breakpoint
+                        secondarySidebar.classList.remove('hidden');
+                        secondarySidebar.classList.add('block');
+                    } else {
+                        secondarySidebar.classList.add('hidden');
+                        secondarySidebar.classList.remove('block');
+                    }
+                }
+            };
+            
+            // Check on load and resize
+            checkScreenSize();
+            window.addEventListener('resize', checkScreenSize);
+        });
+    </script>
+    
     {% block extra_js %}{% endblock %}
-
 </body>
 
 </html> 

@@ -10,6 +10,7 @@ urlpatterns = [
     path('dashboard/', admin_dashboard, name='admin_dashboard'),
     path('logs/', view_process_logs, name='view_process_logs'),
     path('logs/<str:log_file>/', view_process_logs, name='view_specific_log'),
+    path('publish-post/<uuid:post_id>/', publish_post, name='publish_post'),
     
     # Chatbot routes
     path('chatbot/', home, name='chatbot_home'),

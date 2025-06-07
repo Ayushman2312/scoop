@@ -134,6 +134,27 @@ The system comes with five pre-defined templates:
 4. **Local SEO Blog Template**: Location-specific content
 5. **How-To Guide SEO Blog Template**: Step-by-step guides
 
+### Template Selection Process
+
+The template selection process uses Google's Gemini AI to analyze the trending topic and determine which template would be most effective:
+
+1. After selecting the best trending topic, Gemini analyzes the topic's characteristics.
+2. Gemini evaluates each template in `cache/template_context.json` to determine the best match based on:
+   - Search intent (informational, commercial, etc.)
+   - Content structure needs (comparison, how-to, news, etc.)
+   - SEO requirements for the topic
+   - Target audience expectations
+3. Gemini returns a structured response identifying the selected template as "Template 1", "Template 2", etc., along with detailed reasoning.
+4. Each template requires a specific JSON structure with template-appropriate SEO elements.
+5. The content generation process then uses the selected template to create a properly structured blog post with all required SEO elements.
+
+The five templates are designed for different types of content:
+- **Template 1**: Best for comprehensive evergreen pillar content for broad topics
+- **Template 2**: Best for recent trending topics that need timely coverage
+- **Template 3**: Best for comparison/review content between products or services
+- **Template 4**: Best for location-specific content targeting local audiences
+- **Template 5**: Best for step-by-step instructional guides and tutorials
+
 ### Scheduling
 
 The automation schedule can be customized in `blogify/celery.py`. By default:
@@ -154,4 +175,4 @@ Common issues:
 
 ## License
 
-This project is licensed under the MIT License. 
+This project is licensed under the MIT License.

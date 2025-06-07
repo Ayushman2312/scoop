@@ -1,7 +1,13 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/base.html" %}
 {% load static %}
 
 {% block title %}Admin Dashboard{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a> &rsaquo; Dashboard
+</div>
+{% endblock %}
 
 {% block content %}
 <div id="content-main">
@@ -12,6 +18,8 @@
         <div class="dashboard-actions">
             <a href="{% url 'create_blog_api' %}" class="button">Create New Blog Post</a>
             <a href="{% url 'view_process_logs' %}" class="button">View Process Logs</a>
+            <a href="{% url 'admin:blog_blogpost_add' %}" class="button">Add Blog Post Manually</a>
+            <a href="{% url 'admin:blog_blogpost_changelist' %}" class="button">Manage All Posts</a>
         </div>
     </div>
     
@@ -19,24 +27,24 @@
         <h2>Blog Statistics</h2>
         <table>
             <tr>
-                <td>Total Posts:</td>
-                <td>{{ stats.total_posts }}</td>
+                <td><strong>Total Posts:</strong></td>
+                <td>{{ stats.total_posts|default:"0" }}</td>
             </tr>
             <tr>
-                <td>Published Posts:</td>
-                <td>{{ stats.published_posts }}</td>
+                <td><strong>Published Posts:</strong></td>
+                <td>{{ stats.published_posts|default:"0" }}</td>
             </tr>
             <tr>
-                <td>Draft Posts:</td>
-                <td>{{ stats.draft_posts }}</td>
+                <td><strong>Draft Posts:</strong></td>
+                <td>{{ stats.draft_posts|default:"0" }}</td>
             </tr>
             <tr>
-                <td>Scheduled Posts:</td>
-                <td>{{ stats.scheduled_posts }}</td>
+                <td><strong>Scheduled Posts:</strong></td>
+                <td>{{ stats.scheduled_posts|default:"0" }}</td>
             </tr>
             <tr>
-                <td>Total Views:</td>
-                <td>{{ stats.total_views }}</td>
+                <td><strong>Total Views:</strong></td>
+                <td>{{ stats.total_views|default:"0" }}</td>
             </tr>
         </table>
     </div>
@@ -57,16 +65,24 @@
                 {% for post in recent_posts %}
                 <tr>
                     <td>{{ post.title }}</td>
-                    <td>{{ post.status }}</td>
+                    <td>
+                        <span class="status-badge status-{{ post.status }}">{{ post.status }}</span>
+                    </td>
                     <td>{{ post.created_at|date:"Y-m-d H:i" }}</td>
                     <td>{{ post.view_count }}</td>
-                    <td>
-                        <a href="/blog/{{ post.slug }}/" target="_blank">View</a>
+                    <td class="action-buttons">
+                        {% if post.status == 'published' %}
+                            <a href="/blog/{{ post.slug }}/" target="_blank" class="action-btn view-btn">View</a>
+                        {% endif %}
+                        <a href="{% url 'admin:blog_blogpost_change' post.id %}" class="action-btn edit-btn">Edit</a>
+                        {% if post.status == 'draft' %}
+                            <a href="#" class="action-btn publish-btn" data-id="{{ post.id }}">Publish</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5">No posts found</td>
+                    <td colspan="5">No posts found. <a href="{% url 'create_blog_api' %}">Create your first post</a>.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -90,13 +106,14 @@
                     <td>{{ post.title }}</td>
                     <td>{{ post.view_count }}</td>
                     <td>{{ post.avg_time_on_page|default:"N/A" }}</td>
-                    <td>
-                        <a href="/blog/{{ post.slug }}/" target="_blank">View</a>
+                    <td class="action-buttons">
+                        <a href="/blog/{{ post.slug }}/" target="_blank" class="action-btn view-btn">View</a>
+                        <a href="{% url 'admin:blog_blogpost_change' post.id %}" class="action-btn edit-btn">Edit</a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4">No trending posts found</td>
+                    <td colspan="4">No trending posts found. Publish some posts to see them here.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -109,6 +126,7 @@
         margin: 15px 0;
         display: flex;
         gap: 10px;
+        flex-wrap: wrap;
     }
     
     .button {
@@ -118,6 +136,11 @@
         color: white;
         text-decoration: none;
         border-radius: 4px;
+        transition: background 0.3s;
+    }
+    
+    .button:hover {
+        background: #205070;
     }
     
     .module {
@@ -125,6 +148,7 @@
         padding: 15px;
         border: 1px solid #ddd;
         border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
     table {
@@ -140,6 +164,163 @@
     
     table th {
         background-color: #f5f5f5;
+        font-weight: bold;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 0.8em;
+        text-transform: uppercase;
+    }
+    
+    .status-published {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    .status-draft {
+        background-color: #ffc107;
+        color: #212529;
+    }
+    
+    .status-scheduled {
+        background-color: #17a2b8;
+        color: white;
+    }
+    
+    .status-archived {
+        background-color: #6c757d;
+        color: white;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+    }
+    
+    .action-btn {
+        padding: 2px 8px;
+        border-radius: 3px;
+        text-decoration: none;
+        font-size: 0.8em;
+        color: white;
+    }
+    
+    .view-btn {
+        background-color: #007bff;
+    }
+    
+    .edit-btn {
+        background-color: #6c757d;
+    }
+    
+    .publish-btn {
+        background-color: #28a745;
+    }
+    
+    /* Add message styles */
+    .message {
+        padding: 10px 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+    
+    .message.success {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+    }
+    
+    .message.error {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
     }
 </style>
+
+<script>
+    // Add JavaScript to handle the "Publish" button clicks
+    document.addEventListener('DOMContentLoaded', function() {
+        const publishButtons = document.querySelectorAll('.publish-btn');
+        
+        publishButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const postId = this.getAttribute('data-id');
+                const row = this.closest('tr');
+                
+                if (confirm('Are you sure you want to publish this post?')) {
+                    // Show loading state
+                    this.textContent = 'Publishing...';
+                    this.style.opacity = '0.7';
+                    
+                    // Make AJAX call to publish the post
+                    fetch(`/publish-post/${postId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update the UI to show published state
+                            const statusCell = row.querySelector('td:nth-child(2)');
+                            statusCell.innerHTML = '<span class="status-badge status-published">published</span>';
+                            
+                            // Replace the publish button with a view button
+                            this.parentNode.innerHTML = `
+                                <a href="${data.post_url}" target="_blank" class="action-btn view-btn">View</a>
+                                <a href="/admin/blog/blogpost/${postId}/change/" class="action-btn edit-btn">Edit</a>
+                            `;
+                            
+                            // Show success message
+                            showMessage('success', data.message);
+                        } else {
+                            // Show error message
+                            showMessage('error', data.message);
+                            this.textContent = 'Publish';
+                            this.style.opacity = '1';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showMessage('error', 'Failed to publish post. Please try again.');
+                        this.textContent = 'Publish';
+                        this.style.opacity = '1';
+                    });
+                }
+            });
+        });
+        
+        // Function to show message
+        function showMessage(type, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = text;
+            
+            // Add to the top of the content
+            const contentMain = document.getElementById('content-main');
+            contentMain.insertBefore(messageDiv, contentMain.firstChild);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                setTimeout(() => messageDiv.remove(), 500);
+            }, 5000);
+        }
+        
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    });
+</script>
 {% endblock %} 
