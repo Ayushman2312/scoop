@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'blogify',
         'USER': 'blogify',
         'PASSWORD': 'ENCANTADO()@23ok',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
